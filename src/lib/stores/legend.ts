@@ -1,35 +1,12 @@
 import type { LegendItem } from "$lib/types/legend";
-import { browser } from "$app/environment";
-import { get, writable, type Writable } from "svelte/store";
-
-/**
- * adds or updates item in store
- * @param newItem the LegendItem to be added/updated
- * @param store the store it will be updating 
- */
-const add = (newData: LegendItem, store: Writable<Record<string, LegendItem>>) => store.update(data => ({
-  [newData.id]: newData,
-  ...data
-}));
-
-/**
- * removes item in store
- * @param key id of the LegendItem to be removed
- * @param store the store it will be updating 
- */
-const remove = (key: string, store: Writable<Record<string, LegendItem>>) => store.update(items => {
-  const newItems = { ...items }
-  delete newItems[key]
-  return newItems
-});
+import { get, writable } from "svelte/store";
+import { addRecordToStore, removeRecordFromStore, storeData, updateRecordInStore } from "$lib/services/stores";
 
 /**
  * Creates legend store and persists it to local storage (or uses an existing local storage if available)
  * @returns a proxy to the store with interactions baked in
  */
 const createLegend = () => {
-    // local storage key
-    const key = "colormap.legend"
     // default legend item
     const defaultItem = {
       id: crypto.randomUUID(),
@@ -42,37 +19,13 @@ const createLegend = () => {
     };
 
     // create store
-    const store = writable(legend);
-
-    // if this is running in the browser and has local storage
-    if (browser && typeof localStorage !== 'undefined') {
-      // use localstorage data if it exists
-      const stored = localStorage.getItem(key);
-      if (stored) {
-        try {
-          const json = JSON.parse(stored);
-          store.set(json)
-        } catch (e) {
-          console.error(`Error parsing ${key} from localStorage: `, e);
-          store.set(legend)
-        }
-      }
-
-      // subscribe localstorage to the store
-      store.subscribe(value => {
-        try {
-          localStorage.setItem(key, JSON.stringify(value))
-        } catch (e) {
-          console.error(`Error setting ${key} to localStorage`, e)
-        }
-      })
-    }
+    const store =  storeData<Record<string, LegendItem>>('legend', legend);
     
       return {
           subscribe: store.subscribe,
-          updateItem: (newItem: LegendItem) => add(newItem, store),
-          addItem: (newItem: LegendItem) => add(newItem, store),
-          removeItem: (id: string) => remove(id, store),
+          updateItem: (newItem: LegendItem) => updateRecordInStore(newItem.id, newItem, store),
+          addItem: (newItem: LegendItem) => addRecordToStore(newItem.id, newItem, store),
+          removeItem: (id: string) => removeRecordFromStore(id, store),
           clearItems: () => store.set({[defaultItem.id]: defaultItem})
         };
   };

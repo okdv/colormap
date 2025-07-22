@@ -1,5 +1,55 @@
 // src/lib/services/map.ts
-import { map, geoJsonLayer } from '$lib/stores/map'
+import type { LegendItem } from '$lib/types/legend';
+import { legendStore, selectedItem } from '$lib/stores/legend';
+import { map, geoJsonLayer, selectedFeaturesStore } from '$lib/stores/map'
+import { get } from 'svelte/store';
+import type * as L from 'leaflet'; 
+import { SelectedFeature } from '$lib/types/map';
+
+/**
+ * determine style for geojson features, effectively either base or selected if a colors present
+ * @param color if undefined, set the base style, if defined > set selected style using the custom color
+ * @returns geojson feature style as json object 
+ */
+const calculateFeatureStyle = (color?: string) => {
+  // if a color is passed, apply selected styling
+  if (color) {
+    return {
+      color: 'white',
+      weight: 2,
+      fillColor: color,
+      fillOpacity: 0.5
+    }
+  }
+  // otherwise return base style
+  return {
+    color: '#444',
+    weight: 1,
+    fillColor: '#ccc',
+    fillOpacity: 0.3,
+  }
+}
+
+/**
+ * determine what legend item has selected a feature, if any 
+ * @param id feature id as string 
+ * @returns legenditem or undefined if not selected  
+ */
+const getFeatureSelector = (id: string) : LegendItem | undefined => {
+  const debugStoreValue = get(legendStore)
+
+  let selectedBy = undefined;
+  // see if the id is already present in selected features store, return that if so
+  const currentlySelectedFeature = get(selectedFeaturesStore)[id] 
+  if (currentlySelectedFeature) {
+    const selector = debugStoreValue[currentlySelectedFeature.selectedById]
+    selectedBy = selector
+  }
+  return selectedBy
+}
+
+// array of map subscriptions for automatic actions like updating style on store change, etc 
+let subscriptions: (() => void)[] = [];
 
 /**
  * Initializes leaflet map including tiles (e.g. base layer) and features (e.g. counties)
@@ -7,6 +57,7 @@ import { map, geoJsonLayer } from '$lib/stores/map'
  * @param geojson Parsed, ready to use geojson data
  * @todo enhance coordinate defaults, accessibility and memory 
  * @todo support other tiles/base layers 
+ * @todo support updating feature style rather than just select/deselect
  */
 export const initMapAndLayers = async(mapContainer: HTMLDivElement, geojson: any) => {
     const L = await import('leaflet'); // lazy import to avoid SSR 
@@ -23,12 +74,7 @@ export const initMapAndLayers = async(mapContainer: HTMLDivElement, geojson: any
       // local instance of the features geojson layer, e.g. counties
       const localGeoJsonLayer = L.geoJSON(geojson, {
         // set base style
-        style: {
-            color: '#444',
-            weight: 1,
-            fillColor: '#ccc',
-            fillOpacity: 0.3,
-        },
+        style: calculateFeatureStyle(),
         onEachFeature: (feature, layer) => {
           // get metadata 
           const id = feature.properties.GEOID; 
@@ -39,20 +85,62 @@ export const initMapAndLayers = async(mapContainer: HTMLDivElement, geojson: any
 
           // Add click event to each feature layer
           layer.on('click', () => {
-            // if selected, unselect
-            if (feature.properties.style.fillColor !== "#ccc") {
-                feature.properties.style.fillColor = "#ccc"
-                return
+            // feature name shown on hover
+            layer.bindTooltip(name);
+
+            // if there is no active legend item, warn the user and do nothing
+            const activeLegendItem = get(selectedItem)
+            if (activeLegendItem === null) {
+              console.error("Unable to select feature, there may be no legend items");
+              alert("Please create and/or select a legend item before trying to select a feature")
+              return
             }
-            // select it
-            feature.properties.style.fillColor = "#FDD2B4"
+
+            // if the feature is already selected, simply deselect it
+            const selector = getFeatureSelector(id) 
+            if (selector) {
+              selectedFeaturesStore.deselect(id)
+              return 
+            }
+            
+            // otherwise select it
+            selectedFeaturesStore.select(new SelectedFeature(id, name, activeLegendItem.id))
           });
-          // county name shown on hover
-          layer.bindTooltip(name);
         }
         }).addTo(localLeafletMap); // add feature layers to local map
     
     // set map and layer store 
     map.set(localLeafletMap);
     geoJsonLayer.set(localGeoJsonLayer);
+
+    // on changes to the selected features store, update the layers style
+    subscriptions.push(selectedFeaturesStore.subscribe(() => {
+      // if there are geojson layers 
+      const currentGeoJsonLayer = get(geoJsonLayer);
+      if (currentGeoJsonLayer) {
+          currentGeoJsonLayer.eachLayer(layer => {
+              const featureId = (layer as any).featureId;
+              if (featureId) {
+                // get selector if it exists and update the style of the feature layer
+                const selector = getFeatureSelector(featureId);
+                (layer as L.Path).setStyle(calculateFeatureStyle(selector?.color))
+              }
+          })
+      }
+  }))
+
+  // on changes to the legend, update the associated layers styles
+  subscriptions.push(legendStore.subscribe(() => {
+      // if there are geojson layers  and selected features 
+      const currentGeoJsonLayer = get(geoJsonLayer);
+      const currentSelectedFeatures = get(selectedFeaturesStore)
+      if (currentGeoJsonLayer && Object.keys(currentSelectedFeatures).length > 0) {
+          currentGeoJsonLayer.eachLayer(layer => {
+              const featureId = (layer as any).featureId;
+                // get selector if it exists and update the style of the feature layer
+                const selector = getFeatureSelector(featureId);
+                (layer as L.Path).setStyle(calculateFeatureStyle(selector?.color))
+          })
+      }
+  }))
 }
