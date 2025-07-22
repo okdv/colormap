@@ -5,7 +5,6 @@ import { map, geoJsonLayer } from '$lib/stores/map'
  * Initializes leaflet map including tiles (e.g. base layer) and features (e.g. counties)
  * @param mapContainer HTML element that will contain the leaflet map
  * @param geojson Parsed, ready to use geojson data
- * @throws {Error} If 'n' is negative.
  * @todo enhance coordinate defaults, accessibility and memory 
  * @todo support other tiles/base layers 
  */
