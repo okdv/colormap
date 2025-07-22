@@ -3,6 +3,27 @@ import { browser } from "$app/environment";
 import { get, writable, type Writable } from "svelte/store";
 
 /**
+ * adds or updates item in store
+ * @param newItem the LegendItem to be added/updated
+ * @param store the store it will be updating 
+ */
+const add = (newData: LegendItem, store: Writable<Record<string, LegendItem>>) => store.update(data => ({
+  [newData.id]: newData,
+  ...data
+}));
+
+/**
+ * removes item in store
+ * @param key id of the LegendItem to be removed
+ * @param store the store it will be updating 
+ */
+const remove = (key: string, store: Writable<Record<string, LegendItem>>) => store.update(items => {
+  const newItems = { ...items }
+  delete newItems[key]
+  return newItems
+});
+
+/**
  * Creates legend store and persists it to local storage (or uses an existing local storage if available)
  * @returns a proxy to the store with interactions baked in
  */
@@ -36,7 +57,7 @@ const createLegend = () => {
           store.set(legend)
         }
       }
-      
+
       // subscribe localstorage to the store
       store.subscribe(value => {
         try {
@@ -46,20 +67,6 @@ const createLegend = () => {
         }
       })
     }
-
-    // Add / Update item in legend
-    const add = (newData: LegendItem, store: Writable<Record<string, LegendItem>>) => store.update(data => ({
-        [newData.id]: newData,
-        ...data
-    }));
-    
-    // Remove from legend
-    const remove = (key: string, store: Writable<Record<string, LegendItem>>) => store.update(items => {
-        const newItems = { ...items }
-        delete newItems[key]
-        return newItems
-    });
-
     
       return {
           subscribe: store.subscribe,
