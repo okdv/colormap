@@ -4,7 +4,7 @@ import { get, writable, type Writable } from "svelte/store";
 
 /**
  * Creates legend store and persists it to local storage (or uses an existing local storage if available)
- * @returns a proxy to the store with interactions baked 
+ * @returns a proxy to the store with interactions baked in
  */
 const createLegend = () => {
     // local storage key
@@ -20,16 +20,31 @@ const createLegend = () => {
       [defaultItem.id]: defaultItem
     };
 
-    // if legend is already in localstorage, use that instead
+    // create store
+    const store = writable(legend);
+
+    // if this is running in the browser and has local storage
     if (browser && typeof localStorage !== 'undefined') {
+      // use localstorage data if it exists
+      const stored = localStorage.getItem(key);
+      if (stored) {
         try {
-            const stored = localStorage.getItem(key);
-            if (stored != null) {
-                legend = JSON.parse(stored)
-            }
-          } catch (e) {
-            console.error(`Error parsing ${key} from localStorage: `, e);
-          }
+          const json = JSON.parse(stored);
+          store.set(json)
+        } catch (e) {
+          console.error(`Error parsing ${key} from localStorage: `, e);
+          store.set(legend)
+        }
+      }
+      
+      // subscribe localstorage to the store
+      store.subscribe(value => {
+        try {
+          localStorage.setItem(key, JSON.stringify(value))
+        } catch (e) {
+          console.error(`Error setting ${key} to localStorage`, e)
+        }
+      })
     }
 
     // Add / Update item in legend
@@ -45,9 +60,7 @@ const createLegend = () => {
         return newItems
     });
 
-    // create store
-    const store = writable(legend);
-  
+    
       return {
           subscribe: store.subscribe,
           updateItem: (newItem: LegendItem) => add(newItem, store),
