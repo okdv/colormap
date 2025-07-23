@@ -1,11 +1,6 @@
 import type { LegendItem } from '$lib/types';
 import { get, writable } from 'svelte/store';
-import {
-	addRecordToStore,
-	removeRecordFromStore,
-	storeData,
-	updateRecordInStore
-} from '$lib/services';
+import { addRecordToStore, removeRecordFromStore, storeData, updateRecordInStore } from '$lib/services';
 
 /**
  * Creates legend store and persists it to local storage (or uses an existing local storage if available)

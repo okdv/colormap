@@ -20,8 +20,7 @@ const createSelectedFeatures = () => {
 
 	return {
 		subscribe: store.subscribe,
-		select: (feature: SelectedFeature) =>
-			addRecordToStore<SelectedFeature>(feature.id, feature, store),
+		select: (feature: SelectedFeature) => addRecordToStore<SelectedFeature>(feature.id, feature, store),
 		deselect: (id: string) => removeRecordFromStore<SelectedFeature>(id, store),
 		deselectAll: () => store.set({})
 	};

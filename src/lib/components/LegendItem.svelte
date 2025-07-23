@@ -25,20 +25,8 @@
 >
 	{#if isEdit}
 		<div class="inline-flex items-center gap-2">
-			<input
-				id={`item-color-${item.id}`}
-				type="color"
-				bind:value={item.color}
-				on:change={() => updateItem(item)}
-			/>
-			<input
-				id={`item-name-${item.id}`}
-				type="text"
-				bind:value={item.name}
-				on:change={() => updateItem(item)}
-				placeholder="Name..."
-				minlength="1"
-			/>
+			<input id={`item-color-${item.id}`} type="color" bind:value={item.color} on:change={() => updateItem(item)} />
+			<input id={`item-name-${item.id}`} type="text" bind:value={item.name} on:change={() => updateItem(item)} placeholder="Name..." minlength="1" />
 		</div>
 		<div class="inline-flex items-center gap-2">
 			<button

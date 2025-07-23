@@ -9,11 +9,7 @@ import { writable, type Writable } from 'svelte/store';
  * @param newRecord the new record to be added
  * @param store the store it will be updating
  */
-export const addRecordToStore = <T>(
-	key: string,
-	newRecord: T,
-	store: Writable<Record<string, T>>
-) =>
+export const addRecordToStore = <T>(key: string, newRecord: T, store: Writable<Record<string, T>>) =>
 	store.update((records) => ({
 		[key]: newRecord,
 		...records
@@ -36,11 +32,7 @@ export const removeRecordFromStore = <T>(key: string, store: Writable<Record<str
  * @param key id of the record to be removed
  * @param store the store it will be updating
  */
-export const updateRecordInStore = <T>(
-	key: string,
-	newRecord: T,
-	store: Writable<Record<string, T>>
-) =>
+export const updateRecordInStore = <T>(key: string, newRecord: T, store: Writable<Record<string, T>>) =>
 	store.update((records) => {
 		const storedData = { ...records };
 		storedData[key] = newRecord;
