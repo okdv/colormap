@@ -144,3 +144,17 @@ export const initMapAndLayers = async(mapContainer: HTMLDivElement, geojson: any
       }
   }))
 }
+
+/**
+ * removes leaflet map and layers, along with any map subscriptions
+ */
+export const cleanupMap = () => {
+  subscriptions.forEach(unsubscribe => unsubscribe());
+  subscriptions = [] 
+  const currentMap = get(map)
+  if (currentMap) { 
+      currentMap.remove() 
+      map.set(null)
+      geoJsonLayer.set(null)
+  }
+}

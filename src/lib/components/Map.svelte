@@ -1,7 +1,7 @@
 <script lang="ts">
     // src/lib/components/Map.svelte 
     import { onMount } from 'svelte';
-    import { initMapAndLayers } from '$lib/services/map';
+    import { cleanupMap, initMapAndLayers } from '$lib/services/map';
 	import ControlPanel from '$lib/components/ControlPanel.svelte';
     /**
      * Map Component
@@ -20,6 +20,9 @@
 
         // initialize map and layers
         initMapAndLayers(mapContainer, geojson)
+
+        // cleanup on unmount
+        return cleanupMap()
     });
   </script>
   
