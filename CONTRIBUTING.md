@@ -19,7 +19,7 @@ npm run build
 
 You can preview the production build with `npm run preview` or nginx, instructions below:.
 
-### Testing the Production Build with nginx container 
+### Testing the Production Build with nginx container
 
 If you're making changes that affect the production build, especially with the static adapter, you can test it locally using Docker Compose and Nginx:
 
@@ -40,7 +40,8 @@ If you're making changes that affect the production build, especially with the s
     docker compose down
     ```
 
-## Commit messages 
+## Commit messages
+
 Please follow this git commit message format: `<type: chore, feat, fix>: <description> <rel issue number>`
 
 e.g. `chore: cleaning up comments`, `feat: adding calendar feature #13`, `fix: home button deletes all data #16`

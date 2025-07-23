@@ -1,9 +1,9 @@
 <script lang="ts">
-    // src/lib/components/ControlPanel.svelte
-	import {Legend,Toolbar} from '$lib/components';
+	// src/lib/components/ControlPanel.svelte
+	import { Legend, Toolbar } from '$lib/components';
 </script>
 
-<div class="absolute bottom-4 right-4 bg-white rounded-md z-1000">
-    <Toolbar />
-    <Legend />
+<div class="absolute right-4 bottom-4 z-1000 rounded-md bg-white">
+	<Toolbar />
+	<Legend />
 </div>
