@@ -1,1 +1,10 @@
 @import 'tailwindcss';
+
+.leaflet-interactive:focus {
+    outline: none;
+}
+
+.leaflet-interactive {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
