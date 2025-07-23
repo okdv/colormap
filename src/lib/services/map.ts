@@ -57,7 +57,6 @@ let subscriptions: (() => void)[] = [];
  * @param geojson Parsed, ready to use geojson data
  * @todo enhance coordinate defaults, accessibility and memory 
  * @todo support other tiles/base layers 
- * @todo support updating feature style rather than just select/deselect
  */
 export const initMapAndLayers = async(mapContainer: HTMLDivElement, geojson: any) => {
     const L = await import('leaflet'); // lazy import to avoid SSR 
