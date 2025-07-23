@@ -4,20 +4,21 @@ Once you've created a project and installed dependencies with `npm install` (or 
 
 ```bash
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
 ## Building
 
-To create a production version of your app:
+Before creating any Pull Requests please build and run the build.
+
+To create the build:
 
 ```bash
 npm run build
 ```
 
-You can preview the production build with `npm run preview` or nginx, instructions below:.
+This will generate a `/build` dir with static assets 
+
+You can preview the production build with `npm run preview` or using the provided docker-compose (nginx). Or really any web server. 
 
 ### Testing the Production Build with nginx container
 
@@ -39,6 +40,15 @@ If you're making changes that affect the production build, especially with the s
     ```bash
     docker compose down
     ```
+
+## Stack and Standards
+
+### Stack 
+The app uses [Svelte (SvelteKit)](https://svelte.dev/tutorial/svelte/welcome-to-svelte) as a framework/compiler, [TypeScript](https://www.typescriptlang.org/docs/), [TailwindCSS](https://tailwindcss.com/docs/editor-setup) as a CSS library, [FontAwesome](https://fontawesome.com/icons) for icons
+
+Testing will use playwright and vitest, but these are not setup yet
+
+ESLint and Prettier are used for linting/formatting, no need to run these yourself, we will do this prior to any releases
 
 ## Commit messages
 
