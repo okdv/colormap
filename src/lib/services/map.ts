@@ -36,13 +36,11 @@ const calculateFeatureStyle = (color?: string) => {
  * @returns legenditem or undefined if not selected
  */
 const getFeatureSelector = (id: string): LegendItem | undefined => {
-	const debugStoreValue = get(legendStore);
-
 	let selectedBy = undefined;
 	// see if the id is already present in selected features store, return that if so
 	const currentlySelectedFeature = get(selectedFeaturesStore)[id];
 	if (currentlySelectedFeature) {
-		const selector = debugStoreValue[currentlySelectedFeature.selectedById];
+		const selector = get(legendStore)[currentlySelectedFeature.selectedById];
 		selectedBy = selector;
 	}
 	return selectedBy;
@@ -141,7 +139,11 @@ export const initMapAndLayers = async (mapContainer: HTMLDivElement, geojson: an
 					const featureId = (layer as any).featureId;
 					// get selector if it exists and update the style of the feature layer
 					const selector = getFeatureSelector(featureId);
-					(layer as L.Path).setStyle(calculateFeatureStyle(selector?.color));
+          if (selector && selector.color) {
+            (layer as L.Path).setStyle(calculateFeatureStyle(selector.color));
+          } else {
+            (layer as L.Path).setStyle(calculateFeatureStyle());
+          }
 				});
 			}
 		})

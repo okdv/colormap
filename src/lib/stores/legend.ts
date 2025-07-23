@@ -41,3 +41,4 @@ const createSelectedItem = (): LegendItem | null => {
 	return currentLegendValues.length > 0 ? currentLegendValues[0] : null;
 };
 export const selectedItem = writable<LegendItem | null>(createSelectedItem());
+
