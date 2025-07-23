@@ -1,8 +1,8 @@
 <script>
     // src/lib/components/Toolbar.svelte
 
-	import { legendStore } from "$lib/stores/legend";
-	import { LegendItem } from "$lib/types/legend";
+	import { legendStore } from "$lib/stores";
+	import { LegendItem } from "$lib/types";
 
 </script>
 <div class="bg-gray-200 p-2 rounded-t-md">

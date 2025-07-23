@@ -1,8 +1,8 @@
 <script lang="ts">
     // src/lib/components/Map.svelte 
     import { onMount } from 'svelte';
-    import { cleanupMap, initMapAndLayers } from '$lib/services/map';
-	import ControlPanel from '$lib/components/ControlPanel.svelte';
+    import { cleanupMap, initMapAndLayers } from '$lib/services';
+	import { ControlPanel } from '$lib/components';
     /**
      * Map Component
      * @description Renders the leaflet map, base layer and features geojson on the client side (onMount) 

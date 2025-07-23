@@ -1,7 +1,7 @@
 <script lang="ts">
     // src/lib/components/LegendItem.svelte
-	import { legendStore, selectedItem } from '$lib/stores/legend';
-	import type { LegendItem } from '$lib/types/legend';
+	import { legendStore, selectedItem } from '$lib/stores';
+	import type { LegendItem } from '$lib/types';
 
 	export let item: LegendItem;
 

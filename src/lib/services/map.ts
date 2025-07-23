@@ -1,10 +1,10 @@
 // src/lib/services/map.ts
-import type { LegendItem } from '$lib/types/legend';
-import { legendStore, selectedItem } from '$lib/stores/legend';
-import { map, geoJsonLayer, selectedFeaturesStore } from '$lib/stores/map'
+import type { LegendItem } from '$lib/types';
+import { legendStore, selectedItem } from '$lib/stores';
+import { map, geoJsonLayer, selectedFeaturesStore } from '$lib/stores'
 import { get } from 'svelte/store';
 import type * as L from 'leaflet'; 
-import { SelectedFeature } from '$lib/types/map';
+import { SelectedFeature } from '$lib/types';
 
 /**
  * determine style for geojson features, effectively either base or selected if a colors present

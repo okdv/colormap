@@ -1,8 +1,8 @@
 // src/lib/stores/map.ts 
 import { writable } from "svelte/store";
 import type * as L from 'leaflet'; 
-import { addRecordToStore, removeRecordFromStore, storeData } from "$lib/services/stores";
-import type { SelectedFeature } from "$lib/types/map";
+import { addRecordToStore, removeRecordFromStore, storeData } from "$lib/services";
+import type { SelectedFeature } from "$lib/types";
 
 // leaflet map instance, initialized to null bc it only should exist client side
 export const map = writable<L.Map | null>(null);
