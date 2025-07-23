@@ -87,6 +87,13 @@ export const initMapAndLayers = async(mapContainer: HTMLDivElement, geojson: any
           layer.on('click', () => {
             // feature name shown on hover
             layer.bindTooltip(name);
+            
+            // if the feature is already selected, simply deselect it
+            const selector = getFeatureSelector(id) 
+            if (selector) {
+              selectedFeaturesStore.deselect(id)
+              return 
+            }
 
             // if there is no active legend item, warn the user and do nothing
             const activeLegendItem = get(selectedItem)
@@ -96,13 +103,6 @@ export const initMapAndLayers = async(mapContainer: HTMLDivElement, geojson: any
               return
             }
 
-            // if the feature is already selected, simply deselect it
-            const selector = getFeatureSelector(id) 
-            if (selector) {
-              selectedFeaturesStore.deselect(id)
-              return 
-            }
-            
             // otherwise select it
             selectedFeaturesStore.select(new SelectedFeature(id, name, activeLegendItem.id))
           });
