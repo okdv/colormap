@@ -139,10 +139,13 @@ export const initMapAndLayers = async (mapContainer: HTMLDivElement, geojson: an
 					const featureId = (layer as any).featureId;
 					// get selector if it exists and update the style of the feature layer
 					const selector = getFeatureSelector(featureId);
-          if (selector && selector.color) {
+          if (selector) {
             (layer as L.Path).setStyle(calculateFeatureStyle(selector.color));
-          } else {
-            (layer as L.Path).setStyle(calculateFeatureStyle());
+            return
+          }
+          if (currentSelectedFeatures[featureId]) {
+            selectedFeaturesStore.deselect(featureId)
+            return
           }
 				});
 			}
