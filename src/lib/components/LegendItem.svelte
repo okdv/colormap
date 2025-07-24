@@ -15,16 +15,20 @@
 	const updateItem = (item: LegendItem) => legendStore.updateItem(item);
 </script>
 
-<li class={`flex box-border h-11 cursor-pointer justify-between gap-2 rounded-sm p-1`}>
+<li
+	class:selected={$selectedItem?.id === item.id}
+	on:click={() => selectedItem.set(item)}
+	class={`flex  h-11 ${$selectedItem?.id === item.id ? 'border border-gray-300 bg-gray-50' : 'bg-none hover:bg-gray-100'} cursor-pointer justify-between gap-2 rounded-sm p-1`}
+>
 	<input
-		class="h-full w-8 aspect-square appearance-none rounded-lg border-none outline-none"
+		class="aspect-square h-full w-8 appearance-none rounded-lg border-none outline-none"
 		id={`item-color-${item.id}`}
 		type="color"
 		bind:value={item.color}
 		on:change={() => updateItem(item)}
 	/>
 	<input
-		class="w-full rounded-sm p-1 outline-gray-300 focus:outline-1"
+		class="w-full rounded-sm p-1 outline-gray-300 cursor-pointer focus:outline-none"
 		id={`item-name-${item.id}`}
 		type="text"
 		bind:value={item.name}
@@ -36,6 +40,6 @@
 		aria-label="delete legend item"
 		class="aspect-square cursor-pointer rounded-sm text-red-400 transition-all duration-300 ease-in-out hover:bg-red-400 hover:text-white"
 		on:click={() => deleteItem(item)}
-	><i class="fa-solid fa-trash w-7"></i>
+		><i class="fa-solid fa-trash w-7"></i>
 	</button>
 </li>
