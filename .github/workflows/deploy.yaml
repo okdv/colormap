@@ -27,24 +27,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # install node and pnpm
+      # install node and npm
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
+          cache: 'npm'
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 8
-
-      # install and build with pnpm
+      # install and build with npm
       - name: Install dependencies
-        run: pnpm install
+        run: npm install
 
       - name: Build SvelteKit app
-        run: pnpm run build
+        run: npm run build
 
       # configure and upload to gh pages
       - name: Setup Pages
