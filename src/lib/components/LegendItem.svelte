@@ -5,12 +5,6 @@
 
 	export let item: LegendItem;
 
-	// handle legend item being edited/saved
-	let isEdit: boolean = false;
-	const saveItem = (item: LegendItem) => {
-		legendStore.updateItem(item);
-	};
-
 	const deleteItem = (item: LegendItem) => legendStore.removeItem(item.id);
 	const updateItem = (item: LegendItem) => legendStore.updateItem(item);
 </script>
