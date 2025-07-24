@@ -1,5 +1,6 @@
 ## Getting started
 
+First time? [Start here](#instructions)
 ### Quick start
 
 This is a quick start guide, meant to be more of a refresher, or a point of reference for experienced FOSS contributors who are familiar with some of the standards.
@@ -18,11 +19,11 @@ Once you're ready to push your branch, first build and test locally:
 npm run build
 ```
 
-This will generate a `/build` dir with static assets. You can preview the production build with `npm run preview` or using the provided docker-compose (nginx). Or really any web server. There is also a `docker-compose.yaml` and `nginx.conf` provided for those that prefer containers. 
+This will generate a `/build` dir with static assets. You can preview the production build with `npm run preview` or using the provided docker-compose (nginx). Or really any web server. 
 
 Commit messages should follow this format: `<type: chore, feat, fix>: <description> <rel issue number>`
 
-### Step by step (**please read if a first time contributor**)
+### Instructions
 
 I want this project to be easy to hop in for everyone. Rather this is your first contribution ever, or your thousanth. This is a detailed instruction in getting started. Worth reading at least once, especially if this is your first time contributing to the project. If you have any questions don't hesitate to create an issue. 
 
@@ -104,6 +105,7 @@ Github workflows is used to automate builds, releases, etc.
 
 ### App structure
 
+```
 .
 ├── src
 │   ├── lib
@@ -114,3 +116,4 @@ Github workflows is used to automate builds, releases, etc.
 │   └── routes # where pages and layouts are stored, but this is only a SPA for now see [Svelte docs](https://svelte.dev/docs/kit/routing) for details 
 ├── static
 │   ├── data # where geojson feature (e.g. county) files are stored 
+```
