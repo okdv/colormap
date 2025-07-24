@@ -7,7 +7,7 @@
 
 <div class="rounded-t-md bg-gray-100 p-2 border-b border-gray-300">
 	<button
-		class="cursor-pointer px-2 rounded-sm p-1 text-gray-600 transition-all duration-300 ease-in-out hover:bg-gray-400 hover:text-white"
+		class="cursor-pointer px-2 rounded-sm p-1 text-blue-600 transition-all duration-300 ease-in-out hover:bg-blue-400 hover:text-white"
 		on:click={() => legendStore.addItem(new LegendItem())}
 	>
 		<i class="fa-solid fa-plus"></i>
