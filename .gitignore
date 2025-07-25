@@ -1,4 +1,3 @@
-test-results
 node_modules
 
 # Output
@@ -25,3 +24,5 @@ vite.config.ts.timestamp-*
 
 # Playwright 
 /playwright-report
+/test-results 
+.playwright
