@@ -14,10 +14,12 @@ Once you've forked and pulled the project, and installed dependencies with `npm 
 npm run dev
 ```
 
-Once you're ready to push your branch, first build and test locally:
+Once you're ready to push your branch, first build, test and format locally:
 
 ```bash
 npm run build
+npm run format
+npm run test # if you see errors about missing dependencies on the host machine, you can disregard those failures
 ```
 
 This will generate a `/build` dir with static assets. You can preview the production build with `npm run preview` or using the provided docker-compose (nginx). Or really any web server.
@@ -65,10 +67,18 @@ git commit -m "fix: stopped chatbot from becoming sentient #23"
 git commit -m "chore: added chatbot usage comments and notes #23"
 ```
 
-Once you're done making changes, run the production build and test all is well:
+Once you're done making changes, run the production build:
 
 ```bash
+npm run build
 npm run preview
+```
+
+Assuming all is well with the build, lint and run testing locally:
+
+```bash
+npm run format
+npm run test # if you see errors about missing dependencies on the host machine, you can disregard those failures
 ```
 
 Once you're done, merge develop back onto your branch in case there were any changes:
@@ -108,7 +118,7 @@ The app uses [Svelte (SvelteKit)](https://svelte.dev/tutorial/svelte/welcome-to-
 
 Testing will use playwright and vitest, but these are not setup yet
 
-ESLint and Prettier are used for linting/formatting, no need to run these yourself, we will do these in github workflows
+ESLint and Prettier are used for linting/formatting
 
 Github workflows is used to automate builds, releases, etc.
 
