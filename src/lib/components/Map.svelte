@@ -27,4 +27,4 @@
 </script>
 
 <ControlPanel />
-<div bind:this={mapContainer} class="h-screen w-full" />
+<div bind:this={mapContainer} class="h-screen w-full" ></div>
