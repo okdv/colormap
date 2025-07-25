@@ -1,0 +1,36 @@
+# .github/workflows/pull_request.yaml
+name: Pull Request Checks
+
+on:
+  pull_request:
+    branches:
+      - master
+    types: [opened, synchronize, reopened] # triggers on PR create, update, reopen
+  workflow_dispatch: {} # allow manual execution
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4 #
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Lint and Check Formatting
+        run: npm run lint
+
+      - name: Build Project
+        run: npm run build
+
+      - name: Install Playwright Browsers (for Vitest Browser Mode or E2E)
+        run: npx playwright install --with-deps chromium firefox webkit
+
+      - name: Run Tests
+        run: npm run test
