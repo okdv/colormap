@@ -5,7 +5,7 @@ Please ensure the following points are checked before requesting a review.
 * [ ] I have read the [CONTRIBUTING.md](CONTRIBUTING.md) document.
 * [ ] I have updated the documentation (if applicable).
 * [ ] My code follows the project's coding style guidelines.
-* [ ] I have rebased my branch onto the latest `develop` branch, which I am also targetting.
+* [ ] I merged (or rebased) `develop` into my branch before pushing 
 * [ ] This PR is ready for review and not a draft.
 
 ---
