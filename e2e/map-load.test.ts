@@ -1,0 +1,10 @@
+import { expect, test } from "@playwright/test";
+
+
+test("should load the webapp and leaflet map", async({ page }) => {
+    await page.goto('/');
+    // confirm map container is visible
+    await expect(page.locator('#map-container')).toBeVisible();
+    // check that map tiles are rendering by looking for attribution (not perfect but ok for now)
+    await expect(page.getByText('OpenStreetMap contributors')).toBeVisible(); 
+});
