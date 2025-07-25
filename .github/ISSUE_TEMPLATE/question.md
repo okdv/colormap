@@ -1,7 +1,7 @@
 ---
 name: Question / Help
 about: Ask a question or seek help with using the project.
-title: "[Question]: "
+title: '[Question]: '
 labels: question, help wanted
 assignees: ''
 ---
@@ -18,9 +18,10 @@ Please provide any relevant context, what you've tried so far, or what you're tr
 If your question involves specific code or UI, add relevant screenshots or code snippets here.
 
 **Environment (if relevant):**
-* **OS:** [e.g. macOS, Windows, Linux]
-* **Browser:** [e.g. Chrome, Firefox]
-* **App Version:** [e.g. v1.0.0]
+
+- **OS:** [e.g. macOS, Windows, Linux]
+- **Browser:** [e.g. Chrome, Firefox]
+- **App Version:** [e.g. v1.0.0]
 
 **Additional context:**
 Any other information you think might be helpful.
