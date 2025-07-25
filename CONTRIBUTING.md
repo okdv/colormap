@@ -70,10 +70,16 @@ Once you're done making changes, run the production build and test all is well:
 npm run preview
 ```
 
-Once you're done, push your branch into your forked repo:
+Once you're done, merge develop back onto your branch in case there were any changes:
+```bash 
+git fetch origin 
+git merge origin/develop # if confident, feel free to rebase instead, it is better practice
+```
+
+After a successful, conflict free, merge or rebase, push 
 
 ```bash
-git push origin feature/new-header-component
+git push origin feature/new-chatbot-component
 ```
 
 From here you should be able to create a Pull Request in Github, targetting a merge into the `develop` branch, **not** `master` 
