@@ -4,7 +4,7 @@ name: Pull Request Checks
 on:
   pull_request:
     branches:
-      - master
+      - develop
     types: [opened, synchronize, reopened] # triggers on PR create, update, reopen
   workflow_dispatch: {} # allow manual execution
 
@@ -21,7 +21,7 @@ jobs:
           node-version: 20
 
       - name: Install Dependencies
-        run: npm ci
+        run: npm install
 
       - name: Run Lint and Check Formatting
         run: npm run lint
