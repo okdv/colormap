@@ -17,11 +17,11 @@ export type GeoJsonFeature = {
 	featureId?: string;
 	properties: {
 		GEOID: string;
-		[key: string]: any;
+		[key: string]: unknown;
 	};
 	geometry: {
 		type: string;
-		coordinates: any[];
+		coordinates: unknown[];
 	};
 };
 
