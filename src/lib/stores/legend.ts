@@ -14,7 +14,7 @@ const createLegend = () => {
 		color: '#ff0000'
 	};
 	// default legend
-	let legend: Record<string, LegendItem> = {
+	const legend: Record<string, LegendItem> = {
 		[defaultItem.id]: defaultItem
 	};
 
