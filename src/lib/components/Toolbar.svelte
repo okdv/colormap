@@ -5,7 +5,7 @@
 	import { LegendItem } from '$lib/types';
 	import Modal from './Modal.svelte';
 
-	let settingsModal: boolean = false 
+	let settingsModal: boolean = false;
 </script>
 
 <div class="rounded-t-md border-b border-gray-300 bg-gray-100 p-2">
