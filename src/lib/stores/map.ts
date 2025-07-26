@@ -1,7 +1,7 @@
 // src/lib/stores/map.ts
 import { writable } from 'svelte/store';
 import type * as L from 'leaflet';
-import { addRecordToStore, removeRecordFromStore, storeData } from '$lib/services';
+import { addRecordToStore, removeRecordFromStore, selectLayer, storeData } from '$lib/services';
 import type { SelectedFeature } from '$lib/types';
 
 // leaflet map instance, initialized to null bc it only should exist client side
@@ -27,3 +27,13 @@ const createSelectedFeatures = () => {
 };
 
 export const selectedFeaturesStore = createSelectedFeatures();
+
+const createSelectedLayerStore = () => {
+	const { subscribe, set, update } = storeData<string>('selectedLayer', 'us_counties_2023.geojson');
+	return {
+		subscribe,
+		selectLayer: (layer: string) => selectLayer(layer, set)
+	};
+};
+
+export const selectedLayerStore = createSelectedLayerStore();

@@ -136,3 +136,9 @@ Github workflows is used to automate builds, releases, etc.
 ├── static
 │   ├── data # where geojson feature (e.g. county) files are stored
 ```
+
+## Source data
+
+Have GIS experience and want to contribute by creating custom geojson files? Please do! We recommend reaching out via issue beforehand to ensure there is a need for the feature type (states, countries, etc)
+
+Currently the data has been sourced as .shp files from the [US Census](https://www.census.gov/cgi-bin/geo/shapefiles/index.php) and converted to geojson using [GDALs ogr2ogr program](https://gdal.org/en/stable/programs/ogr2ogr.html).
