@@ -11,3 +11,22 @@ export class SelectedFeature {
 		this.selectedById = selectedById;
 	}
 }
+
+export type GeoJsonFeature = {
+	type: string;
+	featureId?: string;
+	properties: {
+		GEOID: string;
+		[key: string]: any;
+	};
+	geometry: {
+		type: string;
+		coordinates: any[];
+	};
+};
+
+export type GeoJson = {
+	type: string;
+	name: string;
+	features: GeoJsonFeature[];
+};

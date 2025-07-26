@@ -1,5 +1,5 @@
 // src/lib/services/map.ts
-import type { LegendItem } from '$lib/types';
+import type { GeoJson, GeoJsonFeature, LegendItem } from '$lib/types';
 import { legendStore, selectedItem, selectedLayerStore } from '$lib/stores';
 import { map, geoJsonLayer, selectedFeaturesStore } from '$lib/stores';
 import { get } from 'svelte/store';
@@ -56,7 +56,7 @@ let subscriptions: (() => void)[] = [];
  * @todo enhance coordinate defaults, accessibility and memory
  * @todo support other tiles/base layers
  */
-export const initMapAndLayers = async (mapContainer: HTMLDivElement, geojson: any) => {
+export const initMapAndLayers = async (mapContainer: HTMLDivElement, geojson: GeoJson) => {
 	const L = await import('leaflet'); // lazy import to avoid SSR
 	await import('leaflet/dist/leaflet.css');
 
@@ -72,13 +72,13 @@ export const initMapAndLayers = async (mapContainer: HTMLDivElement, geojson: an
 	const localGeoJsonLayer = L.geoJSON(geojson, {
 		// set base style
 		style: calculateFeatureStyle(),
-		onEachFeature: (feature, layer) => {
+		onEachFeature: (feature: GeoJsonFeature, layer: L.Layer) => {
 			// get metadata
 			const id = feature.properties.GEOID;
 			const name = feature.properties.NAME;
 
 			// add feature id to generated layer as well
-			(layer as any).featureId = id;
+			(layer as L.Layer).featureId = id;
 
 			// Add click event to each feature layer
 			layer.on('click', () => {
@@ -116,8 +116,8 @@ export const initMapAndLayers = async (mapContainer: HTMLDivElement, geojson: an
 			// if there are geojson layers
 			const currentGeoJsonLayer = get(geoJsonLayer);
 			if (currentGeoJsonLayer) {
-				currentGeoJsonLayer.eachLayer((layer) => {
-					const featureId = (layer as any).featureId;
+				currentGeoJsonLayer.eachLayer((layer: L.Layer) => {
+					const featureId = (layer as L.Layer).featureId;
 					if (featureId) {
 						// get selector if it exists and update the style of the feature layer
 						const selector = getFeatureSelector(featureId);
@@ -135,8 +135,8 @@ export const initMapAndLayers = async (mapContainer: HTMLDivElement, geojson: an
 			const currentGeoJsonLayer = get(geoJsonLayer);
 			const currentSelectedFeatures = get(selectedFeaturesStore);
 			if (currentGeoJsonLayer && Object.keys(currentSelectedFeatures).length > 0) {
-				currentGeoJsonLayer.eachLayer((layer) => {
-					const featureId = (layer as any).featureId;
+				currentGeoJsonLayer.eachLayer((layer: L.Layer) => {
+					const featureId = (layer as L.Layer).featureId;
 					// get selector if it exists and update the style of the feature layer
 					const selector = getFeatureSelector(featureId);
 					if (selector) {
