@@ -49,7 +49,6 @@ export const storeData = <T>(storeName: string, initValue: T): Writable<T> => {
 	// Local Storage Keys follow this format: colormap.fooBar
 	const LOCAL_STORAGE_KEY_PREFIX = 'colormap';
 
-	let value = initValue;
 	const key = `${LOCAL_STORAGE_KEY_PREFIX}.${storeName}`;
 
 	// create store
