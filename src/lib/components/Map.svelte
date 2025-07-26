@@ -16,7 +16,7 @@
 
 	// onMount so this doesnt get SSR'd, only happens on the client side
 	onMount(async () => {
-		const layer = get(selectedLayerStore)
+		const layer = get(selectedLayerStore);
 		// load geojson
 		const res = await fetch(`/data/${layer}`);
 		const geojson = await res.json();

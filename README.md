@@ -6,13 +6,13 @@ Check it out at [colormap.app](https://colormap.app)
 
 ## Using the map
 
-Currently we offer two layers, ready to go. US counties and US states. There is no UI to toggle between these yet, but you can do so via the URL. 
+Currently we offer two layers, ready to go. US counties and US states. There is no UI to toggle between these yet, but you can do so via the URL.
 
 [To use our counties layer, go here](https://colormap.app?type=us_counties_2023.geojson)
 
 [To use our states layer, go here](https://colormap.app?type=us_states_2024.geojson)
 
-**Warning**: Toggling between the two will clear any progress made 
+**Warning**: Toggling between the two will clear any progress made
 
 ## Pre-release disclaimer
 

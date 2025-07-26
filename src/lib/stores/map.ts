@@ -29,11 +29,11 @@ const createSelectedFeatures = () => {
 export const selectedFeaturesStore = createSelectedFeatures();
 
 const createSelectedLayerStore = () => {
-	const { subscribe, set, update} = storeData<string>('selectedLayer', 'us_counties_2023.geojson');
+	const { subscribe, set, update } = storeData<string>('selectedLayer', 'us_counties_2023.geojson');
 	return {
 		subscribe,
 		selectLayer: (layer: string) => selectLayer(layer, set)
-	}
-}
+	};
+};
 
 export const selectedLayerStore = createSelectedLayerStore();
