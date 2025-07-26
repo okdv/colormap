@@ -33,4 +33,4 @@ jobs:
         run: npx playwright install --with-deps chromium firefox webkit
 
       - name: Run Tests
-        run: npm run test
+        run: npm run test:cli
