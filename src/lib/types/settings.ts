@@ -4,7 +4,7 @@ type BaseStyle = {
     color: string,
     weight: number, 
     fillOpacity: number
-    fillColor?: string,
+    fillColor: string,
 }
 
 type BaseStyleSetting = {
@@ -27,7 +27,8 @@ export class Settings {
             unselected: {
                 color: '#444',
                 weight: 1,
-                fillOpacity: 0.3
+                fillOpacity: 0.3,
+                fillColor: '#ccc'
             }
         }
 	}
