@@ -1,6 +1,6 @@
 // src/lib/services/map.ts
 import type { GeoJson, GeoJsonFeature, LegendItem } from '$lib/types';
-import { legendStore, selectedItem, selectedLayerStore } from '$lib/stores';
+import { legendStore, settingsStore, selectedItem, selectedLayerStore } from '$lib/stores';
 import { map, geoJsonLayer, selectedFeaturesStore } from '$lib/stores';
 import { get } from 'svelte/store';
 import type * as L from 'leaflet';
@@ -12,22 +12,16 @@ import { SelectedFeature } from '$lib/types';
  * @returns geojson feature style as json object
  */
 const calculateFeatureStyle = (color?: string) => {
+	const currentSettings = get(settingsStore)
 	// if a color is passed, apply selected styling
 	if (color) {
 		return {
-			color: 'white',
-			weight: 2,
-			fillColor: color,
-			fillOpacity: 0.5
+			...currentSettings.baseStyle.selected,
+			fillColor: color
 		};
 	}
 	// otherwise return base style
-	return {
-		color: '#444',
-		weight: 1,
-		fillColor: '#ccc',
-		fillOpacity: 0.3
-	};
+	return currentSettings.baseStyle.unselected;
 };
 
 /**
