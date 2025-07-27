@@ -4,12 +4,12 @@ import { Settings } from "$lib/types";
 
 const createSettings = () => {
     const defaultSettings: Settings = new Settings()
-    const { subscribe, set } = storeData<Settings>('settings', defaultSettings)
+    const store = storeData<Settings>('settings', defaultSettings)
 
     return {
-        subscribe,
-        set,
-        reset: set(defaultSettings)
+        subscribe: store.subscribe,
+        updateSettings: (newSettings: Settings) => store.set(newSettings),
+        reset: () => store.set(defaultSettings)
     }
 }
 

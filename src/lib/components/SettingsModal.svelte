@@ -4,14 +4,12 @@
 	import Modal from "./Modal.svelte";
 	import { settingsStore } from "$lib/stores";
 	import type { Settings } from "$lib/types";
-	import { get } from "svelte/store";
     export let open: boolean = false;
 
-    const currentSettings: Settings = get(settingsStore)
-    let settingsForm: Settings = currentSettings;
+    let settingsForm: Settings = $settingsStore;
 
     const handleSubmit = () => {
-        settingsStore.set(settingsForm)
+        settingsStore.updateSettings(settingsForm)
     }
 
 </script>
