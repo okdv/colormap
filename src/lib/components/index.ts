@@ -5,4 +5,5 @@ export { default as Legend } from './Legend.svelte';
 export { default as LegendItem } from './LegendItem.svelte';
 export { default as Map } from './Map.svelte';
 export { default as Modal } from './Modal.svelte';
+export { default as SettingsModal } from './SettingsModal.svelte';
 export { default as Toolbar } from './Toolbar.svelte';
