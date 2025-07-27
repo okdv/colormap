@@ -1,8 +1,18 @@
 <script lang="ts">
-	// src/lib/components/SettingsModal.svelte
+    // src/lib/components/SettingsModal.svelte
     // a specific instance of Modal 
 	import Modal from "./Modal.svelte";
+	import { settingsStore } from "$lib/stores";
+	import type { Settings } from "$lib/types";
+	import { get } from "svelte/store";
     export let open: boolean = false;
+
+    const currentSettings: Settings = get(settingsStore)
+    let settingsForm: Settings = currentSettings;
+
+    const handleSubmit = () => {
+        settingsStore.set(settingsForm)
+    }
 
 </script>
 <Modal bind:open={open}>
@@ -10,12 +20,13 @@
         <h2 class="text-2xl">Settings</h2>
     </div>
     <div>
-        <form on:submit|preventDefault={() => console.log("settings saved")}>
+        <form on:submit|preventDefault={handleSubmit}>
             <label class="block">
                 <span>Interactive Map Layer: </span>
-                <select class="cursor-pointer">
-                    <option>US Counties</option>
-                    <option>US States</option>
+                <select bind:value={settingsForm.featureLayerFilename} class="cursor-pointer">
+                    <!-- @todo dynamically set these options-->
+                    <option value="us_counties_2023.geojson">US Counties</option>
+                    <option value="us_states_2024.geojson">US States</option>
                 </select>
             </label>
             <!-- 
@@ -29,7 +40,7 @@
             -->
             <label class="block">
                 <span>Selected Feature Opacity: </span>
-                <input type="number" min="0" max="1" step=".1" placeholder=".3" />
+                <input type="number" min="0" max="1" step=".1" placeholder=".3" bind:value={settingsForm.baseStyle.selected.fillOpacity} />
             </label>
             <div class="flex justify-center gap-2 w-full">
                 <button class="m-w-auto cursor-pointer rounded-sm p-1 px-2 transition-all duration-300 ease-in-out text-gray-700 hover:bg-gray-700 hover:text-white">
