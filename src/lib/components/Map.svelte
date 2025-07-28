@@ -3,8 +3,6 @@
 	import { onMount } from 'svelte';
 	import { cleanupMap, initMapAndLayers } from '$lib/services';
 	import { ControlPanel } from '$lib/components';
-	import { get } from 'svelte/store';
-	import { selectedLayerStore } from '$lib/stores';
 	/**
 	 * Map Component
 	 * @description Renders the leaflet map, base layer and features geojson on the client side (onMount)
@@ -16,13 +14,8 @@
 
 	// onMount so this doesnt get SSR'd, only happens on the client side
 	onMount(async () => {
-		const layer = get(selectedLayerStore);
-		// load geojson
-		const res = await fetch(`/data/${layer}`);
-		const geojson = await res.json();
-
 		// initialize map and layers
-		initMapAndLayers(mapContainer, geojson);
+		initMapAndLayers(mapContainer);
 
 		// cleanup on unmount
 		return cleanupMap();

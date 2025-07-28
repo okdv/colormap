@@ -50,9 +50,14 @@ let subscriptions: (() => void)[] = [];
  * @todo enhance coordinate defaults, accessibility and memory
  * @todo support other tiles/base layers
  */
-export const initMapAndLayers = async (mapContainer: HTMLDivElement, geojson: GeoJson) => {
+export const initMapAndLayers = async (mapContainer: HTMLDivElement) => {
 	const L = await import('leaflet'); // lazy import to avoid SSR
 	await import('leaflet/dist/leaflet.css');
+
+	// try to retrieve feature layer using settings
+	const currentSettings = get(settingsStore)
+	const featureLayerRes = await fetch(`/data/${currentSettings.featureLayerFilename}`);
+	const geojson: GeoJson = await featureLayerRes.json()
 
 	// local instance of the leaflet map + set default view
 	const localLeafletMap = L.map(mapContainer).setView([37.8, -96], 4);

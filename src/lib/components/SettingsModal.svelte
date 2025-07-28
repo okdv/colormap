@@ -4,11 +4,14 @@
 	import Modal from "./Modal.svelte";
 	import { settingsStore } from "$lib/stores";
 	import type { Settings } from "$lib/types";
+	import { get } from "svelte/store";
     export let open: boolean = false;
 
-    let settingsForm: Settings = $settingsStore;
+    let settingsForm: Settings = get(settingsStore);
+    //$: if (open) settingsForm = get(settingsStore)
 
     const handleSubmit = () => {
+        //console.log(get(settingsStore))
         settingsStore.updateSettings(settingsForm)
     }
 
@@ -18,6 +21,7 @@
         <h2 class="text-2xl">Settings</h2>
     </div>
     <div>
+        <button on:click={() => console.log(settingsForm, get(settingsStore))}>wtf</button>
         <form on:submit|preventDefault={handleSubmit}>
             <label class="block">
                 <span>Interactive Map Layer: </span>
