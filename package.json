@@ -1,7 +1,7 @@
 {
 	"name": "colormap",
 	"private": true,
-	"version": "0.0.1",
+	"version": "1.0.0-beta",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
