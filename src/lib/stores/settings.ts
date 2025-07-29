@@ -1,5 +1,5 @@
 // src/lib/stores/settings.ts
-import { storeData, updateSettings } from "$lib/services";
+import { storeData, updateSettings, updateFeatureLayer } from "$lib/services";
 import { Settings } from "$lib/types";
 import { get } from "svelte/store";
 
@@ -25,7 +25,8 @@ const createSettings = () => {
             // fallback to og deep clone trick if not 
             return JSON.parse(JSON.stringify(currentValue));
 
-        }
+        },
+        updateFeatureLayer: (newFeatureFilename: string) => updateFeatureLayer(newFeatureFilename, store)
         // @todo add a getCurrentValue function to bypass the obj reference returned by get(store) 
     }
 }
