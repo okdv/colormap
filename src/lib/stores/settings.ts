@@ -15,7 +15,7 @@ const createSettings = () => {
         updateSettings: (newSettings: Settings) => updateSettings(newSettings, store),
         reset: () => store.set(defaultSettings),
         // returns a deep clone of the current state value. get(store) returns a ref to the object, no the object itself.
-        getCurrentValue: () => getDeepClonedValue(store),
+        getCurrentValue: () => getDeepClonedValue<Settings>(store),
         updateFeatureLayer: (newFeatureFilename: string) => updateFeatureLayer(newFeatureFilename, store)
     }
 }
