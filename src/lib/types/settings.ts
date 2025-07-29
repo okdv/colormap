@@ -1,5 +1,6 @@
 // src/lib/types/settings.ts
 
+// structure of the base style itself 
 type BaseStyle = {
     color: string,
     weight: number, 
@@ -7,6 +8,7 @@ type BaseStyle = {
     fillColor: string,
 }
 
+// structure of the Settings that hold the base style
 type BaseStyleSetting = {
     selected: Omit<BaseStyle, 'fillColor'>,
     unselected: BaseStyle

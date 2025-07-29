@@ -1,15 +1,19 @@
 <script lang="ts">
-    // src/lib/components/SettingsModal.svelte
-    // a specific instance of Modal 
-	import Modal from "./Modal.svelte";
+	/** src/lib/components/SettingsModal.svelte
+	 * SettingsModal Component
+	 * @description A specific instance of Modal for the Settings Form 
+	 * @todo add more settings (base style enhance, map style, etc) 
+     * @todo dynamically set feature select options 
+	 */	
+    import Modal from "./Modal.svelte";
 	import { settingsStore } from "$lib/stores";
 	import type { Settings } from "$lib/types";
     export let open: boolean = false;
 
     let settingsForm: Settings = settingsStore.getCurrentValue();
 
+    // handle settings form submission by updating store (which has side effects)
     const handleSubmit = () => {
-        //console.log(get(settingsStore))
         settingsStore.updateSettings(settingsForm)
     }
 
@@ -23,7 +27,6 @@
             <label class="block">
                 <span>Interactive Map Layer: </span>
                 <select bind:value={settingsForm.featureLayerFilename} class="cursor-pointer">
-                    <!-- @todo dynamically set these options-->
                     <option value="us_counties_2023.geojson">US Counties</option>
                     <option value="us_states_2024.geojson">US States</option>
                 </select>

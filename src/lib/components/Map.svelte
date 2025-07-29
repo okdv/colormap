@@ -1,14 +1,12 @@
 <script lang="ts">
-	// src/lib/components/Map.svelte
-	import { onMount } from 'svelte';
-	import { cleanupMap, initMapAndLayers } from '$lib/services';
-	import { ControlPanel } from '$lib/components';
-	/**
+	/** src/lib/components/Map.svelte
 	 * Map Component
 	 * @description Renders the leaflet map, base layer and features geojson on the client side (onMount)
 	 * @todo dynamically set base layer
-	 * @todo dynamically set features layer geojson
 	 */
+	import { onMount } from 'svelte';
+	import { cleanupMap, initMapAndLayers } from '$lib/services';
+	import { ControlPanel } from '$lib/components';
 
 	let mapContainer: HTMLDivElement;
 

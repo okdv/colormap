@@ -3,6 +3,10 @@ import { storeData, updateSettings } from "$lib/services";
 import { Settings } from "$lib/types";
 import { get } from "svelte/store";
 
+/**
+ * handles global settings
+ * @returns functions to interact with settings store
+ */
 const createSettings = () => {
     const defaultSettings = new Settings()
     const store = storeData<Settings>('settings', defaultSettings)
