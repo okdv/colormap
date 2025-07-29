@@ -1,6 +1,6 @@
 // src/lib/services/map.ts
 import type { GeoJson, GeoJsonFeature, LegendItem } from '$lib/types';
-import { legendStore, settingsStore, selectedItem, selectedLayerStore } from '$lib/stores';
+import { legendStore, settingsStore, selectedItem } from '$lib/stores';
 import { map, geoJsonLayer, selectedFeaturesStore } from '$lib/stores';
 import { get } from 'svelte/store';
 import type * as L from 'leaflet';
@@ -163,25 +163,5 @@ export const cleanupMap = () => {
 		currentMap.remove();
 		map.set(null);
 		geoJsonLayer.set(null);
-	}
-};
-
-export const selectLayer = async (layer: string, set: (this: void, value: string) => void) => {
-	const currentSelectedLayer = get(selectedLayerStore);
-	try {
-		// if new and current layer are the same, do nothing
-		if (currentSelectedLayer === layer) {
-			throw new Error(`Attempted to select ${layer} but it is already selected`);
-		}
-		// get the corresponding geojson if it exists
-		const res = await fetch(`/data/${layer}`);
-		if (!res.ok) {
-			throw new Error(`Failed to fetch geojson layer: ${layer}`);
-		}
-		set(layer);
-		selectedFeaturesStore.deselectAll();
-		window.location.reload();
-	} catch (e) {
-		console.error(e);
 	}
 };
