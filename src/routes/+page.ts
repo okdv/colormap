@@ -1,4 +1,4 @@
-import { selectedLayerStore } from '$lib/stores';
+import { settingsStore } from '$lib/stores';
 import type { PageLoad } from './$types';
 
 export const ssr = false;
@@ -11,6 +11,6 @@ export const load: PageLoad = ({ url }) => {
 
 	// if url param is present, use it
 	if (layerName && layerName.length > 0) {
-		selectedLayerStore.selectLayer(layerName);
+		settingsStore.updateFeatureLayer(layerName)
 	}
 };
