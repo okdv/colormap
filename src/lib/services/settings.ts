@@ -1,6 +1,6 @@
 // src/lib/services/settings.ts
 import { Settings } from "$lib/types";
-import type { Writable } from "svelte/store";
+import { get, type Writable } from "svelte/store";
 
 /**
  * updates settings to store/localStorage and refreshes page if feature layer was changed (to re-init map)
@@ -22,14 +22,12 @@ export const updateSettings = (newSettings: Settings, store: Writable<Settings>)
 }
 
 /**
- * update feature layer only (useful for importing and URL interactions)
+ * updateSettings proxy to check for change in feature layer, preserve other settings 
  */
 export const updateFeatureLayer = (featureLayerFilename: string, store: Writable<Settings>) => {
-    // update feature filename only in the store 
-    store.update(currentSettings => {
-        const newSettings = new Settings(featureLayerFilename, currentSettings.baseStyle)
-        return newSettings
-    })
-    // refresh to re-init map
-    window.location.reload();
+    const currentStore = get(store)
+    if (featureLayerFilename !== currentStore.featureLayerFilename) {
+        const newSettings = new Settings(featureLayerFilename, currentStore.baseStyle)
+        updateSettings(newSettings, store)
+    }
 }
