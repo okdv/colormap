@@ -1,25 +1,10 @@
 // src/lib/stores/settings.ts
 import { storeData, updateSettings } from "$lib/services";
-import type { Settings } from "$lib/types";
+import { Settings } from "$lib/types";
 import { get } from "svelte/store";
 
 const createSettings = () => {
-    const defaultSettings: Settings = {
-        featureLayerFilename: 'us_counties_2023.geojson',
-        baseStyle: {
-            selected: {
-                color: 'white',
-                weight: 2,
-                fillOpacity: 0.5
-            },
-            unselected: {
-                color: '#444',
-                weight: 1,
-                fillOpacity: 0.3,
-                fillColor: '#ccc'
-            }
-        }
-    }
+    const defaultSettings = new Settings()
     const store = storeData<Settings>('settings', defaultSettings)
 
     return {
