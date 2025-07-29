@@ -4,9 +4,9 @@
 	import { LegendItem } from '$lib/components';
 </script>
 
-<ul class="w-96 list-none p-2 gap-2 flex flex-col">
+<ul class="flex w-96 list-none flex-col gap-2 p-2">
 	<!-- convert Mapped Records to array of values, each being a legend item -->
-	{#each Object.values($legendStore) as item}
+	{#each Object.values($legendStore) as item (item.id)}
 		<LegendItem {item} />
 	{/each}
 </ul>

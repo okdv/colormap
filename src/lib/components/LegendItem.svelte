@@ -22,7 +22,7 @@
 		on:change={() => updateItem(item)}
 	/>
 	<input
-		class="w-full rounded-sm p-1 outline-gray-300 cursor-pointer focus:outline-none"
+		class="w-full cursor-pointer rounded-sm p-1 outline-gray-300 focus:outline-none"
 		id={`item-name-${item.id}`}
 		type="text"
 		bind:value={item.name}

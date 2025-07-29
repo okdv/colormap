@@ -1,12 +1,13 @@
 ## Pull Request Checklist:
 
-Please ensure the following points are checked before requesting a review.
+Please ensure the following points are checked before requesting a review. Asterisk (\*) denotes that it is required prior to merge.
 
-* [ ] I have read the [CONTRIBUTING.md](CONTRIBUTING.md) document.
-* [ ] I have updated the documentation (if applicable).
-* [ ] My code follows the project's coding style guidelines.
-* [ ] I merged (or rebased) `develop` into my branch before pushing 
-* [ ] This PR is ready for review and not a draft.
+- [ ] I have read the [CONTRIBUTING.md](CONTRIBUTING.md) document. \*
+- [ ] I have updated the documentation (if applicable).
+- [ ] I have added or updated any relevant tests
+- [ ] I have tested and formatted the code locally, `npm run format` and `npm run test` \* (if playwright test failed just notate why below)
+- [ ] I merged (or rebased) `develop` into my branch before pushing \*
+- [ ] This PR is ready for review and not a draft. \*
 
 ---
 
@@ -28,12 +29,12 @@ e.g., Closes #123, Fixes #456
 
 Please check the applicable options.
 
-* [ ] Bug fix (non-breaking change which fixes an issue)
-* [ ] New feature (non-breaking change which adds functionality)
-* [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-* [ ] Documentation update
-* [ ] Refactoring/Code quality improvement
-* [ ] Other (please describe below)
+- [ ] Bug fix (non-breaking change which fixes an issue)
+- [ ] New feature (non-breaking change which adds functionality)
+- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- [ ] Documentation update
+- [ ] Refactoring/Code quality improvement
+- [ ] Other (please describe below)
 
 ---
 

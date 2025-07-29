@@ -14,7 +14,7 @@ const createLegend = () => {
 		color: '#ff0000'
 	};
 	// default legend
-	let legend: Record<string, LegendItem> = {
+	const legend: Record<string, LegendItem> = {
 		[defaultItem.id]: defaultItem
 	};
 
@@ -41,4 +41,3 @@ const createSelectedItem = (): LegendItem | null => {
 	return currentLegendValues.length > 0 ? currentLegendValues[0] : null;
 };
 export const selectedItem = writable<LegendItem | null>(createSelectedItem());
-

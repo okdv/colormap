@@ -1,6 +1,6 @@
 // src/lib/services/map.ts
-import type { LegendItem } from '$lib/types';
-import { legendStore, selectedItem } from '$lib/stores';
+import type { GeoJson, GeoJsonFeature, LegendItem } from '$lib/types';
+import { legendStore, settingsStore, selectedItem } from '$lib/stores';
 import { map, geoJsonLayer, selectedFeaturesStore } from '$lib/stores';
 import { get } from 'svelte/store';
 import type * as L from 'leaflet';
@@ -12,22 +12,16 @@ import { SelectedFeature } from '$lib/types';
  * @returns geojson feature style as json object
  */
 const calculateFeatureStyle = (color?: string) => {
+	const currentSettings = get(settingsStore);
 	// if a color is passed, apply selected styling
 	if (color) {
 		return {
-			color: 'white',
-			weight: 2,
-			fillColor: color,
-			fillOpacity: 0.5
+			...currentSettings.baseStyle.selected,
+			fillColor: color
 		};
 	}
 	// otherwise return base style
-	return {
-		color: '#444',
-		weight: 1,
-		fillColor: '#ccc',
-		fillOpacity: 0.3
-	};
+	return currentSettings.baseStyle.unselected;
 };
 
 /**
@@ -56,9 +50,14 @@ let subscriptions: (() => void)[] = [];
  * @todo enhance coordinate defaults, accessibility and memory
  * @todo support other tiles/base layers
  */
-export const initMapAndLayers = async (mapContainer: HTMLDivElement, geojson: any) => {
+export const initMapAndLayers = async (mapContainer: HTMLDivElement) => {
 	const L = await import('leaflet'); // lazy import to avoid SSR
 	await import('leaflet/dist/leaflet.css');
+
+	// try to retrieve feature layer using settings
+	const currentSettings = get(settingsStore);
+	const featureLayerRes = await fetch(`/data/${currentSettings.featureLayerFilename}`);
+	const geojson: GeoJson = await featureLayerRes.json();
 
 	// local instance of the leaflet map + set default view
 	const localLeafletMap = L.map(mapContainer).setView([37.8, -96], 4);
@@ -72,13 +71,13 @@ export const initMapAndLayers = async (mapContainer: HTMLDivElement, geojson: an
 	const localGeoJsonLayer = L.geoJSON(geojson, {
 		// set base style
 		style: calculateFeatureStyle(),
-		onEachFeature: (feature, layer) => {
+		onEachFeature: (feature: GeoJsonFeature, layer: L.Layer) => {
 			// get metadata
 			const id = feature.properties.GEOID;
 			const name = feature.properties.NAME;
 
 			// add feature id to generated layer as well
-			(layer as any).featureId = id;
+			(layer as L.Layer).featureId = id;
 
 			// Add click event to each feature layer
 			layer.on('click', () => {
@@ -116,8 +115,8 @@ export const initMapAndLayers = async (mapContainer: HTMLDivElement, geojson: an
 			// if there are geojson layers
 			const currentGeoJsonLayer = get(geoJsonLayer);
 			if (currentGeoJsonLayer) {
-				currentGeoJsonLayer.eachLayer((layer) => {
-					const featureId = (layer as any).featureId;
+				currentGeoJsonLayer.eachLayer((layer: L.Layer) => {
+					const featureId = (layer as L.Layer).featureId;
 					if (featureId) {
 						// get selector if it exists and update the style of the feature layer
 						const selector = getFeatureSelector(featureId);
@@ -135,18 +134,18 @@ export const initMapAndLayers = async (mapContainer: HTMLDivElement, geojson: an
 			const currentGeoJsonLayer = get(geoJsonLayer);
 			const currentSelectedFeatures = get(selectedFeaturesStore);
 			if (currentGeoJsonLayer && Object.keys(currentSelectedFeatures).length > 0) {
-				currentGeoJsonLayer.eachLayer((layer) => {
-					const featureId = (layer as any).featureId;
+				currentGeoJsonLayer.eachLayer((layer: L.Layer) => {
+					const featureId = (layer as L.Layer).featureId;
 					// get selector if it exists and update the style of the feature layer
 					const selector = getFeatureSelector(featureId);
-          if (selector) {
-            (layer as L.Path).setStyle(calculateFeatureStyle(selector.color));
-            return
-          }
-          if (currentSelectedFeatures[featureId]) {
-            selectedFeaturesStore.deselect(featureId)
-            return
-          }
+					if (selector) {
+						(layer as L.Path).setStyle(calculateFeatureStyle(selector.color));
+						return;
+					}
+					if (currentSelectedFeatures[featureId]) {
+						selectedFeaturesStore.deselect(featureId);
+						return;
+					}
 				});
 			}
 		})

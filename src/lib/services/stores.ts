@@ -1,7 +1,7 @@
 // src/lib/services/stores.ts
 
 import { browser } from '$app/environment';
-import { writable, type Writable } from 'svelte/store';
+import { get, writable, type Writable } from 'svelte/store';
 
 /**
  * adds or updates record in store
@@ -40,6 +40,20 @@ export const updateRecordInStore = <T>(key: string, newRecord: T, store: Writabl
 	});
 
 /**
+ * returns a deep clone of the stores value, rather than a reference to the store value like get(store)
+ * @param store the store to be deep cloned
+ */
+export const getDeepClonedValue = <T>(store: Writable<T>) => {
+	const currentValue = get(store);
+	// use structuredClone if its available
+	if (typeof structuredClone === 'function') {
+		return structuredClone(currentValue);
+	}
+	// fallback to og deep clone trick if not
+	return JSON.parse(JSON.stringify(currentValue));
+};
+
+/**
  * Creates and syncs svelte store and localStorage with initial or existing values, or updated items from the store subscription
  * @param storeName the localstorage store specific key, e.g. key='fooBar' results in localStorage entry named "colormap.fooBar"
  * @param initValue initial value for the store and localstorage, usually a default value
@@ -49,7 +63,6 @@ export const storeData = <T>(storeName: string, initValue: T): Writable<T> => {
 	// Local Storage Keys follow this format: colormap.fooBar
 	const LOCAL_STORAGE_KEY_PREFIX = 'colormap';
 
-	let value = initValue;
 	const key = `${LOCAL_STORAGE_KEY_PREFIX}.${storeName}`;
 
 	// create store
