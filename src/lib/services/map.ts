@@ -12,7 +12,7 @@ import { SelectedFeature } from '$lib/types';
  * @returns geojson feature style as json object
  */
 const calculateFeatureStyle = (color?: string) => {
-	const currentSettings = get(settingsStore)
+	const currentSettings = get(settingsStore);
 	// if a color is passed, apply selected styling
 	if (color) {
 		return {
@@ -55,9 +55,9 @@ export const initMapAndLayers = async (mapContainer: HTMLDivElement) => {
 	await import('leaflet/dist/leaflet.css');
 
 	// try to retrieve feature layer using settings
-	const currentSettings = get(settingsStore)
+	const currentSettings = get(settingsStore);
 	const featureLayerRes = await fetch(`/data/${currentSettings.featureLayerFilename}`);
-	const geojson: GeoJson = await featureLayerRes.json()
+	const geojson: GeoJson = await featureLayerRes.json();
 
 	// local instance of the leaflet map + set default view
 	const localLeafletMap = L.map(mapContainer).setView([37.8, -96], 4);

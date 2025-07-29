@@ -11,6 +11,6 @@ export const load: PageLoad = ({ url }) => {
 
 	// if url param is present, use it
 	if (layerName && layerName.length > 0) {
-		settingsStore.updateFeatureLayer(layerName)
+		settingsStore.updateFeatureLayer(layerName);
 	}
 };

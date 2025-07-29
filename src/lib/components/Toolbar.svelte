@@ -1,8 +1,8 @@
 <script lang="ts">
 	/** src/lib/components/Toolbar.svelte
 	 * Toolbar Component
-	 * @description The toolbar with action buttons that sits on the control panel overlaying the map 
-	 * @todo add help btn 
+	 * @description The toolbar with action buttons that sits on the control panel overlaying the map
+	 * @todo add help btn
 	 */
 	import { legendStore } from '$lib/stores';
 	import { LegendItem } from '$lib/types';

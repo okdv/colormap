@@ -44,14 +44,14 @@ export const updateRecordInStore = <T>(key: string, newRecord: T, store: Writabl
  * @param store the store to be deep cloned
  */
 export const getDeepClonedValue = <T>(store: Writable<T>) => {
-	const currentValue = get(store)
+	const currentValue = get(store);
 	// use structuredClone if its available
 	if (typeof structuredClone === 'function') {
-		return structuredClone(currentValue)
+		return structuredClone(currentValue);
 	}
-	// fallback to og deep clone trick if not 
+	// fallback to og deep clone trick if not
 	return JSON.parse(JSON.stringify(currentValue));
-}
+};
 
 /**
  * Creates and syncs svelte store and localStorage with initial or existing values, or updated items from the store subscription
