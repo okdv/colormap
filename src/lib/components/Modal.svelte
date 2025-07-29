@@ -35,13 +35,24 @@
 	bind:this={dialog}
 	on:close={closeModal}
 	on:click|self={closeDialog}
-	class="max-w-lg scale-95 transform-gpu border-r-2 border-none p-0 duration-300 ease-in-out backdrop:bg-white/30 backdrop:backdrop-blur-sm open:scale-100"
+	class="absolute m-auto max-w-lg scale-95 transform-gpu rounded-md border-none p-0 shadow-md duration-300 ease-in-out backdrop:bg-white/50 backdrop:backdrop-blur-md open:scale-100"
 >
-	<div class="p-4" on:click|stopPropagation>
-		<slot name="header" />
+	<div class="w-full max-w-lg p-4" on:click|stopPropagation>
+		<div class="flex justify-between p-1">
+			<div>
+				<slot name="header" />
+			</div>
+			<div class="h-full w-auto">
+				<button
+					class="h-8 w-8 cursor-pointer rounded-full border-2 border-solid border-red-600 text-red-600 transition-all duration-300 ease-in-out hover:bg-red-600 hover:text-white"
+					autofocus
+					on:click={closeDialog}
+				>
+					<i class="fa-solid fa-x"></i>
+				</button>
+			</div>
+		</div>
 		<hr />
 		<slot />
-		<hr />
-		<button class="block" autofocus on:click={closeDialog}>close</button>
 	</div>
 </dialog>

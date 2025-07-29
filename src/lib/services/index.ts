@@ -2,3 +2,4 @@
 
 export * from './map';
 export * from './stores';
+export * from './settings';
