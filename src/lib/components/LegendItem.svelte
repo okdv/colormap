@@ -9,12 +9,11 @@
 	const updateItem = (item: LegendItem) => legendStore.updateItem(item);
 </script>
 
-
 <li>
-	<div 
+	<div
 		on:keyup={() => selectedItem.set(item)}
-     	role="button"
-     	tabindex="0"
+		role="button"
+		tabindex="0"
 		on:click={() => selectedItem.set(item)}
 		class={`flex  h-11 ${$selectedItem?.id === item.id ? 'border border-gray-300 bg-gray-50' : 'bg-none hover:bg-gray-100'} cursor-pointer justify-between gap-2 rounded-sm p-1`}
 	>
@@ -26,7 +25,7 @@
 			on:change={() => updateItem(item)}
 		/>
 		<input
-			class="w-full rounded-sm p-1 outline-gray-300 cursor-pointer focus:outline-none"
+			class="w-full cursor-pointer rounded-sm p-1 outline-gray-300 focus:outline-none"
 			id={`item-name-${item.id}`}
 			type="text"
 			bind:value={item.name}
