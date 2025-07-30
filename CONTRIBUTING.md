@@ -77,7 +77,7 @@ npm run preview
 Assuming all is well with the build, run the pre-push script **Always do this!**:
 
 ```bash
-npm run pre-push # if you see errors around browser dependencies with the test portion, ignore, GH actions can run those tests instead 
+npm run pre-push # if you see errors around browser dependencies with the test portion, ignore, GH actions can run those tests instead
 ```
 
 Once you're done, merge develop back onto your branch in case there were any changes:
