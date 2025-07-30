@@ -74,11 +74,10 @@ npm run build
 npm run preview
 ```
 
-Assuming all is well with the build, lint and run testing locally:
+Assuming all is well with the build, run the pre-push script **Always do this!**:
 
 ```bash
-npm run format
-npm run test # if you see errors about missing dependencies on the host machine, you can disregard those failures
+npm run pre-push # if you see errors around browser dependencies with the test portion, ignore, GH actions can run those tests instead
 ```
 
 Once you're done, merge develop back onto your branch in case there were any changes:
