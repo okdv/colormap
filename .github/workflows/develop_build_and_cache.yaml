@@ -39,7 +39,7 @@ jobs:
         id: cache-playwright-browsers 
         uses: actions/cache@v4 
         with: 
-          path: ~/.cache/ms-playwright
+          path: ~/.cache/ms-playwright # https://www.cuketest.com/playwright/docs/browsers/
           key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }} # Key based on OS, 'node', and package-lock hash, e.g. Linux-playwright-c1f59...
           restore-keys: |
             ${{ runner.os }}-playwright-
