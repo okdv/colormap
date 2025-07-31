@@ -1,12 +1,12 @@
 # .github/workflows/develop_build_and_cache.yaml
-name: Develop Branch Build & Cache 
+name: Develop Branch Build & Cache
 
 on:
-  push: 
-    branches: 
-      - develop # triggers when code is pushed to develop 
+  push:
+    branches:
+      - develop # triggers when code is pushed to develop
 
-jobs: 
+jobs:
   build_and_cache_playwright:
     runs-on: ubuntu-latest
     steps:
@@ -18,12 +18,12 @@ jobs:
         with:
           node-version: 20
 
-      # Cache node_modules 
-      - name: Cache node_modules 
-        id: cache-node_modules 
-        uses: actions/cache@v4 
+      # Cache node_modules
+      - name: Cache node_modules
+        id: cache-node_modules
+        uses: actions/cache@v4
         with:
-          path: node_modules 
+          path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }} # Key based on OS, 'node', and package-lock hash, e.g. Linux-node-c1f59...
           # fallback if key mismatch
           restore-keys: |
@@ -34,17 +34,17 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm ci
 
-      # Cache Playwright Browsers 
-      - name: Cache Playwright Browsers 
-        id: cache-playwright-browsers 
-        uses: actions/cache@v4 
-        with: 
+      # Cache Playwright Browsers
+      - name: Cache Playwright Browsers
+        id: cache-playwright-browsers
+        uses: actions/cache@v4
+        with:
           path: ~/.cache/ms-playwright # https://www.cuketest.com/playwright/docs/browsers/
           key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }} # Key based on OS, 'node', and package-lock hash, e.g. Linux-playwright-c1f59...
           restore-keys: |
             ${{ runner.os }}-playwright-
 
-      - name: Install Playwright Browsers 
+      - name: Install Playwright Browsers
         # should only run on cache miss
         if: steps.cache-playwright-browsers.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps chromium firefox webkit
