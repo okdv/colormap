@@ -13,9 +13,10 @@
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint .",
 		"test:unit": "vitest",
+		"test:unit:run": "vitest run",
 		"test": "npm run test:unit -- --run && npm run test:e2e",
 		"test:e2e": "playwright test",
-		"pre-push": "npm run format && vitest run && npm run test:e2e -- --project=chromium"
+		"pre-push": "npm run format && npm run test:unit:run && npm run test:e2e -- --project=chromium"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",
