@@ -46,5 +46,8 @@ jobs:
       - name: Build Project
         run: npm run build
 
-      - name: Run Tests
-        run: npm run test
+      - name: Run Unit Tests
+        run: npm run test:unit:run
+
+      - name: Start Server and Run E2E Tests
+        run: npx start-server-and-test preview http://localhost:4173 'npm run test:e2e'

@@ -4,23 +4,9 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
 	plugins: [tailwindcss(), sveltekit()],
+	resolve: process.env.VITEST ? { conditions: ['browser'] } : undefined,
 	test: {
-		projects: [
-			{
-				extends: './vite.config.ts',
-				test: {
-					name: 'client',
-					environment: 'browser',
-					browser: {
-						enabled: true,
-						provider: 'playwright',
-						instances: [{ browser: 'chromium' }]
-					},
-					include: ['src/**/*.{test,spec}.{js,ts}'],
-					exclude: ['src/lib/server/**'],
-					setupFiles: ['./vitest-setup-client.ts']
-				}
-			}
-		]
+		exclude: ['**/node_modules/**', '**/build/**', '**/*.spec.ts', '**/*.spec.js'],
+		include: ['src/**/*.test.{js,ts}'] // test.ts = vitest, .spec.ts = playwright
 	}
 });
