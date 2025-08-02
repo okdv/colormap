@@ -54,4 +54,4 @@ jobs:
         with:
           command: npm run test:e2e
           start: npm run preview
-          wait on: 'http://localhost:4173'
+          wait-on: 'http://localhost:4173'
