@@ -16,7 +16,7 @@
 		"test:unit:run": "vitest run",
 		"test": "npm run test:unit -- --run && npm run test:e2e",
 		"test:e2e": "playwright test",
-		"pre-push": "npm run format && npm run test:unit:run && npm run test:e2e -- --project=chromium"
+		"pre-push": "npm run format && npm run test:unit:run && npx start-server-and-test preview http://localhost:4173 'npm run test:e2e -- --project=chromium'"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",
@@ -36,6 +36,7 @@
 		"prettier": "^3.4.2",
 		"prettier-plugin-svelte": "^3.3.3",
 		"prettier-plugin-tailwindcss": "^0.6.11",
+		"start-server-and-test": "^2.0.12",
 		"svelte": "^5.0.0",
 		"svelte-check": "^4.0.0",
 		"tailwindcss": "^4.0.0",
