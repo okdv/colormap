@@ -52,11 +52,11 @@ jobs:
       - name: Run Lint and Check Formatting
         run: npm run lint
 
-      - name: Build Project
-        run: npm run build
-
       - name: Run Unit Tests
         run: npm run test:unit:run
+
+      - name: Build Project
+        run: npm run build
 
       - name: Start Server and Run E2E Tests
         run: npx start-server-and-test preview http://localhost:4173 'npm run test:e2e'
