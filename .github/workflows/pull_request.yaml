@@ -44,6 +44,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-playwright-
 
+      - name: Install Playwright Dependencies
+        # should always run as deps are needed to even use browser cache and should not be cached themselves
+        run: npx playwright install-deps
+
       - name: Install Playwright Browsers (for Vitest Browser Mode or E2E)
         # should only run on cache miss
         run: npx playwright install --with-deps chromium firefox webkit
