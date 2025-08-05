@@ -5,6 +5,7 @@ on:
   pull_request:
     branches:
       - develop
+      - master
     types: [opened, synchronize, reopened] # triggers on PR create, update, reopen
   workflow_dispatch: {} # allow manual execution
 
