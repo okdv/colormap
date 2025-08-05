@@ -32,7 +32,7 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Install Dependencies
-        if: steps.node_modules-cache-check.cache-hit != 'true'
+        if: steps.node_modules-cache-check.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Check for Playwright cache
