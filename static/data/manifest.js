@@ -1,1 +1,1 @@
-['us_counties_2023.geojson', 'us_states_2024.geojson']
+export const geojsonFiles = ['us_counties_2023.geojson', 'us_states_2024.geojson']
