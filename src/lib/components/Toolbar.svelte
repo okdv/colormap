@@ -11,7 +11,7 @@
 	let settingsModalOpen: boolean = false;
 </script>
 
-<div class="rounded-t-md border-b border-gray-300 bg-gray-100 p-2">
+<nav class="rounded-t-md border-b border-gray-300 bg-gray-100 p-2">
 	<button
 		class="cursor-pointer rounded-sm p-1 px-2 text-blue-600 transition-all duration-300 ease-in-out hover:bg-blue-400 hover:text-white"
 		on:click={() => legendStore.addItem(new LegendItem())}
@@ -37,7 +37,7 @@
 		<i class="fa-solid fa-arrow-rotate-right"></i>
 		<span>Clear</span>
 	</button>
-</div>
+</nav>
 
 {#if settingsModalOpen}
 	<SettingsModal bind:open={settingsModalOpen} />
