@@ -74,11 +74,10 @@ npm run build
 npm run preview
 ```
 
-Assuming all is well with the build, lint and run testing locally:
+Assuming all is well with the build, run the pre-push script **Always do this!**:
 
 ```bash
-npm run format
-npm run test # if you see errors about missing dependencies on the host machine, you can disregard those failures
+npm run pre-push # if you see errors around browser dependencies with the test portion, ignore, GH actions can run those tests instead
 ```
 
 Once you're done, merge develop back onto your branch in case there were any changes:
@@ -111,6 +110,29 @@ Await any comments or actions from a maintainer. If approved, your code will be 
 We use tags to associate specific releases, such as `v1.0.0-beta`, `v1.2.12`
 
 Commit messages should follow this format: `<type: chore, feat, fix>: <description> <rel issue number>`
+
+### Design Standards
+
+If you plan to add or edit UI features, you will want to ensure you are following our design standards. We use TailwindCSS and it should be used where possible.
+
+#### Color scheme
+
+- color name | corresponding tailwind class
+- red | red-600
+- blue | blue-600
+- green | green-500
+- yellow | yellow-400
+- white | zinc-50
+- black | zinc-950
+- light gray | zinc-100
+- dark gray | zinc-800
+- gray | zinc-600
+
+When using differential coloring (such as creating a border that is slightly darker than the background for definition or depth) the differential color should be -/+ 200 most of the time. So if I have a box with a background color of white, zinc-50, my border would be zinc-250. If i have a black (zinc-950) bg and want the opposite effect, the border would be zinc-750
+
+#### Animation
+
+Include classes `transition-all duration-300 ease-in-out`
 
 ### Stack
 

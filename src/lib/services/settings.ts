@@ -16,7 +16,7 @@ export const updateSettings = (newSettings: Settings, store: Writable<Settings>)
 		return newSettings;
 	});
 	// reload if refresh was set to true (feature layer changed)
-	if (refresh) {
+	if (refresh && typeof window !== 'undefined') {
 		// remove type param if it exists, to avoid situation where type param conflicts with user updated state
 		const urlObj = new URL(window.location.href);
 		urlObj.searchParams.delete('type');

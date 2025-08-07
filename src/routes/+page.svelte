@@ -3,4 +3,6 @@
 	import { Map } from '$lib/components';
 </script>
 
-<Map />
+<main>
+	<Map />
+</main>
