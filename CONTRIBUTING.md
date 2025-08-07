@@ -113,20 +113,20 @@ Commit messages should follow this format: `<type: chore, feat, fix>: <descripti
 
 ### Design Standards
 
-If you plan to add or edit UI features, you will want to ensure you are following our design standards. We use TailwindCSS and it should be used where possible. 
+If you plan to add or edit UI features, you will want to ensure you are following our design standards. We use TailwindCSS and it should be used where possible.
 
 #### Color scheme
 
 - color name | corresponding tailwind class
 - red | red-600
-- blue | blue-600 
-- green | green-500 
-- yellow | yellow-400 
-- white | zinc-50 
-- black | zinc-950 
-- light gray | zinc-100 
-- dark gray | zinc-800 
-- gray | zinc-600 
+- blue | blue-600
+- green | green-500
+- yellow | yellow-400
+- white | zinc-50
+- black | zinc-950
+- light gray | zinc-100
+- dark gray | zinc-800
+- gray | zinc-600
 
 When using differential coloring (such as creating a border that is slightly darker than the background for definition or depth) the differential color should be -/+ 200 most of the time. So if I have a box with a background color of white, zinc-50, my border would be zinc-250. If i have a black (zinc-950) bg and want the opposite effect, the border would be zinc-750
 
