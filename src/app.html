@@ -22,12 +22,40 @@
 		<meta property="og:image:alt" content="colormap.app logo" />
 		<!-- twitter tags -->
 		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:title" content="Create and Color Custom Maps for Free | colormap.app" />
+		<meta name="twitter:title" content="colormap.app | Create and Color Custom Maps for Free" />
 		<meta name="twitter:description" content="Free, Opensource tool for creating your own maps by selecting counties, states, etc. to color them in according to your own legend. Customize the style and features of your map. Bulk update your selections. Share your map with world, rather to show where you've been, data you've collected, and more." />
 		<meta name="twitter:image" content="%sveltekit.assets%/logo.png" />
 		<meta name="twitter:image:alt" content="colormap.app logo" />
 		<!-- external scripts -->
 		<script src="https://kit.fontawesome.com/c39b392e49.js" crossorigin="anonymous"></script>
+		<script type="application/ld+json">
+			{
+			  "@context": "https://schema.org",
+			  "@graph": [
+				{
+				  "@type": "WebApplication",
+				  "name": "colormap.app",
+				  "url": "https://colormap.app",
+				  "description": "Free, Opensource tool for creating your own maps by selecting counties, states, etc. to color them in according to your own legend. Customize the style and features of your map. Bulk update your selections. Share your map with world, rather to show where you've been, data you've collected, and more.",
+				  "applicationCategory": "MapsApplication",
+				  "operatingSystem": "Any",
+				  "softwareRequirements": "JavaScript-enabled browser",
+				  "image": "https://colormap.app/logo.png",
+				},
+				{
+				  "@type": "Map",
+				  "name": "Create and Color Custom Maps ",
+				  "description": "Create custom color-coded maps of counties, states, and countries with a user-defined legend.",
+				  "url": "https://colormap.app",
+				  "image": "https://colormap.app/logo.png",
+				  "author": {
+					"@type": "Person",
+					"name": "otho"
+				  }
+				}
+			  ]
+			}
+			</script>			
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
