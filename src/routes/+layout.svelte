@@ -1,7 +1,7 @@
 <script lang="ts">
+	import { Footer } from '$lib/components';
 	import '../app.css';
-
-	let { children } = $props();
 </script>
 
-{@render children()}
+<slot />
+<Footer />
