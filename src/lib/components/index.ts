@@ -8,3 +8,4 @@ export { default as Map } from './Map.svelte';
 export { default as Modal } from './Modal.svelte';
 export { default as SettingsModal } from './SettingsModal.svelte';
 export { default as Toolbar } from './Toolbar.svelte';
+export { default as Footer } from './Footer.svelte';
