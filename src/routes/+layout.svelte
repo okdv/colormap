@@ -4,7 +4,7 @@
 </script>
 
 <Navbar />
-<main>
+<main class="mt-16">
 	<slot />
 </main>
 <Footer />

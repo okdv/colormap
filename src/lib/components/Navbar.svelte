@@ -2,7 +2,7 @@
 
 </script>
 
-<nav class="flex justify-between border-b border-zinc-750 bg-zinc-950 p-2 text-xl text-zinc-50 shadow-2xl">
+<header class="w-full h-16 fixed top-0 z-1000 flex justify-between border-b border-zinc-750 bg-zinc-950 p-2 text-xl text-zinc-50 shadow-2xl">
     <div>
         <a href="https://colormap.app" >
             <div class="text-2xl font-bold flex items-center justify-center">
@@ -12,7 +12,7 @@
             </div>
         </a>
     </div>
-    <div>
+    <nav>
         <!-- nav menu -->
-    </div>
-</nav>
+    </nav>
+</header>

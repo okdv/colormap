@@ -2,7 +2,7 @@
 	const year = new Date().getFullYear();
 </script>
 
-<footer class="flex justify-center gap-10 border-t border-zinc-750 bg-zinc-950 py-4 text-xl text-zinc-50 shadow-2xl">
+<footer class="flex h-14 justify-center gap-10 border-t border-zinc-750 bg-zinc-950 py-4 text-xl text-zinc-50 shadow-2xl">
     <a href="https://github.com/okdv/colormap" class="transition-all duration-300 ease-in-out hover:text-blue-800">
         <i class="fa-brands fa-github fa-xl"></i>
     </a>
