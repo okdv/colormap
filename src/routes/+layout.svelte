@@ -1,7 +1,10 @@
 <script lang="ts">
+	import { Navbar } from '$lib/components';
 	import '../app.css';
-
-	let { children } = $props();
 </script>
 
-{@render children()}
+<Navbar />
+<!-- move main down by height of navbar-->
+<main class="mt-16">
+	<slot />
+</main>
