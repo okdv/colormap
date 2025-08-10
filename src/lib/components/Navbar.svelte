@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { Dropdown } from "$lib/components";
+
 
 </script>
 
@@ -14,9 +16,10 @@
         <div class="mt-2 rounded-full bg-red-600 text-zinc-50 px-2 text-sm font-bold"><span>beta</span></div>
     </div>
     <nav class="flex justify-between gap-4 items-center text-xl">
-        <a href="#">
-            Maps&nbsp;<i class="fa-solid fa-angle-down fa-sm"></i>
-        </a>
+        <Dropdown>
+            <span slot="link">Maps&nbsp;<i class="fa-solid fa-angle-down fa-sm"></i></span>
+            <div slot="body">test</div>
+        </Dropdown>
         <a href="https://github.com/okdv/colormap" class="transition-all duration-300 ease-in-out hover:text-blue-800">
             <i class="fa-brands fa-github fa-xl"></i>
         </a>
