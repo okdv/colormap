@@ -17,7 +17,7 @@
     </div>
     <nav class="flex justify-between gap-4 items-center text-xl">
         <Dropdown>
-            <span slot="link">Maps&nbsp;<i class="fa-solid fa-angle-down fa-sm"></i></span>
+            <span slot="link">Maps</span>
             <div slot="body">test</div>
         </Dropdown>
         <a href="https://github.com/okdv/colormap" class="transition-all duration-300 ease-in-out hover:text-blue-800">
