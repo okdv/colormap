@@ -13,10 +13,10 @@
 
 <header class="w-full h-16 fixed top-0 z-1000 flex justify-between border-b border-zinc-750 bg-zinc-950 p-2 text-zinc-50 shadow-2xl">
     <div class="flex items-center justify-center">
-        <a href="https://colormap.app" >
+        <a href="/" >
             <img src="/logo.svg" alt="colormap.app logo" class="h-12 w-12" />
         </a>
-        <a href="https://colormap.app">
+        <a href="/">
             <h2 class="mt-1 text-yellow-400 text-2xl font-bold">colormap<span class="text-red-600">.</span><span class="text-green-400">app</span></h2>
         </a>
         <p class="mx-2 mt-2"> - built by <a href="https://otho.dev" class="transition-all duration-300 ease-in-out hover:text-green-400">otho</a> & <a href="https://github.com/okdv/colormap/graphs/contributors" class="transition-all duration-300 ease-in-out hover:text-yellow-400">contributors</a></p>
@@ -29,7 +29,7 @@
                 <ul>
                     {#each geojsonFiles as file}
                         <li class="cursor-pointer transition-all duration-300 ease-in-out hover:text-blue-600">
-                            <a href="/map/{file}">{file}</a>
+                            <a href="/?type={file}">{file}</a>
                         </li>
                     {/each}
                 </ul>
