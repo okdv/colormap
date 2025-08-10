@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Footer, Navbar } from '$lib/components';
+	import { Navbar } from '$lib/components';
 	import '../app.css';
 </script>
 
