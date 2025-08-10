@@ -7,6 +7,27 @@ import type * as L from 'leaflet';
 import { SelectedFeature } from '$lib/types';
 
 /**
+ * returns the geojson manifest stored in /data/manifest.json
+ * @returns promise to return the files object in the manifest.json (currently string[])
+ */
+export const getFeatureLayers = async (): Promise<string[]> => {
+	 try {
+		const res = await fetch('/data/manifest.json')
+		if (!res.ok) {
+			throw new Error('Error HTTP ' + res.status)
+		}
+		const data = await res.json() 
+		if (!data.files) {
+			throw new Error("manifest is malformed, missing files: []")
+		}
+		return data.files
+	 } catch(err) {
+		console.error(`Could not retrieve manifest: ${err}`)
+		return []
+	 }
+}
+
+/**
  * determine style for geojson features, effectively either base or selected if a colors present
  * @param color if undefined, set the base style, if defined > set selected style using the custom color
  * @returns geojson feature style as json object

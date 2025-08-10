@@ -1,6 +1,13 @@
 <script lang="ts">
 	import { Dropdown } from "$lib/components";
+	import { getFeatureLayers } from "$lib/services";
+	import { onMount } from "svelte";
 
+    let geojsonFiles: string[] = []
+    
+    onMount(async () => {
+        geojsonFiles = await getFeatureLayers()
+    })
 
 </script>
 
@@ -18,7 +25,15 @@
     <nav class="flex justify-between gap-4 items-center text-xl">
         <Dropdown>
             <span slot="link">Maps</span>
-            <div slot="body">test</div>
+            <div slot="body">
+                <ul>
+                    {#each geojsonFiles as file}
+                        <li>
+                            <a href="/map/{file}">{file}</a>
+                        </li>
+                    {/each}
+                </ul>
+            </div>
         </Dropdown>
         <a href="https://github.com/okdv/colormap" class="transition-all duration-300 ease-in-out hover:text-blue-800">
             <i class="fa-brands fa-github fa-xl"></i>
