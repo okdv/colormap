@@ -10,7 +10,7 @@
 	});
 </script>
 
-<header class="border-zinc-750 fixed top-0 z-1000 flex h-16 w-full justify-between border-b bg-zinc-950 p-2 text-zinc-50 shadow-2xl">
+<header id="navbar" class="border-zinc-750 fixed top-0 z-1000 flex h-16 w-full justify-between border-b bg-zinc-950 p-2 text-zinc-50 shadow-2xl">
 	<div class="flex items-center justify-center">
 		<a href="/">
 			<img src="/logo.svg" alt="colormap.app logo" class="h-12 w-12" />
@@ -29,10 +29,10 @@
 	<nav class="flex items-center justify-between gap-4 text-xl">
 		<Dropdown>
 			<span slot="link">Maps</span>
-			<div slot="body">
+			<div slot="body" id="navbar-dropdown-body">
 				<ul>
-					{#each geojsonFiles as file}
-						<li class="cursor-pointer transition-all duration-300 ease-in-out hover:text-blue-600">
+					{#each geojsonFiles as file, i}
+						<li class="cursor-pointer transition-all duration-300 ease-in-out hover:text-blue-600" id="navbar-dropdown-entry-{i}">
 							<a href="/?type={file}">{file}</a>
 						</li>
 					{/each}
