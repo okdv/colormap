@@ -31,7 +31,7 @@
 			<span slot="link">Maps</span>
 			<div slot="body" id="navbar-dropdown-body">
 				<ul>
-					{#each geojsonFiles as file, i}
+					{#each geojsonFiles as file, i (file)}
 						<li class="cursor-pointer transition-all duration-300 ease-in-out hover:text-blue-600" id="navbar-dropdown-entry-{i}">
 							<a href="/?type={file}">{file}</a>
 						</li>
