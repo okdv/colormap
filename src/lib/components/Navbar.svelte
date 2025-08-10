@@ -28,7 +28,7 @@
             <div slot="body">
                 <ul>
                     {#each geojsonFiles as file}
-                        <li>
+                        <li class="cursor-pointer transition-all duration-300 ease-in-out hover:text-blue-600">
                             <a href="/map/{file}">{file}</a>
                         </li>
                     {/each}
