@@ -3,6 +3,6 @@ export const ssr = false;
 
 export const load = ({ params }) => {
     return {
-        'geojson': params.geojson
+        geojson: params.geojson
     }
 }

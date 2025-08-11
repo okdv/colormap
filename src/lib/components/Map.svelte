@@ -8,12 +8,14 @@
 	import { cleanupMap, initMapAndLayers } from '$lib/services';
 	import { ControlPanel } from '$lib/components';
 
+	export let featureLayer: string;
+
 	let mapContainer: HTMLDivElement;
 
 	// onMount so this doesnt get SSR'd, only happens on the client side
 	onMount(async () => {
 		// initialize map and layers
-		initMapAndLayers(mapContainer);
+		initMapAndLayers(mapContainer, featureLayer);
 
 		// cleanup on unmount
 		return cleanupMap();
