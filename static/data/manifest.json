@@ -7,11 +7,13 @@
     {
         "id": "us_counties",
         "filename": "us_counties_2023.geojson",
-        "name": "US Counties"
+        "name": "US Counties",
+        "defaultZoom": 5
     },
     {
         "id": "us_states",
         "filename": "us_states_2024.geojson",
-        "name": "US States"
+        "name": "US States",
+        "defaultZoom": 5
     }
 ]
