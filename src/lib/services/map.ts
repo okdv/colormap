@@ -75,25 +75,26 @@ export const initMapAndLayers = async (mapContainer: HTMLDivElement) => {
 
 	// try to retrieve feature layer using settings
 	const currentSettings = get(settingsStore);
-	const currentInteractiveLayers = get(interactiveLayersStore)
+	const currentInteractiveLayers = get(interactiveLayersStore);
 	const featureLayerRes = await fetch(`/data/${currentSettings.featureLayerFilename}`);
 	const geojson: GeoJson = await featureLayerRes.json();
 
-	for (let i=0;i<currentInteractiveLayers.length;i++) {
-		const currentLayer = currentInteractiveLayers[i]
+	for (let i = 0; i < currentInteractiveLayers.length; i++) {
+		const currentLayer = currentInteractiveLayers[i];
 		if (currentLayer.filename === currentSettings.featureLayerFilename) {
-			interactiveLayer = currentLayer
+			interactiveLayer = currentLayer;
 		}
 	}
 
 	if (interactiveLayer === null) {
-		console.warn("Matching interactive layer could not be found in manifest")
+		console.warn('Matching interactive layer could not be found in manifest');
 		return;
 	}
 
-	const zoomLevel = interactiveLayer.defaultZoom ?? 4
-	const coordinates = interactiveLayer.defaultCoordinates ? [interactiveLayer.defaultCoordinates.latitude, interactiveLayer.defaultCoordinates.longitude] : [37.8, -96]
-	
+	const zoomLevel = interactiveLayer.defaultZoom ?? 4;
+	const coordinates = interactiveLayer.defaultCoordinates
+		? [interactiveLayer.defaultCoordinates.latitude, interactiveLayer.defaultCoordinates.longitude]
+		: [37.8, -96];
 
 	// local instance of the leaflet map + set default view
 	const localLeafletMap = L.map(mapContainer).setView(coordinates, zoomLevel);

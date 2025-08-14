@@ -41,6 +41,6 @@ export type InteractiveLayer = {
 	defaultCoordinates?: {
 		latitude: number;
 		longitude: number;
-	}
+	};
 	defaultLegendItems?: LegendItem[];
 };

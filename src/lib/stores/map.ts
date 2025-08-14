@@ -28,10 +28,10 @@ const createSelectedFeatures = () => {
 
 export const selectedFeaturesStore = createSelectedFeatures();
 
-const createInteractiveLayers = async() => {
-	const interactiveLayers: InteractiveLayer[] = await getFeatureLayers() 
-	const interactiveLayersStore = writable<InteractiveLayer[]>(interactiveLayers)
+const createInteractiveLayers = async () => {
+	const interactiveLayers: InteractiveLayer[] = await getFeatureLayers();
+	const interactiveLayersStore = writable<InteractiveLayer[]>(interactiveLayers);
 	return interactiveLayersStore;
-}
+};
 
 export const interactiveLayersStore = await createInteractiveLayers();
