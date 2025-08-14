@@ -1,5 +1,7 @@
 // src/lib/types/map.ts
 
+import type { LegendItem } from '$lib/types';
+
 // SelectedFeatures: the map features (e.g. counties) that the user has selected
 export class SelectedFeature {
 	id: string;
@@ -29,4 +31,16 @@ export type GeoJson = {
 	type: string;
 	name: string;
 	features: GeoJsonFeature[];
+};
+
+export type InteractiveLayer = {
+	id: string; // should equal the key from the object
+	filename: string;
+	name: string;
+	defaultZoom?: number;
+	defaultCoordinates?: {
+		latitude: number;
+		longitude: number;
+	};
+	defaultLegendItems?: LegendItem[];
 };

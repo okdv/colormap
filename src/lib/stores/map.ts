@@ -1,8 +1,8 @@
 // src/lib/stores/map.ts
 import { writable } from 'svelte/store';
 import type * as L from 'leaflet';
-import { addRecordToStore, removeRecordFromStore, storeData } from '$lib/services';
-import type { SelectedFeature } from '$lib/types';
+import { addRecordToStore, getFeatureLayers, removeRecordFromStore, storeData } from '$lib/services';
+import type { InteractiveLayer, SelectedFeature } from '$lib/types';
 
 // leaflet map instance, initialized to null bc it only should exist client side
 export const map = writable<L.Map | null>(null);
@@ -27,3 +27,11 @@ const createSelectedFeatures = () => {
 };
 
 export const selectedFeaturesStore = createSelectedFeatures();
+
+const createInteractiveLayers = async () => {
+	const interactiveLayers: InteractiveLayer[] = await getFeatureLayers();
+	const interactiveLayersStore = writable<InteractiveLayer[]>(interactiveLayers);
+	return interactiveLayersStore;
+};
+
+export const interactiveLayersStore = await createInteractiveLayers();

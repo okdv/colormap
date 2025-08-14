@@ -1,6 +1,6 @@
 // src/lib/services/map.ts
-import type { GeoJson, GeoJsonFeature, LegendItem } from '$lib/types';
-import { legendStore, settingsStore, selectedItem } from '$lib/stores';
+import type { GeoJson, GeoJsonFeature, InteractiveLayer, LegendItem } from '$lib/types';
+import { legendStore, settingsStore, selectedItem, interactiveLayersStore } from '$lib/stores';
 import { map, geoJsonLayer, selectedFeaturesStore } from '$lib/stores';
 import { get } from 'svelte/store';
 import type * as L from 'leaflet';
@@ -10,17 +10,14 @@ import { SelectedFeature } from '$lib/types';
  * returns the geojson manifest stored in /data/manifest.json
  * @returns promise to return the files object in the manifest.json (currently string[])
  */
-export const getFeatureLayers = async (): Promise<string[]> => {
+export const getFeatureLayers = async (): Promise<InteractiveLayer[]> => {
 	try {
 		const res = await fetch('/data/manifest.json');
 		if (!res.ok) {
 			throw new Error('Error HTTP ' + res.status);
 		}
-		const data = await res.json();
-		if (!data.files) {
-			throw new Error('manifest is malformed, missing files: []');
-		}
-		return data.files;
+		const data: InteractiveLayer[] = await res.json();
+		return data;
 	} catch (err) {
 		console.error(`Could not retrieve manifest: ${err}`);
 		return [];
@@ -72,16 +69,35 @@ let subscriptions: (() => void)[] = [];
  * @todo support other tiles/base layers
  */
 export const initMapAndLayers = async (mapContainer: HTMLDivElement) => {
+	let interactiveLayer: InteractiveLayer | null = null;
 	const L = await import('leaflet'); // lazy import to avoid SSR
 	await import('leaflet/dist/leaflet.css');
 
 	// try to retrieve feature layer using settings
 	const currentSettings = get(settingsStore);
+	const currentInteractiveLayers = get(interactiveLayersStore);
 	const featureLayerRes = await fetch(`/data/${currentSettings.featureLayerFilename}`);
 	const geojson: GeoJson = await featureLayerRes.json();
 
+	for (let i = 0; i < currentInteractiveLayers.length; i++) {
+		const currentLayer = currentInteractiveLayers[i];
+		if (currentLayer.filename === currentSettings.featureLayerFilename) {
+			interactiveLayer = currentLayer;
+		}
+	}
+
+	if (interactiveLayer === null) {
+		console.warn('Matching interactive layer could not be found in manifest');
+		return;
+	}
+
+	const zoomLevel = interactiveLayer.defaultZoom ?? 4;
+	const coordinates = interactiveLayer.defaultCoordinates
+		? [interactiveLayer.defaultCoordinates.latitude, interactiveLayer.defaultCoordinates.longitude]
+		: [37.8, -96];
+
 	// local instance of the leaflet map + set default view
-	const localLeafletMap = L.map(mapContainer).setView([37.8, -96], 4);
+	const localLeafletMap = L.map(mapContainer).setView(coordinates, zoomLevel);
 
 	// add OSM tile as base layer + attribution, add to local map
 	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

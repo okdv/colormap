@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { Dropdown } from '$lib/components';
 	import { getFeatureLayers } from '$lib/services';
+	import type { InteractiveLayer } from '$lib/types';
 	import { onMount } from 'svelte';
 
-	let geojsonFiles: string[] = [];
+	let interativeLayers: InteractiveLayer[] = [];
 
 	onMount(async () => {
-		geojsonFiles = await getFeatureLayers();
+		interativeLayers = await getFeatureLayers();
 	});
 </script>
 
@@ -31,9 +32,9 @@
 			<span slot="link">Maps</span>
 			<div slot="body" id="navbar-dropdown-body">
 				<ul>
-					{#each geojsonFiles as file, i (file)}
+					{#each interativeLayers as layer, i (i)}
 						<li class="cursor-pointer transition-all duration-300 ease-in-out hover:text-blue-600" id="navbar-dropdown-entry-{i}">
-							<a href="/?type={file}">{file}</a>
+							<a href="/?type={layer.filename}">{layer.name}</a>
 						</li>
 					{/each}
 				</ul>
