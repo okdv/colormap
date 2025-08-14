@@ -16,7 +16,7 @@ export const geoJsonLayer = writable<L.GeoJSON | null>(null);
  * @todo support updating selected feature, avoids need to deselect > reselect in order to update the selector legend item used
  */
 const createSelectedFeatures = () => {
-	const store = storeData<Record<string, SelectedFeature>>('selectedFeatures', {});
+	const store = storeData<Record<string, SelectedFeature>>('selectedFeatures', {}, 500);
 
 	return {
 		subscribe: store.subscribe,
