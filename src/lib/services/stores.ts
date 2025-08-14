@@ -1,6 +1,7 @@
 // src/lib/services/stores.ts
 
 import { browser } from '$app/environment';
+import type { Func } from '$lib/types';
 import { get, writable, type Writable } from 'svelte/store';
 
 /**
@@ -54,15 +55,45 @@ export const getDeepClonedValue = <T>(store: Writable<T>) => {
 };
 
 /**
+ * Saves a value to localStorage with a key
+ * @param key (string) full localStorage key name, e.g. "colormap.fooBar"
+ * @param value value to set localStorage to, will be stringified
+ */
+const persistToLocalStorage = <T>(key: string, value: T) => {
+	try {
+		console.log(key + ' saved to localSTorage')
+		localStorage.setItem(key, JSON.stringify(value));
+	} catch(err) {
+		console.error(`Error saving ${key} to localStorage: ${err}`)
+	}
+}
+
+/**
+ * Executes a function with a queueing delay, particularly used for creating a debounce behavior between svelte store and localStorage to sort of 'queue' saves
+ * @param func (Function) this is the function that will be executed on the debounce, can have any number or type of args 
+ * @param delay (number) ms delay that is passed to setTimout
+ */
+const debounce = <T extends any[]>(func: Func<T>, delay: number): Func<T> => {
+	let timeout: ReturnType<typeof setTimeout>;
+	console.log('debounced')
+
+	return function(this: any, ...args: T) {
+		const context = this; 
+		clearTimeout(timeout);
+		timeout = setTimeout(() => func.apply(context, args), delay);
+	}
+}
+
+/**
  * Creates and syncs svelte store and localStorage with initial or existing values, or updated items from the store subscription
  * @param storeName the localstorage store specific key, e.g. key='fooBar' results in localStorage entry named "colormap.fooBar"
- * @param initValue initial value for the store and localstorage, usually a default value
+ * @param initValue initial value for the store and localstorage, usually a default value'
+ * @param delay integer that sets a debounce delay for localStorage to be updated, defaults to 0, which bypasses debounce 
  * @returns a svelte store
  */
-export const storeData = <T>(storeName: string, initValue: T): Writable<T> => {
+export const storeData = <T>(storeName: string, initValue: T, delay: number = 0): Writable<T> => {
 	// Local Storage Keys follow this format: colormap.fooBar
 	const LOCAL_STORAGE_KEY_PREFIX = 'colormap';
-
 	const key = `${LOCAL_STORAGE_KEY_PREFIX}.${storeName}`;
 
 	// create store
@@ -82,14 +113,17 @@ export const storeData = <T>(storeName: string, initValue: T): Writable<T> => {
 			}
 		}
 
-		// subscribe localstorage to the store
-		store.subscribe((value) => {
-			try {
-				localStorage.setItem(key, JSON.stringify(value));
-			} catch (e) {
-				console.error(`Error setting ${key} to localStorage`, e);
-			}
-		});
+		// check if delay is set
+		if (delay > 0) {
+			const debouncedSaved = debounce(persistToLocalStorage, delay);
+			store.subscribe((value) => {
+				debouncedSaved(key, value)
+			})
+		} else {
+			store.subscribe((value) => {
+				persistToLocalStorage(key, value)
+			})
+		}
 	}
 
 	return store;

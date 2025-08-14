@@ -118,6 +118,7 @@ export const initMapAndLayers = async (mapContainer: HTMLDivElement) => {
 
 			// Add click event to each feature layer
 			layer.on('click', () => {
+				console.log('click')
 				// feature name shown on hover
 				layer.bindTooltip(name);
 
