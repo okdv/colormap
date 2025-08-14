@@ -1,6 +1,6 @@
 // src/lib/types/map.ts
 
-import type { LegendItem } from "$lib/types";
+import type { LegendItem } from '$lib/types';
 
 // SelectedFeatures: the map features (e.g. counties) that the user has selected
 export class SelectedFeature {
@@ -38,4 +38,4 @@ export type InteractiveLayer = {
 	filename: string;
 	name: string;
 	defaultLegendItems?: LegendItem[];
-}
+};
