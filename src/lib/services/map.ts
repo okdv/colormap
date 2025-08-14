@@ -1,5 +1,5 @@
 // src/lib/services/map.ts
-import type { GeoJson, GeoJsonFeature, LegendItem } from '$lib/types';
+import type { GeoJson, GeoJsonFeature, InteractiveLayer, LegendItem } from '$lib/types';
 import { legendStore, settingsStore, selectedItem } from '$lib/stores';
 import { map, geoJsonLayer, selectedFeaturesStore } from '$lib/stores';
 import { get } from 'svelte/store';
@@ -10,17 +10,14 @@ import { SelectedFeature } from '$lib/types';
  * returns the geojson manifest stored in /data/manifest.json
  * @returns promise to return the files object in the manifest.json (currently string[])
  */
-export const getFeatureLayers = async (): Promise<string[]> => {
+export const getFeatureLayers = async (): Promise<InteractiveLayer[]> => {
 	try {
 		const res = await fetch('/data/manifest.json');
 		if (!res.ok) {
 			throw new Error('Error HTTP ' + res.status);
 		}
-		const data = await res.json();
-		if (!data.files) {
-			throw new Error('manifest is malformed, missing files: []');
-		}
-		return data.files;
+		const data: InteractiveLayer[] = await res.json();
+		return data;
 	} catch (err) {
 		console.error(`Could not retrieve manifest: ${err}`);
 		return [];
