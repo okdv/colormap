@@ -39,7 +39,3 @@ export type InteractiveLayer = {
 	name: string;
 	defaultLegendItems?: LegendItem[];
 }
-
-export type InteractiveLayerManifest = {
-	[key:string]: InteractiveLayer
-}
