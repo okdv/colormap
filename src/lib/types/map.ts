@@ -45,4 +45,4 @@ export type InteractiveLayer = {
 	defaultLegendItems?: LegendItem[];
 };
 
-export type Func<T extends any[]> = (...args: T) => void;
+export type Func<T extends unknown[]> = (...args: T) => void;

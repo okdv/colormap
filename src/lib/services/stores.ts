@@ -73,14 +73,13 @@ const persistToLocalStorage = <T>(key: string, value: T) => {
  * @param func (Function) this is the function that will be executed on the debounce, can have any number or type of args
  * @param delay (number) ms delay that is passed to setTimout
  */
-const debounce = <T extends any[]>(func: Func<T>, delay: number): Func<T> => {
+const debounce = <T extends unknown[]>(func: Func<T>, delay: number): Func<T> => {
 	let timeout: ReturnType<typeof setTimeout>;
 	console.log('debounced');
 
-	return function (this: any, ...args: T) {
-		const context = this;
+	return function (this: unknown, ...args: T) {
 		clearTimeout(timeout);
-		timeout = setTimeout(() => func.apply(context, args), delay);
+		timeout = setTimeout(() => func.apply(this, args), delay);
 	};
 };
 
