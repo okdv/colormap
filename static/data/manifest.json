@@ -3,13 +3,11 @@
         "id": "custom",
         "filename": "us_counties_2023.geojson",
         "name": "Custom Map"
-
     },
     {
         "id": "us_counties",
         "filename": "us_counties_2023.geojson",
         "name": "US Counties"
-
     },
     {
         "id": "us_states",

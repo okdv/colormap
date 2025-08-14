@@ -37,5 +37,10 @@ export type InteractiveLayer = {
 	id: string; // should equal the key from the object
 	filename: string;
 	name: string;
+	defaultZoom?: number;
+	defaultCoordinates?: {
+		latitude: number;
+		longitude: number;
+	}
 	defaultLegendItems?: LegendItem[];
 };
