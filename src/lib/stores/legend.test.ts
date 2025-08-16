@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { currentInteractiveLayerStore, interactiveLayersStore, legendStore } from '$lib/stores';
+import { legendStore } from '$lib/stores';
 import { get } from 'svelte/store';
 
 describe('legendStore', () => {
@@ -19,7 +19,7 @@ describe('legendStore', () => {
 		legendStore.addMap('test');
 		currentLegendStore = get(legendStore);
 		const currentLegend = currentLegendStore['test'];
-		expect(currentLegend).toBeDefined;
+		expect(currentLegend).toBeDefined();
 		const currentLegendValues = Object.values(currentLegend);
 		expect(currentLegendValues.length).toBe(1);
 		expect(currentLegendValues[0].name).toBe('Visited');
