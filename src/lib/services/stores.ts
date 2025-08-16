@@ -29,6 +29,56 @@ export const removeRecordFromStore = <T>(key: string, store: Writable<Record<str
 	});
 
 /**
+ * adds a record to a nested store, e.g. it can add a feature to selectedFeatures (which is a Record Set of Features nested in a Record Set of Maps)
+ * @param outerKey key of the outer Record, e.g. mapId in selectedFeatures
+ * @param innerKey key of the inner Record, e.g. feature.id in selectedFeatures
+ * @param newRecord the value of the new Record being added to the nested set, e.g. feature: SelectedFeature in selectedFeatures
+ * @param store the store it will be updating, e.g. selectedFeatures
+ */
+export const addRecordToNestedStore = <T>(outerKey: string, innerKey: string, newRecord: T, store: Writable<Record<string, Record<string, T>>>) => {
+	store.update((outerRecords) => {
+		// create a local clone to interact with
+		const newOuterRecords = { ...outerRecords };
+
+		// if the outerkey doesnt exist yet, create it with init value of newRecord
+		if (!newOuterRecords[outerKey]) {
+			newOuterRecords[outerKey] = {};
+		}
+
+		// update the nested Record immutably
+		newOuterRecords[outerKey] = {
+			...newOuterRecords[outerKey],
+			[innerKey]: newRecord
+		};
+
+		return newOuterRecords;
+	});
+};
+
+/**
+ * removes a record from a nested store, e.g. it can remove a feature from selectedFeatures (which is a Record Set of Features nested in a Record Set of Maps)
+ * @param outerKey key of the outer Record, e.g. mapId in selectedFeatures
+ * @param innerKey key of the inner Record, e.g. feature.id in selectedFeatures
+ * @param store the store it will be updating, e.g. selectedFeatures
+ */
+export const removeRecordFromNestedStore = <T>(outerKey: string, innerKey: string, store: Writable<Record<string, Record<string, T>>>) => {
+	store.update((outerRecords) => {
+		// create a local clone to interact with
+		const newOuterRecords = { ...outerRecords };
+
+		// if the outer and inner Records/Sets exist, create a local clone of the inner Record Set and delete the inner Record from that
+		if (newOuterRecords[outerKey] && newOuterRecords[outerKey][innerKey]) {
+			const newInnerRecords = { ...newOuterRecords[outerKey] };
+			delete newInnerRecords[innerKey];
+
+			newOuterRecords[outerKey] = newInnerRecords;
+		}
+
+		return newOuterRecords;
+	});
+};
+
+/**
  * updates record in store
  * @param key id of the record to be removed
  * @param store the store it will be updating
