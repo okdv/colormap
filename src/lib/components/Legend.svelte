@@ -3,7 +3,7 @@
 	import { legendStore } from '$lib/stores';
 	import { LegendItem } from '$lib/components';
 	import { get } from 'svelte/store';
-	import type { InteractiveLayer, Legend } from '$lib/types';
+	import type { InteractiveLayer } from '$lib/types';
 
 	export let interactiveLayer: InteractiveLayer;
 

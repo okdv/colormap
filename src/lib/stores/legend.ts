@@ -1,10 +1,11 @@
 import type { LegendLocalStorage, LegendItem, Legend } from '$lib/types';
-import { get, writable } from 'svelte/store';
+import { writable } from 'svelte/store';
 import {
 	addRecordToNestedStore,
 	addRecordToStore,
 	removeRecordFromNestedStore,
 	removeRecordFromStore,
+	resetNestedStore,
 	storeData,
 	updateRecordInNestedStore,
 	updateRecordInStore
@@ -34,14 +35,10 @@ const createLegend = () => {
 		addMap: (mapId: string) => addRecordToStore<Legend>(mapId, legendSet, store),
 		removeMap: (mapId: string) => removeRecordFromStore<Legend>(mapId, store),
 		clearMap: (mapId: string) => updateRecordInStore<Legend>(mapId, legendSet, store),
+		clearAll: () => resetNestedStore(store),
 		addLegendItem: (mapId: string, item: LegendItem) => addRecordToNestedStore(mapId, item.id, item, store),
 		removeLegendItem: (mapId: string, itemId: string) => removeRecordFromNestedStore(mapId, itemId, store),
-		updateLegendItem: (mapId: string, newItem: LegendItem) => updateRecordInNestedStore(mapId, newItem.id, newItem, store),
-
-		updateItem: (newItem: LegendItem) => updateRecordInStore(newItem.id, newItem, store),
-		addItem: (newItem: LegendItem) => addRecordToStore(newItem.id, newItem, store),
-		removeItem: (id: string) => removeRecordFromStore(id, store),
-		clearItems: () => store.set({ [defaultItem.id]: defaultItem })
+		updateLegendItem: (mapId: string, newItem: LegendItem) => updateRecordInNestedStore(mapId, newItem.id, newItem, store)
 	};
 };
 export const legendStore = createLegend();

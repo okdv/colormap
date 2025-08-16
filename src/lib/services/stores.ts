@@ -40,6 +40,17 @@ export const removeRecordFromStore = <T>(key: string, store: Writable<Record<str
 		return newItems;
 	});
 
+export const resetNestedStore = <T>(store: Writable<Record<string, Record<string, T>>>) => {
+	store.update((outerRecords) => {
+		const newRecords = outerRecords;
+		const outerRecordKeys = Object.keys(newRecords);
+		for (let i = 0; i < outerRecordKeys.length; i++) {
+			newRecords[outerRecordKeys[i]] = {};
+		}
+		return newRecords;
+	});
+};
+
 /**
  * adds a record to a nested store, e.g. it can add a feature to selectedFeatures (which is a Record Set of Features nested in a Record Set of Maps)
  * @param outerKey key of the outer Record, e.g. mapId in selectedFeatures
