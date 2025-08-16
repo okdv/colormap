@@ -37,14 +37,4 @@ const createLegend = () => {
 	};
 };
 export const legendStore = createLegend();
-
-/**
- * handles what legend item is selected
- * @returns a legend item or null
- */
-const createSelectedItem = (): LegendItem | null => {
-	const currentLegend = get(legendStore);
-	const currentLegendValues = Object.values(currentLegend);
-	return currentLegendValues.length > 0 ? currentLegendValues[0] : null;
-};
-export const selectedItem = writable<LegendItem | null>(createSelectedItem());
+export const selectedItem = writable<LegendItem | null>(null);
