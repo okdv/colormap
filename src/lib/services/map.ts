@@ -44,13 +44,14 @@ const calculateFeatureStyle = (color?: string) => {
 
 /**
  * determine what legend item has selected a feature, if any
- * @param id feature id as string
+ * @param mapId map id as string
+ * @param featureId feature id as string
  * @returns legenditem or undefined if not selected
  */
-const getFeatureSelector = (id: string): LegendItem | undefined => {
+const getFeatureSelector = (mapId: string, featureId: string): LegendItem | undefined => {
 	let selectedBy = undefined;
 	// see if the id is already present in selected features store, return that if so
-	const currentlySelectedFeature = get(selectedFeaturesStore)[id];
+	const currentlySelectedFeature = get(selectedFeaturesStore)[mapId][featureId];
 	if (currentlySelectedFeature) {
 		const selector = get(legendStore)[currentlySelectedFeature.selectedById];
 		selectedBy = selector;
