@@ -181,20 +181,20 @@ export const initMapAndLayers = async (mapContainer: HTMLDivElement) => {
 
 	// on changes to the legend, update the associated layers styles
 	subscriptions.push(
-		legendStore.subscribe(() => {
-			// if there are geojson layers  and selected features
+		legendStore.subscribe((newLegendStoreData) => {
+			const selectedFeatures = get(selectedFeaturesStore)[interactiveLayer.id]
 			const currentGeoJsonLayer = get(geoJsonLayer);
-			const currentSelectedFeatures = get(selectedFeaturesStore);
-			if (currentGeoJsonLayer && Object.keys(currentSelectedFeatures).length > 0) {
-				currentGeoJsonLayer.eachLayer((layer: L.Layer) => {
-					const featureId = (layer as L.Layer).featureId;
+			const legendItems = newLegendStoreData[interactiveLayer.id]
+			if (currentGeoJsonLayer && legendItems && Object.keys(selectedFeatures).length > 0) {
+				currentGeoJsonLayer.eachLayer((feature: L.Layer) => {
+					const featureId = feature.featureId;
 					// get selector if it exists and update the style of the feature layer
 					const selector = getFeatureSelector(interactiveLayer.id, featureId);
 					if (selector) {
-						(layer as L.Path).setStyle(calculateFeatureStyle(selector.color));
+						feature.setStyle(calculateFeatureStyle(selector.color));
 						return;
 					}
-					if (currentSelectedFeatures[featureId]) {
+					if (selectedFeatures[featureId]) {
 						selectedFeaturesStore.deselectLayer(interactiveLayer.id, featureId);
 						return;
 					}
