@@ -5,8 +5,10 @@
 	 * @todo add help btn
 	 */
 	import { legendStore } from '$lib/stores';
-	import { LegendItem } from '$lib/types';
+	import { LegendItem, type InteractiveLayer } from '$lib/types';
 	import { SettingsModal } from '$lib/components';
+
+	export let interactiveLayer: InteractiveLayer;
 
 	let settingsModalOpen: boolean = false;
 </script>
@@ -14,7 +16,7 @@
 <nav class="rounded-t-md border-b border-gray-300 bg-gray-100 p-2">
 	<button
 		class="cursor-pointer rounded-sm p-1 px-2 text-blue-600 transition-all duration-300 ease-in-out hover:bg-blue-400 hover:text-white"
-		on:click={() => legendStore.addItem(new LegendItem())}
+		on:click={() => legendStore.addLegendItem(interactiveLayer.id, new LegendItem())}
 	>
 		<i class="fa-solid fa-plus"></i>
 		<span>New</span>
@@ -31,7 +33,7 @@
 	<button
 		class="cursor-pointer rounded-sm p-1 px-2 text-red-400 transition-all duration-300 ease-in-out hover:bg-red-400 hover:text-white"
 		on:click={() => {
-			legendStore.clearItems();
+			legendStore.clearMap(interactiveLayer.id);
 		}}
 	>
 		<i class="fa-solid fa-arrow-rotate-right"></i>
