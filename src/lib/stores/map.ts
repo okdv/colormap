@@ -1,7 +1,15 @@
 // src/lib/stores/map.ts
 import { writable } from 'svelte/store';
 import type * as L from 'leaflet';
-import { addRecordToNestedStore, addRecordToStore, getFeatureLayers, getInteractiveLayerByID, removeRecordFromNestedStore, removeRecordFromStore, storeData } from '$lib/services';
+import {
+	addRecordToNestedStore,
+	addRecordToStore,
+	getFeatureLayers,
+	getInteractiveLayerByID,
+	removeRecordFromNestedStore,
+	removeRecordFromStore,
+	storeData
+} from '$lib/services';
 import { SelectedFeature, type InteractiveLayer, type SelectedFeatures, type SelectedFeaturesLocalStorage } from '$lib/types';
 
 // leaflet map instance, initialized to null bc it only should exist client side
@@ -31,7 +39,7 @@ export const selectedFeaturesStore = createSelectedFeatures();
 
 /**
  * creates store of an array of interactive layers
- * @returns a proxy to the store 
+ * @returns a proxy to the store
  */
 const createInteractiveLayers = async () => {
 	const interactiveLayers: InteractiveLayer[] = await getFeatureLayers();
@@ -45,20 +53,20 @@ export const interactiveLayersStore = await createInteractiveLayers();
  * @returns a proxy to the store with interactions baked in
  */
 const createCurrentInteractiveLayer = () => {
-	const { set, update, subscribe} = writable<InteractiveLayer | null>(null);
+	const { set, update, subscribe } = writable<InteractiveLayer | null>(null);
 
 	return {
 		set,
 		update,
 		subscribe,
 		updateByID: async (id: string) => {
-			const newInteractiveLayer = await getInteractiveLayerByID(id)
+			const newInteractiveLayer = await getInteractiveLayerByID(id);
 			if (newInteractiveLayer === null) {
-				console.error(`No Interactive Layer with ID ${id} found`)
+				console.error(`No Interactive Layer with ID ${id} found`);
 			}
-			set(newInteractiveLayer)
+			set(newInteractiveLayer);
 		},
 		clear: () => set(null)
-	}
-}
+	};
+};
 export const currentInteractiveLayerStore = createCurrentInteractiveLayer();

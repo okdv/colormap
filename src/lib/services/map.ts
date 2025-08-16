@@ -6,11 +6,10 @@ import { get } from 'svelte/store';
 import type * as L from 'leaflet';
 import { SelectedFeature } from '$lib/types';
 
-
 /**
  * returns the geojson manifest stored in /data/manifest.json
  * @returns promise to return the files object in the manifest.json (currently string[])
-*/
+ */
 export const getFeatureLayers = async (): Promise<InteractiveLayer[]> => {
 	try {
 		const res = await fetch('/data/manifest.json');
@@ -26,26 +25,25 @@ export const getFeatureLayers = async (): Promise<InteractiveLayer[]> => {
 };
 
 /**
- * returns interactive layer from store or manifest based on its id 
+ * returns interactive layer from store or manifest based on its id
  * @returns promise to return the files object in the manifest.json (currently string[])
-*/
+ */
 export const getInteractiveLayerByID = async (id: string): Promise<InteractiveLayer | null> => {
-	let currentInteractiveLayers = get(interactiveLayersStore)
+	let currentInteractiveLayers = get(interactiveLayersStore);
 	let currentInteractiveLayer: InteractiveLayer | null = null;
-	if (!currentInteractiveLayers || currentInteractiveLayers.length === 0) { 
-		currentInteractiveLayers = await getFeatureLayers()
+	if (!currentInteractiveLayers || currentInteractiveLayers.length === 0) {
+		currentInteractiveLayers = await getFeatureLayers();
 	}
 
-	for (let i=0; i<currentInteractiveLayers.length; i++) {
-		const activeLayer = currentInteractiveLayers[i]
+	for (let i = 0; i < currentInteractiveLayers.length; i++) {
+		const activeLayer = currentInteractiveLayers[i];
 		if (activeLayer.id === id) {
-			currentInteractiveLayer = activeLayer
+			currentInteractiveLayer = activeLayer;
 		}
 	}
 
 	return currentInteractiveLayer;
-
-}
+};
 
 /**
  * determine style for geojson features, effectively either base or selected if a colors present
@@ -74,8 +72,8 @@ const calculateFeatureStyle = (color?: string) => {
 const getFeatureSelector = (mapId: string, featureId: string): LegendItem | undefined => {
 	let selectedBy = undefined;
 	// see if the id is already present in selected features store, return that if so
-	const currentlySelectedMap = get(selectedFeaturesStore)[mapId]
-	const currentlySelectedFeature = currentlySelectedMap ? currentlySelectedMap[featureId] : null
+	const currentlySelectedMap = get(selectedFeaturesStore)[mapId];
+	const currentlySelectedFeature = currentlySelectedMap ? currentlySelectedMap[featureId] : null;
 	if (currentlySelectedFeature) {
 		const selector = get(legendStore)[currentlySelectedFeature.selectedById];
 		selectedBy = selector;
@@ -98,12 +96,12 @@ export const initMapAndLayers = async (mapContainer: HTMLDivElement) => {
 	const L = await import('leaflet'); // lazy import to avoid SSR
 
 	// get interactive layer, and its associated geojson, fail if null
-	const interactiveLayer = get(currentInteractiveLayerStore)
+	const interactiveLayer = get(currentInteractiveLayerStore);
 	if (interactiveLayer === null) {
 		console.warn('Matching interactive layer could not be found in manifest');
 		return;
 	}
-	const mapId = interactiveLayer.id
+	const mapId = interactiveLayer.id;
 	const featureLayerRes = await fetch(`/data/${interactiveLayer.filename}`);
 	const geojson: GeoJson = await featureLayerRes.json();
 

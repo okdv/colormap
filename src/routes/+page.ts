@@ -12,8 +12,8 @@ export const load: PageLoad = ({ url }) => {
 	// if url param is present, use it
 	if (layerName && layerName.length > 0) {
 		if (layerName === null) {
-			layerName = 'us_counties'
+			layerName = 'us_counties';
 		}
-		currentInteractiveLayerStore.updateByID(layerName)
+		currentInteractiveLayerStore.updateByID(layerName);
 	}
 };
