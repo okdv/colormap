@@ -1,8 +1,11 @@
 // src/lib/stores/map.ts
 import { writable } from 'svelte/store';
 import type * as L from 'leaflet';
-import { addRecordToStore, getFeatureLayers, removeRecordFromStore, storeData } from '$lib/services';
-import type { InteractiveLayer, SelectedFeature } from '$lib/types';
+import { addRecordToNestedStore, addRecordToStore, getFeatureLayers, removeRecordFromNestedStore, removeRecordFromStore, storeData } from '$lib/services';
+import { SelectedFeature, type InteractiveLayer, type SelectedFeatures, type SelectedFeaturesLocalStorage } from '$lib/types';
+
+// svelte store for ID of interactive layer as shown in manifest, gets updated on navigation
+export const interactiveLayerID = writable<string | null>(null);
 
 // leaflet map instance, initialized to null bc it only should exist client side
 export const map = writable<L.Map | null>(null);
@@ -16,13 +19,15 @@ export const geoJsonLayer = writable<L.GeoJSON | null>(null);
  * @todo support updating selected feature, avoids need to deselect > reselect in order to update the selector legend item used
  */
 const createSelectedFeatures = () => {
-	const store = storeData<Record<string, SelectedFeature>>('selectedFeatures', {}, 500);
+	const store = storeData<SelectedFeaturesLocalStorage>('selectedFeatures', {}, 500);
 
 	return {
 		subscribe: store.subscribe,
-		select: (feature: SelectedFeature) => addRecordToStore<SelectedFeature>(feature.id, feature, store),
-		deselect: (id: string) => removeRecordFromStore<SelectedFeature>(id, store),
-		deselectAll: () => store.set({})
+		addMap: (map: InteractiveLayer) => addRecordToStore<SelectedFeatures>(map.id, {}, store),
+		removeMap: (id: string) => removeRecordFromStore<SelectedFeatures>(id, store),
+		selectLayer: (mapId: string, feature: SelectedFeature) => addRecordToNestedStore<SelectedFeature>(mapId, feature.id, feature, store),
+		deselectLayer: (mapId: string, featureId: string) => removeRecordFromNestedStore<SelectedFeature>(mapId, featureId, store),
+		reset: () => store.set({})
 	};
 };
 
