@@ -71,12 +71,14 @@ const calculateFeatureStyle = (color?: string) => {
  */
 const getFeatureSelector = (mapId: string, featureId: string): LegendItem | undefined => {
 	let selectedBy: LegendItem | undefined = undefined;
-	const currentSelectedFeaturesStore = get(selectedFeaturesStore)
-	const currentLegendStore = get(legendStore)
+	const currentSelectedFeaturesStore = get(selectedFeaturesStore);
+	const currentLegendStore = get(legendStore);
 	// see if the id is already present in selected features store, return that if so
-	const currentlySelectedFeature: SelectedFeature | null = currentSelectedFeaturesStore[mapId] ? currentSelectedFeaturesStore[mapId][featureId] : null;
+	const currentlySelectedFeature: SelectedFeature | null = currentSelectedFeaturesStore[mapId]
+		? currentSelectedFeaturesStore[mapId][featureId]
+		: null;
 	if (currentlySelectedFeature && currentLegendStore[mapId]) {
-		selectedBy = currentLegendStore[mapId][currentlySelectedFeature.selectedById]
+		selectedBy = currentLegendStore[mapId][currentlySelectedFeature.selectedById];
 	}
 	return selectedBy;
 };
@@ -182,9 +184,9 @@ export const initMapAndLayers = async (mapContainer: HTMLDivElement) => {
 	// on changes to the legend, update the associated layers styles
 	subscriptions.push(
 		legendStore.subscribe((newLegendStoreData) => {
-			const selectedFeatures = get(selectedFeaturesStore)[interactiveLayer.id]
+			const selectedFeatures = get(selectedFeaturesStore)[interactiveLayer.id];
 			const currentGeoJsonLayer = get(geoJsonLayer);
-			const legendItems = newLegendStoreData[interactiveLayer.id]
+			const legendItems = newLegendStoreData[interactiveLayer.id];
 			if (currentGeoJsonLayer && legendItems && Object.keys(selectedFeatures).length > 0) {
 				currentGeoJsonLayer.eachLayer((feature: L.Layer) => {
 					const featureId = feature.featureId;

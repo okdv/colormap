@@ -73,7 +73,12 @@ export const addRecordToNestedStore = <T>(outerKey: string, innerKey: string, ne
  * @param innerKey key of the inner Record, e.g. feature.id in selectedFeatures
  * @param store the store it will be updating, e.g. selectedFeatures
  */
-export const updateRecordInNestedStore = <T>(outerKey: string, innerKey: string, newRecord: T, store: Writable<Record<string, Record<string, T>>>) => {
+export const updateRecordInNestedStore = <T>(
+	outerKey: string,
+	innerKey: string,
+	newRecord: T,
+	store: Writable<Record<string, Record<string, T>>>
+) => {
 	store.update((outerRecords) => {
 		// create a local clone to interact with
 		const newOuterRecords = { ...outerRecords };

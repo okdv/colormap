@@ -18,6 +18,6 @@ export class LegendItem {
 	}
 }
 
-export type Legend = Record<string, LegendItem>
+export type Legend = Record<string, LegendItem>;
 
-export type LegendLocalStorage = Record<string, Legend>
+export type LegendLocalStorage = Record<string, Legend>;

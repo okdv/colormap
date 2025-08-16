@@ -23,5 +23,5 @@
 	});
 </script>
 
-<ControlPanel interactiveLayer={interactiveLayer} />
+<ControlPanel {interactiveLayer} />
 <div bind:this={mapContainer} class="h-full w-full" id="map-container"></div>

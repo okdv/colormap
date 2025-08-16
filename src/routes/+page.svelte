@@ -4,7 +4,7 @@
 	import { currentInteractiveLayerStore } from '$lib/stores';
 	import { get } from 'svelte/store';
 
-	const currentInteractiveLayer = get(currentInteractiveLayerStore)
+	const currentInteractiveLayer = get(currentInteractiveLayerStore);
 </script>
 
 <!-- height = screenheight minus heigh of navbar (4rem / h-16)-->

@@ -7,9 +7,9 @@
 
 	export let interactiveLayer: InteractiveLayer;
 
-	const currentLegendStore = get(legendStore)
+	const currentLegendStore = get(legendStore);
 	if (!currentLegendStore[interactiveLayer.id]) {
-		legendStore.addMap(interactiveLayer.id)
+		legendStore.addMap(interactiveLayer.id);
 	}
 </script>
 
