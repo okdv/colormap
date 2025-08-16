@@ -14,6 +14,10 @@ export class SelectedFeature {
 	}
 }
 
+export type SelectedFeatures = Record<string, SelectedFeature>
+
+export type SelectedFeaturesLocalStorage = Record<string, SelectedFeatures>
+
 export type GeoJsonFeature = {
 	type: string;
 	featureId?: string;
