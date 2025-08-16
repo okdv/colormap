@@ -17,3 +17,7 @@ export class LegendItem {
 		this.color = color;
 	}
 }
+
+export type Legend = Record<string, LegendItem>
+
+export type LegendLocalStorage = Record<string, Legend>
