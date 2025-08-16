@@ -17,6 +17,18 @@ export const addRecordToStore = <T>(key: string, newRecord: T, store: Writable<R
 	}));
 
 /**
+ * updates record in store
+ * @param key id of the record to be removed
+ * @param store the store it will be updating
+ */
+export const updateRecordInStore = <T>(key: string, newRecord: T, store: Writable<Record<string, T>>) =>
+	store.update((records) => {
+		const storedData = { ...records };
+		storedData[key] = newRecord;
+		return storedData;
+	});
+
+/**
  * removes record in store
  * @param key id of the record to be removed
  * @param store the store it will be updating
@@ -61,6 +73,29 @@ export const addRecordToNestedStore = <T>(outerKey: string, innerKey: string, ne
  * @param innerKey key of the inner Record, e.g. feature.id in selectedFeatures
  * @param store the store it will be updating, e.g. selectedFeatures
  */
+export const updateRecordInNestedStore = <T>(outerKey: string, innerKey: string, newRecord: T, store: Writable<Record<string, Record<string, T>>>) => {
+	store.update((outerRecords) => {
+		// create a local clone to interact with
+		const newOuterRecords = { ...outerRecords };
+
+		// if the outer and inner Records/Sets exist, create a local clone of the inner Record Set and update the inner Record from that
+		if (newOuterRecords[outerKey] && newOuterRecords[outerKey][innerKey]) {
+			const newInnerRecords = { ...newOuterRecords[outerKey] };
+			newInnerRecords[innerKey] = newRecord;
+
+			newOuterRecords[outerKey] = newInnerRecords;
+		}
+
+		return newOuterRecords;
+	});
+};
+
+/**
+ * removes a record from a nested store, e.g. it can remove a feature from selectedFeatures (which is a Record Set of Features nested in a Record Set of Maps)
+ * @param outerKey key of the outer Record, e.g. mapId in selectedFeatures
+ * @param innerKey key of the inner Record, e.g. feature.id in selectedFeatures
+ * @param store the store it will be updating, e.g. selectedFeatures
+ */
 export const removeRecordFromNestedStore = <T>(outerKey: string, innerKey: string, store: Writable<Record<string, Record<string, T>>>) => {
 	store.update((outerRecords) => {
 		// create a local clone to interact with
@@ -77,18 +112,6 @@ export const removeRecordFromNestedStore = <T>(outerKey: string, innerKey: strin
 		return newOuterRecords;
 	});
 };
-
-/**
- * updates record in store
- * @param key id of the record to be removed
- * @param store the store it will be updating
- */
-export const updateRecordInStore = <T>(key: string, newRecord: T, store: Writable<Record<string, T>>) =>
-	store.update((records) => {
-		const storedData = { ...records };
-		storedData[key] = newRecord;
-		return storedData;
-	});
 
 /**
  * returns a deep clone of the stores value, rather than a reference to the store value like get(store)
