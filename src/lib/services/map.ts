@@ -70,13 +70,15 @@ const calculateFeatureStyle = (color?: string) => {
  * @returns legenditem or undefined if not selected
  */
 const getFeatureSelector = (mapId: string, featureId: string): LegendItem | undefined => {
-	let selectedBy = undefined;
+	let selectedBy: LegendItem | undefined = undefined;
+	const currentSelectedFeaturesStore = get(selectedFeaturesStore);
+	const currentLegendStore = get(legendStore);
 	// see if the id is already present in selected features store, return that if so
-	const currentlySelectedMap = get(selectedFeaturesStore)[mapId];
-	const currentlySelectedFeature = currentlySelectedMap ? currentlySelectedMap[featureId] : null;
-	if (currentlySelectedFeature) {
-		const selector = get(legendStore)[currentlySelectedFeature.selectedById];
-		selectedBy = selector;
+	const currentlySelectedFeature: SelectedFeature | null = currentSelectedFeaturesStore[mapId]
+		? currentSelectedFeaturesStore[mapId][featureId]
+		: null;
+	if (currentlySelectedFeature && currentLegendStore[mapId]) {
+		selectedBy = currentLegendStore[mapId][currentlySelectedFeature.selectedById];
 	}
 	return selectedBy;
 };
@@ -181,20 +183,20 @@ export const initMapAndLayers = async (mapContainer: HTMLDivElement) => {
 
 	// on changes to the legend, update the associated layers styles
 	subscriptions.push(
-		legendStore.subscribe(() => {
-			// if there are geojson layers  and selected features
+		legendStore.subscribe((newLegendStoreData) => {
+			const selectedFeatures = get(selectedFeaturesStore)[interactiveLayer.id];
 			const currentGeoJsonLayer = get(geoJsonLayer);
-			const currentSelectedFeatures = get(selectedFeaturesStore);
-			if (currentGeoJsonLayer && Object.keys(currentSelectedFeatures).length > 0) {
-				currentGeoJsonLayer.eachLayer((layer: L.Layer) => {
-					const featureId = (layer as L.Layer).featureId;
+			const legendItems = newLegendStoreData[interactiveLayer.id];
+			if (currentGeoJsonLayer && legendItems && Object.keys(selectedFeatures).length > 0) {
+				currentGeoJsonLayer.eachLayer((feature: L.Layer) => {
+					const featureId = feature.featureId;
 					// get selector if it exists and update the style of the feature layer
 					const selector = getFeatureSelector(interactiveLayer.id, featureId);
 					if (selector) {
-						(layer as L.Path).setStyle(calculateFeatureStyle(selector.color));
+						feature.setStyle(calculateFeatureStyle(selector.color));
 						return;
 					}
-					if (currentSelectedFeatures[featureId]) {
+					if (selectedFeatures[featureId]) {
 						selectedFeaturesStore.deselectLayer(interactiveLayer.id, featureId);
 						return;
 					}

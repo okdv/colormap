@@ -1,6 +1,15 @@
-import type { LegendItem } from '$lib/types';
-import { get, writable } from 'svelte/store';
-import { addRecordToStore, removeRecordFromStore, storeData, updateRecordInStore } from '$lib/services';
+import type { LegendLocalStorage, LegendItem, Legend } from '$lib/types';
+import { writable } from 'svelte/store';
+import {
+	addRecordToNestedStore,
+	addRecordToStore,
+	removeRecordFromNestedStore,
+	removeRecordFromStore,
+	resetNestedStore,
+	storeData,
+	updateRecordInNestedStore,
+	updateRecordInStore
+} from '$lib/services';
 
 /**
  * Creates legend store and persists it to local storage (or uses an existing local storage if available)
@@ -14,30 +23,23 @@ const createLegend = () => {
 		color: '#ff0000'
 	};
 	// default legend
-	const legend: Record<string, LegendItem> = {
+	const legendSet: Record<string, LegendItem> = {
 		[defaultItem.id]: defaultItem
 	};
 
 	// create store
-	const store = storeData<Record<string, LegendItem>>('legend', legend);
+	const store = storeData<LegendLocalStorage>('legend', {});
 
 	return {
 		subscribe: store.subscribe,
-		updateItem: (newItem: LegendItem) => updateRecordInStore(newItem.id, newItem, store),
-		addItem: (newItem: LegendItem) => addRecordToStore(newItem.id, newItem, store),
-		removeItem: (id: string) => removeRecordFromStore(id, store),
-		clearItems: () => store.set({ [defaultItem.id]: defaultItem })
+		addMap: (mapId: string) => addRecordToStore<Legend>(mapId, legendSet, store),
+		removeMap: (mapId: string) => removeRecordFromStore<Legend>(mapId, store),
+		clearMap: (mapId: string) => updateRecordInStore<Legend>(mapId, legendSet, store),
+		clearAll: () => resetNestedStore(store),
+		addLegendItem: (mapId: string, item: LegendItem) => addRecordToNestedStore(mapId, item.id, item, store),
+		removeLegendItem: (mapId: string, itemId: string) => removeRecordFromNestedStore(mapId, itemId, store),
+		updateLegendItem: (mapId: string, newItem: LegendItem) => updateRecordInNestedStore(mapId, newItem.id, newItem, store)
 	};
 };
 export const legendStore = createLegend();
-
-/**
- * handles what legend item is selected
- * @returns a legend item or null
- */
-const createSelectedItem = (): LegendItem | null => {
-	const currentLegend = get(legendStore);
-	const currentLegendValues = Object.values(currentLegend);
-	return currentLegendValues.length > 0 ? currentLegendValues[0] : null;
-};
-export const selectedItem = writable<LegendItem | null>(createSelectedItem());
+export const selectedItem = writable<LegendItem | null>(null);

@@ -7,6 +7,9 @@
 	import { onMount } from 'svelte';
 	import { cleanupMap, initMapAndLayers } from '$lib/services';
 	import { ControlPanel } from '$lib/components';
+	import type { InteractiveLayer } from '$lib/types';
+
+	export let interactiveLayer: InteractiveLayer;
 
 	let mapContainer: HTMLDivElement;
 
@@ -20,5 +23,5 @@
 	});
 </script>
 
-<ControlPanel />
+<ControlPanel {interactiveLayer} />
 <div bind:this={mapContainer} class="h-full w-full" id="map-container"></div>
