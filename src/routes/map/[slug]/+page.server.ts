@@ -5,8 +5,6 @@ import { getStaticFile } from '$lib/services/utils.server';
 
 const manifest: InteractiveLayer[] = getStaticFile('manifest.json')
 
-console.log('page loaded - server')
-
 export const entries: EntryGenerator = async() => {
     return manifest.map(layer => ({ slug: layer.id}));
 };
