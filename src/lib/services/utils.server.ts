@@ -2,7 +2,6 @@
  *      a suite of utility functions to run at static site generation (server side render)
  *      @important do not call these on the client side
  */
-import type { InteractiveLayer } from '$lib/types';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 

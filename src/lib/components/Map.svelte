@@ -16,7 +16,6 @@
 
 	// onMount so this doesnt get SSR'd, only happens on the client side
 	onMount(async () => {
-		$: console.log('init map');
 		// initialize map and layers
 		initMapAndLayers(mapContainer, geojson);
 
