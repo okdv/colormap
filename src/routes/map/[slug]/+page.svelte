@@ -4,17 +4,17 @@
 	import { currentInteractiveLayerStore } from '$lib/stores';
 	import type { PageData } from './$types';
 
-    export let data: PageData;
+	export let data: PageData;
 
-    $: ({geojson, layerMetadata} = data);
+	$: ({ geojson, layerMetadata } = data);
 
-    $: if (layerMetadata) {
-        currentInteractiveLayerStore.set(layerMetadata)
-    }
+	$: if (layerMetadata) {
+		currentInteractiveLayerStore.set(layerMetadata);
+	}
 </script>
 
 <svelte:head>
-    <title>{layerMetadata.name}</title>
+	<title>{layerMetadata.name}</title>
 </svelte:head>
 
 <!-- height = screenheight minus heigh of navbar (4rem / h-16)-->
