@@ -93,7 +93,7 @@ let subscriptions: (() => void)[] = [];
  * @todo enhance coordinate defaults, accessibility and memory
  * @todo support other tiles/base layers
  */
-export const initMapAndLayers = async (mapContainer: HTMLDivElement) => {
+export const initMapAndLayers = async (mapContainer: HTMLDivElement, geojson: GeoJson) => {
 	await import('leaflet/dist/leaflet.css');
 	const L = await import('leaflet'); // lazy import to avoid SSR
 
@@ -104,8 +104,6 @@ export const initMapAndLayers = async (mapContainer: HTMLDivElement) => {
 		return;
 	}
 	const mapId = interactiveLayer.id;
-	const featureLayerRes = await fetch(`/data/${interactiveLayer.filename}`);
-	const geojson: GeoJson = await featureLayerRes.json();
 
 	// get map params from interactive layer
 	const zoomLevel = interactiveLayer.defaultZoom ?? 4;
