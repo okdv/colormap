@@ -1,9 +1,9 @@
 import type { EntryGenerator, PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
 import type { GeoJson, InteractiveLayer } from '$lib/types';
-import { getStaticFile } from '$lib/server/utils.server';
+import { getManifest, getStaticFile } from '$lib/server/utils.server';
 
-const manifest: InteractiveLayer[] = getStaticFile('manifest.json');
+const manifest: InteractiveLayer[] = getManifest();
 
 export const entries: EntryGenerator = async () => {
 	return manifest.map((layer) => ({ slug: layer.id }));

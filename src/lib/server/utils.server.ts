@@ -13,3 +13,13 @@ export const getStaticFile = (filename: string) => {
 	const fileContent = readFileSync(filePath, 'utf-8');
 	return JSON.parse(fileContent);
 };
+
+// build time cache of interactive layers to avoid duplicate calls to retrieve manifest 
+let interactiveLayers: InteractiveLayer[] | null = null
+
+export const getManifest = (): InteractiveLayer[] => {
+    if (interactiveLayers) {
+        return interactiveLayers
+    }
+    return getStaticFile('manifest.json')
+}

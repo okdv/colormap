@@ -1,8 +1,8 @@
-import { getStaticFile } from '$lib/server/utils.server';
+import { getManifest } from '$lib/server/utils.server';
 import type { InteractiveLayer } from '$lib/types';
 import { test } from '@playwright/test';
 
-const manifest: InteractiveLayer[] = getStaticFile('manifest.json');
+const manifest: InteractiveLayer[] = getManifest();
 
 test.describe('Prerendered Map Pages', () => {
 	if (!manifest || manifest.length === 0) {
