@@ -1,8 +1,8 @@
 // src/lib/server/utils.server.ts
-// server side utility functions, since webapp is SSG'd these are run at build time only 
+// server side utility functions, since webapp is SSG'd these are run at build time only
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
-import type { InteractiveLayer } from "$lib/types";
+import type { InteractiveLayer } from '$lib/types';
 
 /**
  * returns a file from the static/data directory using only filepath utilities
@@ -14,12 +14,12 @@ export const getStaticFile = (filename: string) => {
 	return JSON.parse(fileContent);
 };
 
-// build time cache of interactive layers to avoid duplicate calls to retrieve manifest 
-let interactiveLayers: InteractiveLayer[] | null = null
+// build time cache of interactive layers to avoid duplicate calls to retrieve manifest
+let interactiveLayers: InteractiveLayer[] | null = null;
 
 export const getManifest = (): InteractiveLayer[] => {
-    if (interactiveLayers) {
-        return interactiveLayers
-    }
-    return getStaticFile('manifest.json')
-}
+	if (interactiveLayers) {
+		return interactiveLayers;
+	}
+	return getStaticFile('manifest.json');
+};
