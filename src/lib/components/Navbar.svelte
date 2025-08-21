@@ -4,11 +4,7 @@
 	import type { InteractiveLayer } from '$lib/types';
 	import { onMount } from 'svelte';
 
-	let interativeLayers: InteractiveLayer[] = [];
-
-	onMount(async () => {
-		interativeLayers = await getFeatureLayers();
-	});
+	export let interativeLayers: InteractiveLayer[] = [];
 </script>
 
 <header id="navbar" class="border-zinc-750 fixed top-0 z-1000 flex h-16 w-full justify-between border-b bg-zinc-950 p-2 text-zinc-50 shadow-2xl">

@@ -1,4 +1,4 @@
-import { getStaticFile } from '../src/lib/services/utils.server';
+import { getStaticFile } from '$lib/server/utils.server';
 import type { InteractiveLayer } from '$lib/types';
 import { test } from '@playwright/test';
 

@@ -1,9 +1,8 @@
-/** src/lib/services/utils.server.ts
- *      a suite of utility functions to run at static site generation (server side render)
- *      @important do not call these on the client side
- */
+// src/lib/server/utils.server.ts
+// server side utility functions, since webapp is SSG'd these are run at build time only 
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
+import type { InteractiveLayer } from "$lib/types";
 
 /**
  * returns a file from the static/data directory using only filepath utilities
