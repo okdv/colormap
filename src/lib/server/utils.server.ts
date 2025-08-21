@@ -15,7 +15,7 @@ export const getStaticFile = (filename: string) => {
 };
 
 // build time cache of interactive layers to avoid duplicate calls to retrieve manifest
-let interactiveLayers: InteractiveLayer[] | null = null;
+const interactiveLayers: InteractiveLayer[] | null = null;
 
 export const getManifest = (): InteractiveLayer[] => {
 	if (interactiveLayers) {
