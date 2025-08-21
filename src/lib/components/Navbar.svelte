@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { Dropdown } from '$lib/components';
-	import { getFeatureLayers } from '$lib/services';
 	import type { InteractiveLayer } from '$lib/types';
-	import { onMount } from 'svelte';
 
 	export let interativeLayers: InteractiveLayer[] = [];
 </script>
