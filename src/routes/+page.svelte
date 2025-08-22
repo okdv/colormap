@@ -24,5 +24,9 @@
 		</ul>
 	</header>
 	<main></main>
-	<footer></footer>
+	<footer>
+		<div class="text-center text-lg">
+			<span>{new Date().getFullYear()} &copy; <a href="https://otho.dev" class="transition-all duration-300 ease-in-out hover:text-blue-800">otho.dev</a></span>
+		</div>
+	</footer>
 </div>
