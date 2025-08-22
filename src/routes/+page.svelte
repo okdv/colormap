@@ -25,9 +25,11 @@
 	</header>
 	<main>
 		<section>
+			<h2 class="text-3xl">Getting Started</h2>
 			{@html data.sections.readme}
 		</section>
 		<section>
+			<h2 class="text-3xl">Want to help?</h2>
 			{@html data.sections.contributing}
 		</section>
 	</main>
