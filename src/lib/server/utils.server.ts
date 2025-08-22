@@ -26,3 +26,23 @@ export const getManifest = (): InteractiveLayer[] => {
 	const manifestStr = getFile('./static/data/', 'manifest.json');
 	return JSON.parse(manifestStr)
 };
+
+/**
+ * convert markdown into html, specifically used to convert README and CONTRIBUITING into homepage sections  
+ * @param md markdown file content as a string 
+ * @returns html parsed from markdown
+ */
+export const mdToHtml =(md: string) => {
+	let html = md
+		.replace(/^(#+)\s(.*)/gm, (match, hashes, content) => { // headers
+			const level = hashes.length;
+			return `<h${level}>${content}</h${level}>`;
+		})
+		.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // bold 
+		.replace(/\*(.*?)\*/g, '<em>$1</em>') // italics 
+		.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-500 hover:text-blue-700 underline">$1</a>') // links 
+		.replace(/`([^`]+)`/g, '<code class="bg-gray-200 text-red-600 px-1 rounded">$1</code>') // code 
+		.replace(/\n\n/g, '<p></p>'); // Simple paragraph breaks
+
+	return html;
+};
