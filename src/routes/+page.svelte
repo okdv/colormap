@@ -23,17 +23,25 @@
 			{/each}
 		</ul>
 	</header>
-	<main>
-		<section>
-			<h2 class="text-3xl">Getting Started</h2>
-			{@html data.sections.readme}
+	<main class="p-2 space-y-6">
+		<section class="container bg-zinc-100 rounded-xl shadow-2xl mx-auto">
+			<div class="bg-zinc-800 text-zinc-50 p-2 rounded-t-xl shadow">
+				<h2 class="text-3xl text-center">Getting Started</h2>
+			</div>
+			<div class="p-2 space-y-2 text-lg">
+				{@html data.sections.readme}
+			</div>
 		</section>
-		<section>
-			<h2 class="text-3xl">Want to help?</h2>
-			{@html data.sections.contributing}
+		<section class="container bg-zinc-100 rounded-xl shadow-2xl mx-auto">
+			<div class="bg-zinc-800 text-zinc-50 p-2 rounded-t-xl shadow">
+				<h2 class="text-3xl text-center">Want to help?</h2>
+			</div>
+			<div class="p-2 space-y-2 text-lg">
+				{@html data.sections.contributing}
+			</div>
 		</section>
 	</main>
-	<footer>
+	<footer class="p-2 bg-zinc-800 text-zinc-50 shadow-2xl">
 		<div class="text-center text-lg">
 			<span>{new Date().getFullYear()} &copy; <a href="https://otho.dev" class="transition-all duration-300 ease-in-out hover:text-blue-800">otho.dev</a></span>
 		</div>
