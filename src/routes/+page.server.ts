@@ -1,4 +1,4 @@
-import { getManifest } from '$lib/server/utils.server';
+import { getManifest, getFile, mdToHtml } from '$lib/server/utils.server';
 import type { InteractiveLayer } from '$lib/types';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
@@ -7,13 +7,22 @@ export const ssr = false;
 export const prerender = true;
 
 const interactiveLayers: InteractiveLayer[] = getManifest();
+const readme = mdToHtml(getFile('./', 'README.md'))
+const contributing = mdToHtml(getFile('./', 'CONTRIBUTING.md'))
 
 export const load: PageServerLoad = async () => {
 	if (!interactiveLayers || interactiveLayers.length === 0) {
 		throw error(500, 'Unable to locate manifest data');
 	}
+	if (!readme || !contributing || readme.length === 0 || contributing.length === 0) {
+		throw error(500, "Unable to get markdown files")
+	}
 
 	return {
-		interactiveLayers
+		interactiveLayers,
+		sections: {
+			readme,
+			contributing,
+		}
 	};
 };
