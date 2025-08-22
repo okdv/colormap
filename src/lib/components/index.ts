@@ -11,3 +11,4 @@ export { default as Toolbar } from './Toolbar.svelte';
 export { default as Footer } from './Footer.svelte';
 export { default as Navbar } from './Navbar.svelte';
 export { default as Dropdown } from './Dropdown.svelte';
+export { default as Button } from './Button.svelte';

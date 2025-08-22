@@ -1,5 +1,6 @@
 <script lang="ts">
-	import type { LayoutData } from "./$types";
+	import { Button } from "$lib/components";
+import type { LayoutData } from "./$types";
 
 	// src/routes/+page.svelte
 
@@ -17,7 +18,9 @@
 			{#each data.interactiveLayers as layer, i (i)}
 				<a href="/map/{layer.id}">
 					<li>
-						<h3 class="text-2xl">{layer.name}</h3>
+						<Button handleClick={() => legendStore.clearMap(interactiveLayer.id)}>
+							<h3 class="text-2xl">{layer.name}</h3>
+						</Button>
 					</li>
 				</a>
 			{/each}
