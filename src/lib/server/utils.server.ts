@@ -11,7 +11,7 @@ import type { InteractiveLayer } from '$lib/types';
  * @returns parsed file content as string
  */
 export const getFile = (filepath: string, filename: string): string => {
-	const filePath = resolve('./static/data/', filename);
+	const filePath = resolve(filepath, filename);
 	const fileContent = readFileSync(filePath, 'utf-8');
 	return fileContent;
 };
