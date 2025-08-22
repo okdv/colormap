@@ -30,9 +30,13 @@ export const getManifest = (): InteractiveLayer[] => {
 /**
  * convert markdown into html, specifically used to convert README and CONTRIBUITING into homepage sections  
  * @param md markdown file content as a string 
+ * @param trim controls rather some md elements should be removed, such as primary header
  * @returns html parsed from markdown
  */
-export const mdToHtml =(md: string) => {
+export const mdToHtml =(md: string, trim: boolean = false) => {
+	if (trim) {
+		md = md.replace(/#.*[\n\r]/, '')
+	}
 	let html = md
 		.replace(/^(#+)\s(.*)/gm, (match, hashes, content) => { // headers
 			const level = hashes.length;
