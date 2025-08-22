@@ -1,7 +1,7 @@
 import type { EntryGenerator, PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
 import type { GeoJson, InteractiveLayer } from '$lib/types';
-import { getManifest, getStaticFile } from '$lib/server/utils.server';
+import { getManifest, getFile } from '$lib/server/utils.server';
 
 const manifest: InteractiveLayer[] = getManifest();
 
@@ -17,7 +17,8 @@ export const load: PageServerLoad = async ({ params }) => {
 		throw error(404, `GeoJson layer ${layerId} not found`);
 	}
 
-	const geojson: GeoJson = getStaticFile(layer.filename);
+	const jsonStr = getFile('./static/data/', layer.filename);
+	const geojson: GeoJson = JSON.parse(jsonStr)
 
 	return {
 		geojson,
