@@ -41,6 +41,7 @@
 				<h2 class="text-center text-3xl">Getting Started</h2>
 			</div>
 			<div class="space-y-2 p-2 text-lg">
+				<!-- ignore xss warnings as data is coming from a trusted source at build time only -->
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 				{@html data.sections.readme}
 			</div>
@@ -50,6 +51,7 @@
 				<h2 class="text-center text-3xl">Want to help?</h2>
 			</div>
 			<div class="space-y-2 p-2 text-lg">
+				<!-- ignore xss warnings as data is coming from a trusted source at build time only -->
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 				{@html data.sections.contributing}
 			</div>
