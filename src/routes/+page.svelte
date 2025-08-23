@@ -8,10 +8,11 @@ import type { LayoutData } from "./$types";
 
 <!-- height = screenheight minus heigh of navbar (4rem / h-16)-->
 <div class="h-[calc(100vh-4rem)]">
-	<header class="p-2">
+	<header class="p-2 bg-zinc-100 shadow">
 		<div class="text-center space-y-2">
-			<h1 class="text-3xl">Choose a Layer to Create Your Own Map</h1>
-			<p class="text-xl">Select features, like states and counties, on one of our interactive map layers to color them in per your own custom legend. Whether you're looking to graph political data or just visualize all those places you've roadtripped, you can get started in seconds. 100% free and open-source, no signups, no ads, no tracking, just a simple tool that runs right in your browser.</p>
+			<h1 class="text-3xl font-bold text-blue-700">Choose a Layer to Create Your Own Map</h1>
+			<hr class="w-64 mx-auto" />
+			<p class="text-xl max-w-6xl mx-auto">Select features, like states and counties, on one of our interactive map layers to color them in per your own custom legend. Whether you're looking to graph political data or just visualize all those places you've roadtripped, you can get started in seconds. 100% free and open-source, no signups, no ads, no tracking, just a simple tool that runs right in your browser.</p>
 		</div>
 		<ul class="flex justify-center gap-20 p-2">
 			{#each data.interactiveLayers as layer, i (i)}
