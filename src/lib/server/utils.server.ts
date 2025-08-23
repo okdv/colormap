@@ -37,7 +37,7 @@ export const mdToHtml = (md: string, trim: boolean = false) => {
 	if (trim) {
 		md = md.replace(/#.*[\n\r]/, '');
 	}
-	let html = md
+	const html = md
 		.replace(/^(#+)\s(.*)/gm, (match, hashes, content) => {
 			// headers
 			const level = hashes.length;
@@ -46,8 +46,8 @@ export const mdToHtml = (md: string, trim: boolean = false) => {
 		.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // bold
 		.replace(/\*(.*?)\*/g, '<em>$1</em>') // italics
 		.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-500 hover:text-blue-700 underline">$1</a>') // links
-		.replace(/\`{3}[a-zA-Z]+.*/g, '<code class="bg-gray-200 text-red-600 px-1 rounded">') // code
-		.replace(/\`{3}.*/g, '</code>')
+		.replace(/`{3}[a-zA-Z]+.*/g, '<code class="bg-gray-200 text-red-600 px-1 rounded">') // code
+		.replace(/`{3}.*/g, '</code>')
 		.replace(/`([^`]+)`/g, '<code class="bg-gray-200 text-red-600 px-1 rounded">$1</code>')
 		.replace(/\n\n/g, '<p></p>'); // Simple paragraph breaks
 

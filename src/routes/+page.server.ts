@@ -11,8 +11,6 @@ const readmeMd = getFile('./', 'README.md');
 const contributingMd = getFile('./', 'CONTRIBUTING.md');
 
 export const load: PageServerLoad = async () => {
-	let readme: string;
-	let contributing: string;
 	if (!interactiveLayers || interactiveLayers.length === 0) {
 		throw error(500, 'Unable to locate manifest data');
 	}
@@ -20,8 +18,8 @@ export const load: PageServerLoad = async () => {
 		throw error(500, 'Unable to get markdown files');
 	}
 
-	readme = mdToHtml(readmeMd, true);
-	contributing = mdToHtml(contributingMd, true);
+	const readme = mdToHtml(readmeMd, true);
+	const contributing = mdToHtml(contributingMd, true);
 
 	return {
 		interactiveLayers,
