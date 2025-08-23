@@ -16,18 +16,20 @@ import type { LayoutData } from "./$types";
 		</div>
 		<ul class="flex justify-center gap-20 p-2">
 			{#each data.interactiveLayers as layer, i (i)}
-				<a href="/map/{layer.id}">
-					<li>
-						<button on:click={() => legendStore.clearMap(interactiveLayer.id)} class="cursor-pointer shadow-xl font-semibold rounded-sm p-2 border-2 border-solid border-blue-700 text-blue-700 transition-all duration-300 ease-in-out hover:bg-blue-700 hover:text-white hover:shadow">
-							<h3 class="text-2xl">{layer.name}</h3>
-						</button>
-					</li>
-				</a>
+				{#if layer.id !== 'custom'}
+					<a href="/map/{layer.id}">
+						<li>
+							<button on:click={() => legendStore.clearMap(interactiveLayer.id)} class="cursor-pointer shadow-xl font-semibold rounded-sm p-2 border-2 border-solid border-blue-700 text-blue-700 transition-all duration-300 ease-in-out hover:bg-blue-700 hover:text-white hover:shadow">
+								<h3 class="text-2xl">{layer.name}</h3>
+							</button>
+						</li>
+					</a>
+				{/if}
 			{/each}
 		</ul>
 	</header>
 	<main class="p-2 space-y-6">
-		<section class="container bg-zinc-100 rounded-xl shadow-2xl mx-auto">
+		<section class="container bg-zinc-100 rounded-xl shadow-2xl mx-auto" id="get-started">
 			<div class="bg-zinc-800 text-zinc-50 p-2 rounded-t-xl shadow">
 				<h2 class="text-3xl text-center">Getting Started</h2>
 			</div>
@@ -35,7 +37,7 @@ import type { LayoutData } from "./$types";
 				{@html data.sections.readme}
 			</div>
 		</section>
-		<section class="container bg-zinc-100 rounded-xl shadow-2xl mx-auto">
+		<section class="container bg-zinc-100 rounded-xl shadow-2xl mx-auto" id="contributing">
 			<div class="bg-zinc-800 text-zinc-50 p-2 rounded-t-xl shadow">
 				<h2 class="text-3xl text-center">Want to help?</h2>
 			</div>
