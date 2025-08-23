@@ -7,6 +7,7 @@
 
 	export let interactiveLayer: InteractiveLayer;
 
+	// if there is no legend for the current interactive layer, add one 
 	const currentLegendStore = get(legendStore);
 	if (!currentLegendStore[interactiveLayer.id]) {
 		legendStore.addMap(interactiveLayer.id);
