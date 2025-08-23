@@ -10,7 +10,7 @@
 	const updateItem = (item: LegendItem) => legendStore.updateLegendItem(interactiveLayer.id, item);
 </script>
 
-<li>
+<li class="w-full">
 	<div
 		on:keyup={() => selectedItem.set(item)}
 		role="button"

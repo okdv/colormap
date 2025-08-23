@@ -13,7 +13,7 @@
 	}
 </script>
 
-<ul class="flex w-96 list-none flex-col gap-2 p-2">
+<ul class="flex w-auto md:w-96 list-none flex-col gap-2 p-2">
 	<!-- convert Mapped Records to array of values, each being a legend item -->
 	{#each Object.values($legendStore[interactiveLayer.id]) as item (item.id)}
 		<LegendItem {item} {interactiveLayer} />
