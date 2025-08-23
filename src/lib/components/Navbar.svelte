@@ -27,9 +27,11 @@
 			<div slot="body" id="navbar-dropdown-body">
 				<ul>
 					{#each interativeLayers as layer, i (i)}
-						<li class="cursor-pointer transition-all duration-300 ease-in-out hover:text-blue-600" id="navbar-dropdown-entry-{i}">
-							<a href="/map/{layer.id}" data-sveltekit-reload>{layer.name}</a>
-						</li>
+						{#if layer.id !== "custom"}
+							<li class="cursor-pointer transition-all duration-300 ease-in-out hover:text-blue-600" id="navbar-dropdown-entry-{i}">
+								<a href="/map/{layer.id}" data-sveltekit-reload>{layer.name}</a>
+							</li>
+						{/if}
 					{/each}
 				</ul>
 			</div>
