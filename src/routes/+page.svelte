@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { preventDefault } from 'svelte/legacy';
 	import type { LayoutData } from './$types';
 
 	// src/routes/+page.svelte
@@ -21,14 +22,9 @@
 		<ul class="flex justify-center gap-20 p-2">
 			{#each data.interactiveLayers as layer, i (i)}
 				{#if layer.id !== 'custom'}
-					<a href="/map/{layer.id}">
+					<a href="/map/{layer.id}" class="cursor-pointer rounded-sm border-2 border-solid border-blue-700 p-2 font-semibold text-blue-700 shadow-xl transition-all duration-300 ease-in-out hover:bg-blue-700 hover:text-white hover:shadow">
 						<li>
-							<button
-								on:click={() => legendStore.clearMap(interactiveLayer.id)}
-								class="cursor-pointer rounded-sm border-2 border-solid border-blue-700 p-2 font-semibold text-blue-700 shadow-xl transition-all duration-300 ease-in-out hover:bg-blue-700 hover:text-white hover:shadow"
-							>
-								<h3 class="text-2xl">{layer.name}</h3>
-							</button>
+							<h3 class="text-2xl">{layer.name}</h3>
 						</li>
 					</a>
 				{/if}
