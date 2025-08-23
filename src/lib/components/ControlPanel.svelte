@@ -6,7 +6,7 @@
 	export let interactiveLayer: InteractiveLayer;
 </script>
 
-<div class="absolute right-4 bottom-4 z-1000 rounded-md border-1 border-gray-300 bg-white shadow-lg">
+<div class="absolute right-6 bottom-6 z-1000 rounded-md border-1 border-gray-300 bg-white shadow-lg">
 	<Toolbar {interactiveLayer} />
 	<Legend {interactiveLayer} />
 </div>
