@@ -20,7 +20,10 @@
 			{#each data.interactiveLayers as layer, i (i)}
 				<!-- ignore custom layer #126, #107-->
 				{#if layer.id !== 'custom'}
-					<a href="/map/{layer.id}" class="cursor-pointer rounded-sm border-2 border-solid border-blue-700 p-2 font-semibold text-blue-700 shadow-xl transition-all duration-300 ease-in-out hover:bg-blue-700 hover:text-white hover:shadow">
+					<a
+						href="/map/{layer.id}"
+						class="cursor-pointer rounded-sm border-2 border-solid border-blue-700 p-2 font-semibold text-blue-700 shadow-xl transition-all duration-300 ease-in-out hover:bg-blue-700 hover:text-white hover:shadow"
+					>
 						<li>
 							<h3 class="text-2xl">{layer.name}</h3>
 						</li>

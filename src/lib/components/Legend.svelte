@@ -7,14 +7,14 @@
 
 	export let interactiveLayer: InteractiveLayer;
 
-	// if there is no legend for the current interactive layer, add one 
+	// if there is no legend for the current interactive layer, add one
 	const currentLegendStore = get(legendStore);
 	if (!currentLegendStore[interactiveLayer.id]) {
 		legendStore.addMap(interactiveLayer.id);
 	}
 </script>
 
-<ul class="flex w-auto md:w-96 list-none flex-col gap-2 p-2">
+<ul class="flex w-auto list-none flex-col gap-2 p-2 md:w-96">
 	<!-- convert Mapped Records to array of values, each being a legend item -->
 	{#each Object.values($legendStore[interactiveLayer.id]) as item (item.id)}
 		<LegendItem {item} {interactiveLayer} />

@@ -19,7 +19,7 @@
 				>contributors</a
 			>
 		</p>
-		<div class="mt-2 rounded-full bg-red-600 px-2 text-sm font-bold text-zinc-50 hidden lg:block"><span>beta</span></div>
+		<div class="mt-2 hidden rounded-full bg-red-600 px-2 text-sm font-bold text-zinc-50 lg:block"><span>beta</span></div>
 	</div>
 	<nav class="flex items-center justify-between gap-4 text-xl">
 		<Dropdown>
