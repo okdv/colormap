@@ -24,30 +24,31 @@ export const getManifest = (): InteractiveLayer[] => {
 		return interactiveLayers;
 	}
 	const manifestStr = getFile('./static/data/', 'manifest.json');
-	return JSON.parse(manifestStr)
+	return JSON.parse(manifestStr);
 };
 
 /**
- * convert markdown into html, specifically used to convert README and CONTRIBUITING into homepage sections  
- * @param md markdown file content as a string 
+ * convert markdown into html, specifically used to convert README and CONTRIBUITING into homepage sections
+ * @param md markdown file content as a string
  * @param trim controls rather some md elements should be removed, such as primary header
  * @returns html parsed from markdown
  */
-export const mdToHtml =(md: string, trim: boolean = false) => {
+export const mdToHtml = (md: string, trim: boolean = false) => {
 	if (trim) {
-		md = md.replace(/#.*[\n\r]/, '')
+		md = md.replace(/#.*[\n\r]/, '');
 	}
 	let html = md
-		.replace(/^(#+)\s(.*)/gm, (match, hashes, content) => { // headers
+		.replace(/^(#+)\s(.*)/gm, (match, hashes, content) => {
+			// headers
 			const level = hashes.length;
-			return `<h${level} class="text-${4-level}xl">${content}</h${level}>`;
+			return `<h${level} class="text-${4 - level}xl">${content}</h${level}>`;
 		})
-		.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // bold 
-		.replace(/\*(.*?)\*/g, '<em>$1</em>') // italics 
-		.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-500 hover:text-blue-700 underline">$1</a>') // links 
-		.replace(/\`{3}[a-zA-Z]+.*/g, '<code class="bg-gray-200 text-red-600 px-1 rounded">') // code 
+		.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // bold
+		.replace(/\*(.*?)\*/g, '<em>$1</em>') // italics
+		.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-500 hover:text-blue-700 underline">$1</a>') // links
+		.replace(/\`{3}[a-zA-Z]+.*/g, '<code class="bg-gray-200 text-red-600 px-1 rounded">') // code
 		.replace(/\`{3}.*/g, '</code>')
-		.replace(/`([^`]+)`/g, '<code class="bg-gray-200 text-red-600 px-1 rounded">$1</code>') 
+		.replace(/`([^`]+)`/g, '<code class="bg-gray-200 text-red-600 px-1 rounded">$1</code>')
 		.replace(/\n\n/g, '<p></p>'); // Simple paragraph breaks
 
 	return html;

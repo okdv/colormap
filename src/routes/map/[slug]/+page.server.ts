@@ -18,7 +18,7 @@ export const load: PageServerLoad = async ({ params }) => {
 	}
 
 	const jsonStr = getFile('./static/data/', layer.filename);
-	const geojson: GeoJson = JSON.parse(jsonStr)
+	const geojson: GeoJson = JSON.parse(jsonStr);
 
 	return {
 		geojson,
