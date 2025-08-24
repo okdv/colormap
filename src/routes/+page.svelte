@@ -1,8 +1,6 @@
 <script lang="ts">
-	import type { LayoutData } from './$types';
-
 	// src/routes/+page.svelte
-
+	import type { LayoutData } from './$types';
 	export let data: LayoutData;
 </script>
 
@@ -20,15 +18,14 @@
 		</div>
 		<ul class="flex justify-center gap-20 p-2">
 			{#each data.interactiveLayers as layer, i (i)}
+				<!-- ignore custom layer #126, #107-->
 				{#if layer.id !== 'custom'}
-					<a href="/map/{layer.id}">
+					<a
+						href="/map/{layer.id}"
+						class="cursor-pointer rounded-sm border-2 border-solid border-blue-700 p-2 font-semibold text-blue-700 shadow-xl transition-all duration-300 ease-in-out hover:bg-blue-700 hover:text-white hover:shadow"
+					>
 						<li>
-							<button
-								on:click={() => legendStore.clearMap(interactiveLayer.id)}
-								class="cursor-pointer rounded-sm border-2 border-solid border-blue-700 p-2 font-semibold text-blue-700 shadow-xl transition-all duration-300 ease-in-out hover:bg-blue-700 hover:text-white hover:shadow"
-							>
-								<h3 class="text-2xl">{layer.name}</h3>
-							</button>
+							<h3 class="text-2xl">{layer.name}</h3>
 						</li>
 					</a>
 				{/if}
@@ -41,6 +38,7 @@
 				<h2 class="text-center text-3xl">Getting Started</h2>
 			</div>
 			<div class="space-y-2 p-2 text-lg">
+				<!-- ignore xss warnings as data is coming from a trusted source at build time only -->
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 				{@html data.sections.readme}
 			</div>
@@ -50,6 +48,7 @@
 				<h2 class="text-center text-3xl">Want to help?</h2>
 			</div>
 			<div class="space-y-2 p-2 text-lg">
+				<!-- ignore xss warnings as data is coming from a trusted source at build time only -->
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 				{@html data.sections.contributing}
 			</div>
