@@ -41,7 +41,7 @@ export const mdToHtml = (md: string, trim: boolean = false) => {
 		.replace(/^(#+)\s(.*)/gm, (match, hashes, content) => {
 			// headers
 			const level = hashes.length;
-			return `<h${level} class="text-${4 - level}xl">${content}</h${level}>`;
+			return `<h${level} class="text-${5 - level}xl">${content}</h${level}>`;
 		})
 		.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // bold
 		.replace(/\*(.*?)\*/g, '<em>$1</em>') // italics
@@ -49,6 +49,8 @@ export const mdToHtml = (md: string, trim: boolean = false) => {
 		.replace(/`{3}[a-zA-Z]+.*/g, '<code class="bg-gray-200 text-red-600 px-1 rounded">') // code
 		.replace(/`{3}.*/g, '</code>')
 		.replace(/`([^`]+)`/g, '<code class="bg-gray-200 text-red-600 px-1 rounded">$1</code>')
+		.replace(/\[\s{1}\]/g, '<input type="checkbox" />') // checkboxes
+		.replace(/\[x{1}\]/gi, '<input type="checkbox" checked />') 
 		.replace(/\n\n/g, '<p></p>'); // Simple paragraph breaks
 
 	return html;
