@@ -26,7 +26,7 @@ There are really only a few parts:
 
 ### Finding a Map/Interactive Layer
 
-To get started you will want to open of our Interactive Layers, each has its own dedicated URL/page. Currently we have US Counties and US States, but are working to add more in the future! You can find these linked on (our homepage)[https://colormap.app], or under Maps in the navigation bar. We've also direct linked them below, to make things easy. 
+To get started you will want to open of our Interactive Layers, each has its own dedicated URL/page. Currently we have US Counties and US States, but are working to add more in the future! You can find these linked on [our homepage](https://colormap.app), or under Maps in the navigation bar. We've also direct linked them below, to make things easy. 
 
 [US Counties](https://colormap.app/map/us_counties)
 
