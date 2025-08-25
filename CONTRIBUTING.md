@@ -1,10 +1,12 @@
-## Getting started
+# Getting started
 
-First time? [Start here](#instructions)
+Enjoy the project, or notice something that could be improved and want to help? There are lots of ways to contribute! 
 
-### Quick start
+For tech sides of things, keep on reading. If you're interested in adding/editing Interactive Layers (GeoJSON files) then [click here](#contribute-interactive-layers). 
 
-This is a quick start guide, meant to be more of a refresher, or a point of reference for experienced FOSS contributors who are familiar with some of the standards.
+## Quick start
+
+This is a quick start section, meant to be more of a refresher, or a point of reference for experienced FOSS contributors who are familiar with some of the standards.
 
 ---
 
@@ -18,23 +20,24 @@ Once you're ready to push your branch, first build, test and format locally:
 
 ```bash
 npm run build
-npm run format
-npm run test # if you see errors about missing dependencies on the host machine, you can disregard those failures
+npm run pre-push
 ```
 
 This will generate a `/build` dir with static assets. You can preview the production build with `npm run preview` or using the provided docker-compose (nginx). Or really any web server.
 
-Commit messages should follow this format: `<type: chore, feat, fix>: <description> <rel issue number>`
+Commit messages should follow this format: **<type: chore, feat, fix>: <description> <rel issue number>**, e.g. "fix: remove broken button #11" 
 
-### Instructions
+## Instructions
 
-I want this project to be easy to hop in for everyone. Rather this is your first contribution ever, or your thousanth. This is a detailed instruction in getting started. Worth reading at least once, especially if this is your first time contributing to the project. If you have any questions don't hesitate to create an issue.
+I want this project to be easy to hop in for everyone. Rather this is your first contribution ever, or your thousandth. This is a detailed instruction in getting started. Worth reading if you're new to the project or FOSS. 
 
 ---
 
-Pre-requisites: git, Node.js v20.x.x, and npm (or pnpm or yarn if your prefer) installed on your machine
+Pre-requisites: git, Node.js v20.x.x, and npm installed on your machine
 
-Fork the repository and pull it into your local environment
+Fork the repository 
+
+Pull it into your local environment
 
 ```bash
 git clone https://github.com/<your-username>/colormap.git
@@ -83,8 +86,8 @@ npm run pre-push # if you see errors around browser dependencies with the test p
 Once you're done, merge develop back onto your branch in case there were any changes:
 
 ```bash
-git fetch origin
-git merge origin/develop # if confident, feel free to rebase instead, it is better practice
+git pull origin develop # pull any changes made since you clones
+git merge develop # merge them into your branch for proper tracking
 ```
 
 After a successful, conflict free, merge or rebase, push
@@ -95,46 +98,58 @@ git push origin feature/new-chatbot-component
 
 From here you should be able to create a Pull Request in Github, targetting a merge into the `develop` branch, **not** `master`
 
-Please keep PR's specific, they should be targetting a specific feature or bug. If you find something unrelated that needs updating, do that in its own branch and PR.
+Please keep PR's specific, they should be targetting a specific feature or bug. If you find something unrelated that needs updating, do that in its own PR.
 
 Await any comments or actions from a maintainer. If approved, your code will be merged into `develop` and then later merged into `master` as part of a release (done by a maintainer)
 
-## Structure, Stack and Standards
+# Structure, Stack and Standards
 
-### git and Github
+## git and Github
 
-- `develop` this is the branch that **all Pull Requests should target**, it is the active development branch.
-- `master` this is the default branch, it is the latest production build. It should only be merged to from `develop` by a maintainer for a regular release.
-- `other` you may see other branches that are for specific features or recent releases, don't worry about these unless you're a maintainer. contributors only need to worry about `develop`
+`develop` this is the branch that **all Pull Requests should target**, it is the active development branch.
+
+`master` this is the default branch, it is the latest production build. It should only be merged to from `develop` by a maintainer for a regular release.
+
+`other` you may see other branches that are for specific features or recent releases, don't worry about these unless you're a maintainer. contributors only need to worry about `develop`
 
 We use tags to associate specific releases, such as `v1.0.0-beta`, `v1.2.12`
 
 Commit messages should follow this format: `<type: chore, feat, fix>: <description> <rel issue number>`
 
-### Design Standards
+## Design Standards
 
 If you plan to add or edit UI features, you will want to ensure you are following our design standards. We use TailwindCSS and it should be used where possible.
 
-#### Color scheme
+### Color scheme
 
-- color name | corresponding tailwind class
-- red | red-600
-- blue | blue-600
-- green | green-500
-- yellow | yellow-400
-- white | zinc-50
-- black | zinc-950
-- light gray | zinc-100
-- dark gray | zinc-800
-- gray | zinc-600
+color name | corresponding tailwind class
+
+red | red-600
+
+blue | blue-600
+
+green | green-500
+
+yellow | yellow-400
+
+white | zinc-50
+
+black | zinc-950
+
+light gray | zinc-100
+
+dark gray | zinc-800
+
+gray | zinc-600
+
 
 When using differential coloring (such as creating a border that is slightly darker than the background for definition or depth) the differential color should be -/+ 200 most of the time. So if I have a box with a background color of white, zinc-50, my border would be zinc-250. If i have a black (zinc-950) bg and want the opposite effect, the border would be zinc-750
 
-#### Animation
+### Animation
 
 Include classes `transition-all duration-300 ease-in-out`
 
-### Stack
+## Stack
 
 The app uses [Svelte (SvelteKit)](https://svelte.dev/tutorial/svelte/welcome-to-svelte) as a framework/compiler, [TypeScript](https://www.typescriptlang.org/docs/), [TailwindCSS](https://tailwindcss.com/docs/editor-setup) as a CSS library, [FontAwesome](https://fontawesome.com/icons) for icons
 
@@ -144,23 +159,8 @@ ESLint and Prettier are used for linting/formatting
 
 Github workflows is used to automate builds, releases, etc.
 
-### App structure
+## Contribute Interactive Layers
 
-```
-.
-├── src
-│   ├── lib
-│   │   ├── components # this is where all [Svelte components](https://svelte.dev/docs/svelte/svelte-files) live. Each component has its own file.
-│   │   ├── services # this is where most programmatic logic lives. any operation that is not directly interfacing with a store or component should live here. divided into files by association
-│   │   ├── stores # [Svelte stores](https://svelte.dev/docs/svelte/stores) are stored here, divided into files by association
-│   │   └── types # Typescript data is stored here, types, classes, interfaces, etc. divided into files by association
-│   └── routes # where pages and layouts are stored, but this is only a SPA for now see [Svelte docs](https://svelte.dev/docs/kit/routing) for details
-├── static
-│   ├── data # where geojson feature (e.g. county) files are stored
-```
-
-## Source data
-
-Have GIS experience and want to contribute by creating custom geojson files? Please do! We recommend reaching out via issue beforehand to ensure there is a need for the feature type (states, countries, etc)
+Have GIS experience and want to contribute by creating custom geojson files? Please do! We recommend reaching out via issue beforehand to ensure there is a need for the feature type (states, countries, etc).
 
 Currently the data has been sourced as .shp files from the [US Census](https://www.census.gov/cgi-bin/geo/shapefiles/index.php) and converted to geojson using [GDALs ogr2ogr program](https://gdal.org/en/stable/programs/ogr2ogr.html).
