@@ -40,8 +40,8 @@ export const mdToHtml = (md: string, trim: boolean = false) => {
 	const html = md
 		.replace(/^(#+)\s(.*)/gm, (match, hashes, content) => {
 			// headers
-			const level = hashes.length;
-			return `<h${level} class="text-${5 - level}xl">${content}</h${level}>`;
+			const level = hashes.length+1;
+			return `<h${level} class="text-${6 - level}xl">${content}</h${level}>`;
 		})
 		.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // bold
 		.replace(/\*(.*?)\*/g, '<em>$1</em>') // italics
