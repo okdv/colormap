@@ -1,10 +1,49 @@
 // src/lib/services/map.ts
-import type { GeoJson, GeoJsonFeature, LegendItem } from '$lib/types';
-import { legendStore, settingsStore, selectedItem } from '$lib/stores';
+import type { GeoJson, GeoJsonFeature, InteractiveLayer, LegendItem } from '$lib/types';
+import { legendStore, settingsStore, selectedItem, interactiveLayersStore, currentInteractiveLayerStore } from '$lib/stores';
 import { map, geoJsonLayer, selectedFeaturesStore } from '$lib/stores';
 import { get } from 'svelte/store';
 import type * as L from 'leaflet';
 import { SelectedFeature } from '$lib/types';
+
+/**
+ * returns the geojson manifest stored in /data/manifest.json
+ * @returns promise to return the files object in the manifest.json (currently string[])
+ */
+export const getFeatureLayers = async (): Promise<InteractiveLayer[]> => {
+	try {
+		const res = await fetch('/data/manifest.json');
+		if (!res.ok) {
+			throw new Error('Error HTTP ' + res.status);
+		}
+		const data: InteractiveLayer[] = await res.json();
+		return data;
+	} catch (err) {
+		console.error(`Could not retrieve manifest: ${err}`);
+		return [];
+	}
+};
+
+/**
+ * returns interactive layer from store or manifest based on its id
+ * @returns promise to return the files object in the manifest.json (currently string[])
+ */
+export const getInteractiveLayerByID = async (id: string): Promise<InteractiveLayer | null> => {
+	let currentInteractiveLayers = get(interactiveLayersStore);
+	let currentInteractiveLayer: InteractiveLayer | null = null;
+	if (!currentInteractiveLayers || currentInteractiveLayers.length === 0) {
+		currentInteractiveLayers = await getFeatureLayers();
+	}
+
+	for (let i = 0; i < currentInteractiveLayers.length; i++) {
+		const activeLayer = currentInteractiveLayers[i];
+		if (activeLayer.id === id) {
+			currentInteractiveLayer = activeLayer;
+		}
+	}
+
+	return currentInteractiveLayer;
+};
 
 /**
  * determine style for geojson features, effectively either base or selected if a colors present
@@ -26,16 +65,20 @@ const calculateFeatureStyle = (color?: string) => {
 
 /**
  * determine what legend item has selected a feature, if any
- * @param id feature id as string
+ * @param mapId map id as string
+ * @param featureId feature id as string
  * @returns legenditem or undefined if not selected
  */
-const getFeatureSelector = (id: string): LegendItem | undefined => {
-	let selectedBy = undefined;
+const getFeatureSelector = (mapId: string, featureId: string): LegendItem | undefined => {
+	let selectedBy: LegendItem | undefined = undefined;
+	const currentSelectedFeaturesStore = get(selectedFeaturesStore);
+	const currentLegendStore = get(legendStore);
 	// see if the id is already present in selected features store, return that if so
-	const currentlySelectedFeature = get(selectedFeaturesStore)[id];
-	if (currentlySelectedFeature) {
-		const selector = get(legendStore)[currentlySelectedFeature.selectedById];
-		selectedBy = selector;
+	const currentlySelectedFeature: SelectedFeature | null = currentSelectedFeaturesStore[mapId]
+		? currentSelectedFeaturesStore[mapId][featureId]
+		: null;
+	if (currentlySelectedFeature && currentLegendStore[mapId]) {
+		selectedBy = currentLegendStore[mapId][currentlySelectedFeature.selectedById];
 	}
 	return selectedBy;
 };
@@ -50,17 +93,26 @@ let subscriptions: (() => void)[] = [];
  * @todo enhance coordinate defaults, accessibility and memory
  * @todo support other tiles/base layers
  */
-export const initMapAndLayers = async (mapContainer: HTMLDivElement) => {
-	const L = await import('leaflet'); // lazy import to avoid SSR
+export const initMapAndLayers = async (mapContainer: HTMLDivElement, geojson: GeoJson) => {
 	await import('leaflet/dist/leaflet.css');
+	const L = await import('leaflet'); // lazy import to avoid SSR
 
-	// try to retrieve feature layer using settings
-	const currentSettings = get(settingsStore);
-	const featureLayerRes = await fetch(`/data/${currentSettings.featureLayerFilename}`);
-	const geojson: GeoJson = await featureLayerRes.json();
+	// get interactive layer, and its associated geojson, fail if null
+	const interactiveLayer = get(currentInteractiveLayerStore);
+	if (interactiveLayer === null) {
+		console.warn('Matching interactive layer could not be found in manifest');
+		return;
+	}
+	const mapId = interactiveLayer.id;
+
+	// get map params from interactive layer
+	const zoomLevel = interactiveLayer.defaultZoom ?? 4;
+	const coordinates = interactiveLayer.defaultCoordinates
+		? [interactiveLayer.defaultCoordinates.latitude, interactiveLayer.defaultCoordinates.longitude]
+		: [37.8, -96];
 
 	// local instance of the leaflet map + set default view
-	const localLeafletMap = L.map(mapContainer).setView([37.8, -96], 4);
+	const localLeafletMap = L.map(mapContainer).setView(coordinates, zoomLevel);
 
 	// add OSM tile as base layer + attribution, add to local map
 	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -73,21 +125,21 @@ export const initMapAndLayers = async (mapContainer: HTMLDivElement) => {
 		style: calculateFeatureStyle(),
 		onEachFeature: (feature: GeoJsonFeature, layer: L.Layer) => {
 			// get metadata
-			const id = feature.properties.GEOID;
-			const name = feature.properties.NAME;
+			const featureId = feature.properties.GEOID;
+			const featureName: string = typeof feature.properties.NAME === 'string' ? typeof feature.properties.NAME : '';
 
 			// add feature id to generated layer as well
-			(layer as L.Layer).featureId = id;
+			(layer as L.Layer).featureId = featureId;
 
 			// Add click event to each feature layer
 			layer.on('click', () => {
 				// feature name shown on hover
-				layer.bindTooltip(name);
+				layer.bindTooltip(featureName);
 
 				// if the feature is already selected, simply deselect it
-				const selector = getFeatureSelector(id);
+				const selector = getFeatureSelector(mapId, featureId);
 				if (selector) {
-					selectedFeaturesStore.deselect(id);
+					selectedFeaturesStore.deselectLayer(interactiveLayer.id, featureId);
 					return;
 				}
 
@@ -100,7 +152,7 @@ export const initMapAndLayers = async (mapContainer: HTMLDivElement) => {
 				}
 
 				// otherwise select it
-				selectedFeaturesStore.select(new SelectedFeature(id, name, activeLegendItem.id));
+				selectedFeaturesStore.selectLayer(interactiveLayer.id, new SelectedFeature(featureId, featureName, activeLegendItem.id));
 			});
 		}
 	}).addTo(localLeafletMap); // add feature layers to local map
@@ -119,7 +171,7 @@ export const initMapAndLayers = async (mapContainer: HTMLDivElement) => {
 					const featureId = (layer as L.Layer).featureId;
 					if (featureId) {
 						// get selector if it exists and update the style of the feature layer
-						const selector = getFeatureSelector(featureId);
+						const selector = getFeatureSelector(interactiveLayer.id, featureId);
 						(layer as L.Path).setStyle(calculateFeatureStyle(selector?.color));
 					}
 				});
@@ -129,21 +181,21 @@ export const initMapAndLayers = async (mapContainer: HTMLDivElement) => {
 
 	// on changes to the legend, update the associated layers styles
 	subscriptions.push(
-		legendStore.subscribe(() => {
-			// if there are geojson layers  and selected features
+		legendStore.subscribe((newLegendStoreData) => {
+			const selectedFeatures = get(selectedFeaturesStore)[interactiveLayer.id];
 			const currentGeoJsonLayer = get(geoJsonLayer);
-			const currentSelectedFeatures = get(selectedFeaturesStore);
-			if (currentGeoJsonLayer && Object.keys(currentSelectedFeatures).length > 0) {
-				currentGeoJsonLayer.eachLayer((layer: L.Layer) => {
-					const featureId = (layer as L.Layer).featureId;
+			const legendItems = newLegendStoreData[interactiveLayer.id];
+			if (currentGeoJsonLayer && legendItems && Object.keys(selectedFeatures).length > 0) {
+				currentGeoJsonLayer.eachLayer((feature: L.Layer) => {
+					const featureId = feature.featureId;
 					// get selector if it exists and update the style of the feature layer
-					const selector = getFeatureSelector(featureId);
+					const selector = getFeatureSelector(interactiveLayer.id, featureId);
 					if (selector) {
-						(layer as L.Path).setStyle(calculateFeatureStyle(selector.color));
+						feature.setStyle(calculateFeatureStyle(selector.color));
 						return;
 					}
-					if (currentSelectedFeatures[featureId]) {
-						selectedFeaturesStore.deselect(featureId);
+					if (selectedFeatures[featureId]) {
+						selectedFeaturesStore.deselectLayer(interactiveLayer.id, featureId);
 						return;
 					}
 				});

@@ -1,15 +1,16 @@
 <script lang="ts">
 	// src/lib/components/LegendItem.svelte
 	import { legendStore, selectedItem } from '$lib/stores';
-	import type { LegendItem } from '$lib/types';
+	import type { InteractiveLayer, LegendItem } from '$lib/types';
 
 	export let item: LegendItem;
+	export let interactiveLayer: InteractiveLayer;
 
-	const deleteItem = (item: LegendItem) => legendStore.removeItem(item.id);
-	const updateItem = (item: LegendItem) => legendStore.updateItem(item);
+	const deleteItem = (item: LegendItem) => legendStore.removeLegendItem(interactiveLayer.id, item.id);
+	const updateItem = (item: LegendItem) => legendStore.updateLegendItem(interactiveLayer.id, item);
 </script>
 
-<li>
+<li class="w-full">
 	<div
 		on:keyup={() => selectedItem.set(item)}
 		role="button"

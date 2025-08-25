@@ -1,5 +1,7 @@
 // src/lib/types/map.ts
 
+import type { LegendItem } from '$lib/types';
+
 // SelectedFeatures: the map features (e.g. counties) that the user has selected
 export class SelectedFeature {
 	id: string;
@@ -11,6 +13,10 @@ export class SelectedFeature {
 		this.selectedById = selectedById;
 	}
 }
+
+export type SelectedFeatures = Record<string, SelectedFeature>;
+
+export type SelectedFeaturesLocalStorage = Record<string, SelectedFeatures>;
 
 export type GeoJsonFeature = {
 	type: string;
@@ -30,3 +36,17 @@ export type GeoJson = {
 	name: string;
 	features: GeoJsonFeature[];
 };
+
+export type InteractiveLayer = {
+	id: string; // should equal the key from the object
+	filename: string;
+	name: string;
+	defaultZoom?: number;
+	defaultCoordinates?: {
+		latitude: number;
+		longitude: number;
+	};
+	defaultLegendItems?: LegendItem[];
+};
+
+export type Func<T extends unknown[]> = (...args: T) => void;

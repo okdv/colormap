@@ -24,13 +24,6 @@
 	</div>
 	<div>
 		<form on:submit|preventDefault={handleSubmit}>
-			<label class="block">
-				<span>Interactive Map Layer: </span>
-				<select bind:value={settingsForm.featureLayerFilename} class="cursor-pointer">
-					<option value="us_counties_2023.geojson">US Counties</option>
-					<option value="us_states_2024.geojson">US States</option>
-				</select>
-			</label>
 			<!-- 
                 @todo coming soon...     
                 <label class="block">

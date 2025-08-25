@@ -1,7 +1,13 @@
 <script lang="ts">
+	import { Navbar } from '$lib/components';
 	import '../app.css';
+	import type { LayoutData } from './$types';
 
-	let { children } = $props();
+	export let data: LayoutData;
 </script>
 
-{@render children()}
+<Navbar interativeLayers={data.interactiveLayers} />
+<!-- move main down by height of navbar-->
+<main class="mt-16">
+	<slot />
+</main>

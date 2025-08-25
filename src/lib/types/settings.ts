@@ -16,10 +16,8 @@ type BaseStyleSetting = {
 
 // Settings: global settings for the web app
 export class Settings {
-	featureLayerFilename: string;
 	baseStyle: BaseStyleSetting;
-	constructor(featureLayerFilename?: string | null, baseStyle?: BaseStyleSetting | null) {
-		this.featureLayerFilename = featureLayerFilename ?? 'us_counties_2023.geojson';
+	constructor(baseStyle?: BaseStyleSetting | null) {
 		this.baseStyle = baseStyle ?? {
 			selected: {
 				color: 'white',

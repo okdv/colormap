@@ -7,18 +7,22 @@
 	import { onMount } from 'svelte';
 	import { cleanupMap, initMapAndLayers } from '$lib/services';
 	import { ControlPanel } from '$lib/components';
+	import type { GeoJson, InteractiveLayer } from '$lib/types';
+
+	export let interactiveLayer: InteractiveLayer;
+	export let geojson: GeoJson;
 
 	let mapContainer: HTMLDivElement;
 
 	// onMount so this doesnt get SSR'd, only happens on the client side
 	onMount(async () => {
 		// initialize map and layers
-		initMapAndLayers(mapContainer);
+		initMapAndLayers(mapContainer, geojson);
 
 		// cleanup on unmount
 		return cleanupMap();
 	});
 </script>
 
-<ControlPanel />
-<div bind:this={mapContainer} class="h-screen w-full" id="map-container"></div>
+<ControlPanel {interactiveLayer} />
+<div bind:this={mapContainer} class="h-full w-full" id="map-container"></div>

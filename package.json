@@ -1,8 +1,11 @@
 {
 	"name": "colormap",
 	"private": true,
-	"version": "1.0.0-beta.4",
+	"version": "1.0.0-beta.5",
 	"type": "module",
+	"engines": {
+		"node": "20.x"
+	},
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
@@ -16,7 +19,7 @@
 		"test:unit:run": "vitest run",
 		"test": "npm run test:unit -- --run && npm run test:e2e",
 		"test:e2e": "playwright test",
-		"pre-push": "npm run format && npm run test:unit:run && npx start-server-and-test preview http://localhost:4173 'npm run test:e2e -- --project=chromium'"
+		"pre-push": "npm run format && npm run lint && npm run test:unit:run && npx start-server-and-test preview http://localhost:4173 'npm run test:e2e -- --project=chromium'"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",

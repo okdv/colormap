@@ -1,0 +1,19 @@
+[
+    {
+        "id": "custom",
+        "filename": "us_counties_2023.geojson",
+        "name": "Custom Map"
+    },
+    {
+        "id": "us_counties",
+        "filename": "us_counties_2023.geojson",
+        "name": "US Counties",
+        "defaultZoom": 5
+    },
+    {
+        "id": "us_states",
+        "filename": "us_states_2024.geojson",
+        "name": "US States",
+        "defaultZoom": 5
+    }
+]
