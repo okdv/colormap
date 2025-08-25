@@ -18,6 +18,13 @@ export const load: PageServerLoad = async () => {
 		throw error(500, 'Unable to get markdown files');
 	}
 
+	// pre-processing markdowns
+	// add ID to contribute interactive layers for nav purposes
+	contributingMd.replace(
+		/#+\scontribute\sinteractive\slayers\s*/gi,
+		'<h3 class="text-4xl" id="contribute-interactive-layers">Contribute Interactive Layers</h3>'
+	);
+
 	const readme = mdToHtml(readmeMd, true);
 	const contributing = mdToHtml(contributingMd, true);
 
