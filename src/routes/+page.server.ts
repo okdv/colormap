@@ -8,7 +8,7 @@ export const prerender = true;
 
 const interactiveLayers: InteractiveLayer[] = getManifest();
 const readmeMd = getFile('./', 'README.md');
-const contributingMd = getFile('./', 'CONTRIBUTING.md');
+let contributingMd = getFile('./', 'CONTRIBUTING.md');
 
 export const load: PageServerLoad = async () => {
 	if (!interactiveLayers || interactiveLayers.length === 0) {
@@ -17,6 +17,10 @@ export const load: PageServerLoad = async () => {
 	if (!readmeMd || !contributingMd || readmeMd.length === 0 || contributingMd.length === 0) {
 		throw error(500, 'Unable to get markdown files');
 	}
+
+	// pre-processing markdowns
+	// add ID to contribute interactive layers for nav purposes
+	contributingMd.replace(/#+\scontribute\sinteractive\slayers\s*/gi, '<h3>Contribute Interactive Layers</h3>') // bold
 
 	const readme = mdToHtml(readmeMd, true);
 	const contributing = mdToHtml(contributingMd, true);
