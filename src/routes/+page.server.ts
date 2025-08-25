@@ -8,7 +8,7 @@ export const prerender = true;
 
 const interactiveLayers: InteractiveLayer[] = getManifest();
 const readmeMd = getFile('./', 'README.md');
-let contributingMd = getFile('./', 'CONTRIBUTING.md');
+const contributingMd = getFile('./', 'CONTRIBUTING.md');
 
 export const load: PageServerLoad = async () => {
 	if (!interactiveLayers || interactiveLayers.length === 0) {
@@ -20,7 +20,10 @@ export const load: PageServerLoad = async () => {
 
 	// pre-processing markdowns
 	// add ID to contribute interactive layers for nav purposes
-	contributingMd.replace(/#+\scontribute\sinteractive\slayers\s*/gi, '<h3 class="text-4xl" id="contribute-interactive-layers">Contribute Interactive Layers</h3>')
+	contributingMd.replace(
+		/#+\scontribute\sinteractive\slayers\s*/gi,
+		'<h3 class="text-4xl" id="contribute-interactive-layers">Contribute Interactive Layers</h3>'
+	);
 
 	const readme = mdToHtml(readmeMd, true);
 	const contributing = mdToHtml(contributingMd, true);

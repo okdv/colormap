@@ -1,8 +1,8 @@
 # Getting started
 
-Enjoy the project, or notice something that could be improved and want to help? There are lots of ways to contribute! 
+Enjoy the project, or notice something that could be improved and want to help? There are lots of ways to contribute!
 
-For tech sides of things, keep on reading. If you're interested in adding/editing Interactive Layers (GeoJSON files) then [click here](#contribute-interactive-layers). 
+For tech sides of things, keep on reading. If you're interested in adding/editing Interactive Layers (GeoJSON files) then [click here](#contribute-interactive-layers).
 
 ## Quick start
 
@@ -25,17 +25,17 @@ npm run pre-push
 
 This will generate a `/build` dir with static assets. You can preview the production build with `npm run preview` or using the provided docker-compose (nginx). Or really any web server.
 
-Commit messages should follow this format: **<type: chore, feat, fix>: <description> <rel issue number>**, e.g. "fix: remove broken button #11" 
+Commit messages should follow this format: **<type: chore, feat, fix>: <description> <rel issue number>**, e.g. "fix: remove broken button #11"
 
 ## Instructions
 
-I want this project to be easy to hop in for everyone. Rather this is your first contribution ever, or your thousandth. This is a detailed instruction in getting started. Worth reading if you're new to the project or FOSS. 
+I want this project to be easy to hop in for everyone. Rather this is your first contribution ever, or your thousandth. This is a detailed instruction in getting started. Worth reading if you're new to the project or FOSS.
 
 ---
 
 Pre-requisites: git, Node.js v20.x.x, and npm installed on your machine
 
-Fork the repository 
+Fork the repository
 
 Pull it into your local environment
 
@@ -141,7 +141,6 @@ light gray | zinc-100
 dark gray | zinc-800
 
 gray | zinc-600
-
 
 When using differential coloring (such as creating a border that is slightly darker than the background for definition or depth) the differential color should be -/+ 200 most of the time. So if I have a box with a background color of white, zinc-50, my border would be zinc-250. If i have a black (zinc-950) bg and want the opposite effect, the border would be zinc-750
 
